@@ -23,9 +23,8 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         $this->defaultInstance->signature = "bad signature";
         $this->assertFalse($this->defaultInstance->validate());
 
-        $this->markTestIncomplete(
-          'Validation test has not been implemented yet.'
-        );
+        $this->defaultInstance->signature = DEFAULT_SIGNATURE;
+        $this->assertTrue($this->defaultInstance->validate());
     }
 
     public function testCompute () {
@@ -37,10 +36,6 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         $this->assertSame(
             TIGER_SIGNATURE,
             $this->tigerInstance->compute()
-        );
-
-        $this->markTestIncomplete(
-          'Compute test for default instance should be extracted from a real GitHub payload.'
         );
     }
 
