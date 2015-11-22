@@ -2,7 +2,7 @@
   "name": "keruald/github",
   "description": "X-Hub-Signature generator and validator",
   "license": "BSD-2-Clause",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "repositories": [
     {
       "type": "vcs",
