@@ -1,4 +1,5 @@
 <?php
+
 namespace Keruald\GitHub;
 
 class XHubSignature {
@@ -54,7 +55,7 @@ class XHubSignature {
      * @param string $secret the secret token
      * @param string $algo the algorithm to use to compute hashs [facultative]
      */
-    public function __construct ($secret, $algo = DEFAULT_HASH_ALGO) {
+    public function __construct ($secret, $algo = self::DEFAULT_HASH_ALGO) {
         $this->secret = $secret;
         $this->hashAlgo = $algo;
     }
@@ -69,7 +70,7 @@ class XHubSignature {
      * @return string the payload signature
      */
     public function compute () {
-        return hash_hmac($this->algo, $this->payload, $this->secret);
+        return hash_hmac($this->hashAlgo, $this->payload, $this->secret);
     }
 
     /**
@@ -120,9 +121,9 @@ class XHubSignature {
         $secret,
         $payload,
         $signature,
-        $algo = DEFAULT_HASH_ALGO
+        $algo = self::DEFAULT_HASH_ALGO
     ) {
-        $instance = new static($secret, $algo = DEFAULT_HASH_ALGO);
+        $instance = new static($secret, $algo = self::DEFAULT_HASH_ALGO);
         $instance->payload = $payload;
         $instance->signature = $signature;
 
