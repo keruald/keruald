@@ -99,9 +99,9 @@ class XHubSignature {
     public static function hashPayload(
         $secret,
         $payload,
-        $algo = DEFAULT_HASH_ALGO
+        $algo = self::DEFAULT_HASH_ALGO
     ) {
-        $instance = new static($secret, $algo = DEFAULT_HASH_ALGO);
+        $instance = new static($secret, $algo);
         $instance->payload = $payload;
 
         return $instance->compute();
@@ -123,7 +123,7 @@ class XHubSignature {
         $signature,
         $algo = self::DEFAULT_HASH_ALGO
     ) {
-        $instance = new static($secret, $algo = self::DEFAULT_HASH_ALGO);
+        $instance = new static($secret, $algo);
         $instance->payload = $payload;
         $instance->signature = $signature;
 
