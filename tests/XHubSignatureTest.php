@@ -70,4 +70,15 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
             TIGER_ALGO
         ));
     }
+
+    public function testParseSignature () {
+        $this->assertSame(
+            TIGER_SIGNATURE,
+            XHubSignature::parseSignature(TIGER_SIGNATURE)
+        );
+        $this->assertSame(
+            TIGER_SIGNATURE,
+            XHubSignature::parseSignature(TIGER_ALGO . '=' . TIGER_SIGNATURE)
+        );
+    }
 }

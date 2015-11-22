@@ -129,4 +129,19 @@ class XHubSignature {
 
         return $instance->validate();
     }
+
+    /**
+     * Parses a X-Hub-Signature field from headers and gets the signature part
+     *
+     * @param string $header the header value
+     * @return string the signature
+     */
+    public static function parseSignature ($header) {
+        if (strpos($header, '=') === false) {
+            return $header;
+        }
+
+        $data = explode('=', $header, 2);
+        return $data[1];
+    }
 }
