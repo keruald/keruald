@@ -2,12 +2,27 @@
   "name": "keruald/github",
   "description": "X-Hub-Signature generator and validator",
   "license": "BSD-2-Clause",
+  "version": "0.1.0",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/keruald/github"
+    }
+  ],
   "authors": [
     {
       "name": "Sébastien Santoro",
       "email": "dereckson@espace-win.org"
     }
   ],
+  "keywords": [
+    "keruald",
+    "GitHub"
+  ],
+  "support": {
+    "irc": "irc://irc.freenode.net/wolfplex",
+    "issues": "http://devcentral.nasqueron.org"
+  },
   "require": {
     "php": ">=5.6.0"
   },
