@@ -137,6 +137,10 @@ class XHubSignature {
      * @return string the signature
      */
     public static function parseSignature ($header) {
+        if ($header === null) {
+            return "";
+        }
+
         if (strpos($header, '=') === false) {
             return $header;
         }
