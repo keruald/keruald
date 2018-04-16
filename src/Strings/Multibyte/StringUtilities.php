@@ -29,7 +29,7 @@ class StringUtilities {
             ->setPadLength($padLength)
             ->setPadString($padString)
             ->setPadType($padType)
-            ->setEncoding($encoding)
+            ->setEncoding($encoding ?: mb_internal_encoding())
             ->pad();
     }
 

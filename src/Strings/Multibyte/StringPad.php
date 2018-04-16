@@ -56,14 +56,14 @@ class StringPad {
         int $padLength = 0,
         string $padString = ' ',
         int $padType = STR_PAD_RIGHT,
-        ?string $encoding = null
+        string $encoding = ''
     ) {
         $this->input = $input;
         $this->padLength = $padLength;
         $this->padString = $padString;
 
         $this->setPadType($padType);
-        $this->setEncoding($encoding ?? mb_internal_encoding());
+        $this->setEncoding($encoding ?: mb_internal_encoding());
     }
 
     ///

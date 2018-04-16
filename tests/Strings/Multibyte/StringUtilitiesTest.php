@@ -26,6 +26,12 @@ class StringUtilitiesTest extends TestCase {
         $this->assertEquals($expected, $paddedString);
     }
 
+    public function testPadWithDefaultArguments () : void {
+        $this->assertEquals("foo ", StringUtilities::pad("foo", 4));
+        $this->assertEquals("foo_", StringUtilities::pad("foo", 4, '_'));
+        $this->assertEquals("_foo", StringUtilities::pad("foo", 4, '_', STR_PAD_LEFT));
+    }
+
     public function testSupportedEncoding () : void {
         $this->assertTrue(StringUtilities::isSupportedEncoding("UTF-8"));
         $this->assertFalse(StringUtilities::isSupportedEncoding("notexisting"));

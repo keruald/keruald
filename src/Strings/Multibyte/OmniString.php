@@ -20,9 +20,9 @@ class OmniString {
     /// Constructor
     ///
 
-    public function __construct (string $value = '', ?string $encoding = null) {
+    public function __construct (string $value = '', string $encoding = '') {
         $this->value = $value;
-        $this->setEncoding($encoding ?? "UTF-8");
+        $this->setEncoding($encoding ?: "UTF-8");
     }
 
     ///
