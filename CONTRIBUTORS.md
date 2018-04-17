@@ -6,3 +6,5 @@ _Car la connaissance s'accroît quand on la partage._
 
 * Ronald Ulysses Swanson aka Wes
 https://twitter.com/WesNetmo
+
+* Andrew Moore
