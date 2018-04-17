@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Keruald\OmniTools\Strings;
+namespace Keruald\OmniTools\Identifiers;
 
 class UUID {
 

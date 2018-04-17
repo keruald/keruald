@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Keruald\OmniTools\Tests\Strings;
+namespace Keruald\OmniTools\Tests\Identifiers;
 
-use Keruald\OmniTools\Strings\UUID;
+use Keruald\OmniTools\Identifiers\UUID;
 use Phpunit\Framework\TestCase;
 
 class UUIDTest extends TestCase {
