@@ -2,6 +2,11 @@
 <ruleset name="Nasqueron">
     <rule ref="vendor/nasqueron/codestyle/CodeSniffer/ruleset.xml" />
 
+    <!-- Allow dprint_r() and dieprint_r() legacy debug function names -->
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps">
+        <exclude-pattern>*/_register_to_global_space.php</exclude-pattern>
+    </rule>
+
     <file>src</file>
     <file>tests</file>
 </ruleset>
