@@ -8,53 +8,113 @@ use PHPUnit\Framework\TestCase;
 
 class IPTest extends TestCase {
 
+    ///
+    /// Data providers for IP addresses
+    ///
+    /// These data providers methods allow to provide IP addresses
+    /// to validate or invalidate.
+    ///
+    /// The advanced IPv6 tests have been curated by Stephen Ryan
+    /// Source: https://web.archive.org/web/20110515134717/http://forums.dartware.com/viewtopic.php?t=452
+    ///
+
+    public function provideValidIP () : iterable {
+        yield ["0.0.0.0"];
+        yield ["17.17.17.17"];
+        yield ["fe80:0000:0000:0000:0204:61ff:fe9d:f156"];
+    }
+
+    public function provideInvalidIP () : iterable {
+        yield [""];
+        yield ["1"];
+        yield ["17.17"];
+        yield ["17.17.17.256"];
+    }
+
+    public function provideValidIPv4 () : iterable {
+        return [["0.0.0.0"], ["17.17.17.17"]];
+    }
+
+    public function provideInvalidIPv4 () : iterable {
+        yield [""];
+        yield ["1"];
+        yield ["17.17"];
+        yield ["17.17.17.256"];
+        yield ["fe80:0000:0000:0000:0204:61ff:fe9d:f156"];
+    }
+
+    public function provideValidIPv6 () : iterable {
+        yield ["::1"];
+        yield ["::ffff:192.0.2.128"];
+        yield ["fe80:0000:0000:0000:0204:61ff:fe9d:f156"];
+
+        yield ["::ffff:192.0.2.128", "IPv4 represented as dotted-quads"];
+    }
+
+    public function provideInvalidIPv6 () : iterable {
+        yield ["0.0.0.0"];
+        yield [""];
+        yield ["1"];
+        yield ["17.17"];
+        yield ["17.17.17.17"];
+        yield ["::fg", "Valid IPv6 digits are 0-f, ie 0-9 and a-f"];
+
+        yield ["02001:0000:1234:0000:0000:C1C0:ABCD:0876", "Extra 0"];
+        yield ["2001:0000:1234:0000:00001:C1C0:ABCD:0876", "Extra 0"];
+        yield ["1.2.3.4:1111:2222:3333:4444::5555"];
+    }
+
+    ///
+    /// Test cases
+    ///
+
+     /**
+     * @covers \Keruald\OmniTools\Network\IP::isIP
+     * @dataProvider provideValidIP
+     */
+    public function testIsIP ($ip) {
+        $this->assertTrue(IP::isIP($ip));
+    }
+
     /**
      * @covers \Keruald\OmniTools\Network\IP::isIP
+     * @dataProvider provideInvalidIP
      */
-    function testIsIP () {
-        $this->assertTrue(IP::isIP("0.0.0.0"));
-        $this->assertFalse(IP::isIP(""));
-        $this->assertFalse(IP::isIP("1"));
-        $this->assertFalse(IP::isIP("17.17"));
-        $this->assertTrue(IP::isIP("17.17.17.17"));
-        $this->assertFalse(IP::isIP("17.17.17.256"));
-        $this->assertTrue(IP::isIP("fe80:0000:0000:0000:0204:61ff:fe9d:f156"));
+    public function testIsIPWhenItIsNot ($ip) {
+        $this->assertFalse(IP::isIP($ip));
     }
 
     /**
      * @covers \Keruald\OmniTools\Network\IP::isIPv4
+     * @dataProvider provideValidIPv4
      */
-    function testIsIPv4 () {
-        $this->assertTrue(IP::isIPv4("0.0.0.0"));
-        $this->assertFalse(IP::isIPv4(""));
-        $this->assertFalse(IP::isIPv4("1"));
-        $this->assertFalse(IP::isIPv4("17.17"));
-        $this->assertTrue(IP::isIPv4("17.17.17.17"));
-        $this->assertFalse(IP::isIPv4("17.17.17.256"));
-        $this->assertFalse(IP::isIPv4(""));
-        $this->assertFalse(IP::isIPv4("fe80:0000:0000:0000:0204:61ff:fe9d:f156"));
+    public function testIsIPv4 ($ip) {
+        $this->assertTrue(IP::isIPv4($ip));
+    }
+
+    /**
+     * @covers \Keruald\OmniTools\Network\IP::isIPv4
+     * @dataProvider provideInvalidIPv4
+     */
+    public function testIsIPv4WhenItIsNot ($ip) {
+        $this->assertFalse(IP::isIPv4($ip));
     }
 
     /**
      * @covers \Keruald\OmniTools\Network\IP::isIPv6
+     * @dataProvider provideValidIPv6
      */
-    function testIsIPv6 () {
-        $this->assertFalse(IP::isIPv6("0.0.0.0"));
-        $this->assertFalse(IP::isIPv6(""));
-        $this->assertFalse(IP::isIPv6("1"));
-        $this->assertFalse(IP::isIPv6("17.17"));
-        $this->assertFalse(IP::isIPv6("17.17.17.17"));
-        $this->assertTrue(IP::isIPv6("::1"));
-        $this->assertFalse(IP::isIPv6("::fg"));
-        $this->assertTrue(IP::isIPv6("::1"));
-
-        // Advanced IPv6 tests curated by Stephen Ryan
-        // Source: http://forums.dartware.com/viewtopic.php?t=452
-        $this->assertTrue(IP::isIPv6("fe80:0000:0000:0000:0204:61ff:fe9d:f156"));
-        $this->assertFalse(IP::isIPv6("02001:0000:1234:0000:0000:C1C0:ABCD:0876"), "extra 0 not allowed");
-        $this->assertFalse(IP::isIPv6("2001:0000:1234:0000:00001:C1C0:ABCD:0876"), "extra 0 not allowed");
-        $this->assertFalse(IP::isIPv6("1.2.3.4:1111:2222:3333:4444::5555"));
-        $this->assertTrue(IP::isIPv6("::ffff:192.0.2.128"), "can't validate IPv4 represented as dotted-quads");
+    public function testIsIPv6 (string $ip, string $message = "") {
+        $this->assertTrue(IP::isIPv6($ip), $message);
     }
+
+    /**
+     * @covers \Keruald\OmniTools\Network\IP::isIPv6
+     * @dataProvider provideInvalidIPv6
+     */
+    public function testIsIPv6WhenItIsNot (string $ip, string $message = "") : void {
+        $this->assertFalse(IP::isIPv6($ip), $message);
+    }
+
 
 }
