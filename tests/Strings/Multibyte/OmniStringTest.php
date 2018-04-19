@@ -29,4 +29,22 @@ class OmniStringTest extends TestCase {
         $this->assertEquals("-=-foo-=-", $paddedString);
     }
 
+    public function testStartsWith () : void {
+        $this->assertTrue($this->string->startsWith("fo"));
+        $this->assertTrue($this->string->startsWith(""));
+        $this->assertTrue($this->string->startsWith("foo"));
+
+        $this->assertFalse($this->string->startsWith("Fo"));
+        $this->assertFalse($this->string->startsWith("bar"));
+    }
+
+    public function testEndsWith () : void {
+        $this->assertTrue($this->string->endsWith("oo"));
+        $this->assertTrue($this->string->endsWith(""));
+        $this->assertTrue($this->string->endsWith("foo"));
+
+        $this->assertFalse($this->string->endsWith("oO"));
+        $this->assertFalse($this->string->endsWith("bar"));
+    }
+
 }

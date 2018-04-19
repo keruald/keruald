@@ -51,6 +51,14 @@ class OmniString {
             ->pad();
     }
 
+    public function startsWith (string $start) : bool {
+        return StringUtilities::startsWith($this->value, $start);
+    }
+
+    public function endsWith (string $end) : bool {
+        return StringUtilities::endsWith($this->value, $end);
+    }
+
     /**
      * @return string
      */

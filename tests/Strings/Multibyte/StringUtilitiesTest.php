@@ -37,6 +37,23 @@ class StringUtilitiesTest extends TestCase {
         $this->assertFalse(StringUtilities::isSupportedEncoding("notexisting"));
     }
 
+    public function testStartsWith () : void {
+        $this->assertTrue(StringUtilities::startsWith("foo", "fo"));
+        $this->assertTrue(StringUtilities::startsWith("foo", ""));
+        $this->assertTrue(StringUtilities::startsWith("foo", "foo"));
+
+        $this->assertFalse(StringUtilities::startsWith("foo", "bar"));
+    }
+
+    public function testEndsWith () : void {
+        $this->assertTrue(StringUtilities::endsWith("foo", "oo"));
+        $this->assertTrue(StringUtilities::endsWith("foo", ""));
+        $this->assertTrue(StringUtilities::endsWith("foo", "foo"));
+
+        $this->assertFalse(StringUtilities::endsWith("foo", "oO"));
+        $this->assertFalse(StringUtilities::endsWith("foo", "bar"));
+    }
+
     ///
     /// Data providers
     ///

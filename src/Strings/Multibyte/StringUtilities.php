@@ -43,4 +43,14 @@ class StringUtilities {
         return false;
     }
 
+    public static function startsWith (string $string, string $start) {
+        $length = mb_strlen($start);
+        return mb_substr($string, 0, $length) === $start;
+    }
+
+    public static function endsWith (string $string, string $end) {
+        $length = mb_strlen($end);
+        return $length === 0 || mb_substr($string, -$length) === $end;
+    }
+
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Registration;
 
+use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
+
 class Autoloader {
 
     ///
@@ -11,9 +13,8 @@ class Autoloader {
 
     public static function registerPSR4 (string $namespace, string $path) : void {
         spl_autoload_register(function ($class) use ($namespace, $path) {
-            $len = strlen($namespace);
-
-            if (substr($class, 0, $len) === $namespace) {
+            if (StringUtilities::startsWith($class, $namespace)) {
+                $len = strlen($namespace);
                 $classPath = Autoloader::getPathFor(substr($class, $len));
                 include $path . '/' . $classPath;
             }
