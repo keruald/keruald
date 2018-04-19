@@ -10,17 +10,6 @@ use Acme\MockLib\Foo; // a mock class in a mock namespace to test autoload.
 
 class AutoloaderTest extends TestCase {
 
-    ///
-    /// Tests
-    ///
-
-    /**
-     * @dataProvider providePaths
-     */
-    public function testGetPathFor (string $class, string $expected) : void {
-        $this->assertEquals($expected, Autoloader::getPathFor($class));
-    }
-
     public function testRegisterPSR4 () : void {
         $class = Foo::class;
         $this->assertFalse(
@@ -47,15 +36,10 @@ class AutoloaderTest extends TestCase {
         $this->assertEquals(++$count, count(spl_autoload_functions()));
     }
 
-    ///
-    /// Data provider
-    ///
+    public function testCanInclude () : void {
+        $file = __DIR__ . "/MockLib/Foo.php";
+        $this->assertTrue(Autoloader::canInclude($file));
 
-    public function providePaths () : iterable {
-        // Example from PSR-4 canonical document
-        yield ['File_Writer', 'File_Writer.php'];
-        yield ['Response\Status', 'Response/Status.php'];
-        yield ['Request', 'Request.php'];
+        $this->assertFalse(Autoloader::canInclude("/notexisting"));
     }
-
 }
