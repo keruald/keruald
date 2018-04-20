@@ -35,11 +35,38 @@ class CodeFileTest extends TestCase {
         $this->assertFalse($this->notExistingCodeFile->canBeIncluded());
     }
 
+    public function testCanBeIncludedWhenFileModeForbidsReading () : void {
+        $file = $this->getNonReadableFile();
+
+        $this->assertFalse(CodeFile::From($file)->canBeIncluded());
+
+        unlink($file);
+    }
+
     public function testTryInclude () : void {
         $this->assertTrue($this->validCodeFile->tryInclude());
         $this->assertTrue(class_exists(Bar::class));
 
         $this->assertFalse($this->notExistingCodeFile->tryInclude());
+    }
+
+    public function testIsReadable () : void {
+        $this->assertTrue($this->validCodeFile->isReadable());
+    }
+
+    public function testIsReadableWhenFileModeForbidsReading () : void {
+        $file = $this->getNonReadableFile();
+
+        $this->assertFalse(CodeFile::From($file)->isReadable());
+
+        unlink($file);
+    }
+
+    private function getNonReadableFile () : string {
+        $file = tempnam(sys_get_temp_dir(), "testCodeFile");
+        chmod($file, 0);
+
+        return $file;
     }
 
 }
