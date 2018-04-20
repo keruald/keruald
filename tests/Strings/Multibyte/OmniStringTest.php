@@ -6,8 +6,6 @@ namespace Keruald\OmniTools\Tests\Strings\Multibyte;
 use Keruald\OmniTools\Strings\Multibyte\OmniString;
 use PHPUnit\Framework\TestCase;
 
-use InvalidArgumentException;
-
 class OmniStringTest extends TestCase {
 
     /**
