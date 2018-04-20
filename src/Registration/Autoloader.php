@@ -15,22 +15,6 @@ class Autoloader {
     }
 
     ///
-    /// Include methods
-    ///
-
-    public static function tryInclude (string $filename) : void {
-        if (!self::canInclude($filename)) {
-            return;
-        }
-
-        include($filename);
-    }
-
-    public static function canInclude (string $filename) : bool {
-        return file_exists($filename) && is_readable($filename);
-    }
-
-    ///
     /// Methods to register OmniTools library
     ///
 

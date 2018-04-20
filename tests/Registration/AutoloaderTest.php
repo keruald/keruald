@@ -39,10 +39,4 @@ class AutoloaderTest extends TestCase {
         $this->assertEquals(++$count, count(spl_autoload_functions()));
     }
 
-    public function testCanInclude () : void {
-        $file = $this->getDataPath("MockLib/Foo.php");
-        $this->assertTrue(Autoloader::canInclude($file));
-
-        $this->assertFalse(Autoloader::canInclude("/notexisting"));
-    }
 }

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Registration\PSR4;
 
-use Keruald\OmniTools\Registration\Autoloader as BaseAutoloader;
+use Keruald\OmniTools\Reflection\CodeFile;
 
 final class Autoloader {
 
@@ -48,7 +48,7 @@ final class Autoloader {
                 return;
             }
 
-            BaseAutoloader::tryInclude($solver->resolve());
+            CodeFile::from($solver->resolve())->tryInclude();
         });
     }
 
