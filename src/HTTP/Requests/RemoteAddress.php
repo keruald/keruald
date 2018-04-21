@@ -30,7 +30,7 @@ class RemoteAddress {
         return $this->remoteAddress !== "";
     }
 
-    public function getOne () : string {
+    public function getClientAddress () : string {
         if (strpos($this->remoteAddress, ',') === false) {
             // We only have one value, it's the IP
             return $this->remoteAddress;

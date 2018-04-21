@@ -13,30 +13,30 @@ class RemoteAddressTest extends TestCase {
     ///
 
     /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getOne
+     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getClientAddress
      * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getAll
      * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::has
      */
     public function testEmptyRequest () : void {
         $address = new RemoteAddress;
 
-        $this->assertEmpty($address->getOne());
+        $this->assertEmpty($address->getClientAddress());
         $this->assertEmpty($address->getAll());
         $this->assertFalse($address->has());
     }
 
     /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getOne
+     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getClientAddress
      * @dataProvider provideTenZeroZeroThreeHeaderValues
      */
     public function testGetOne (string $value) : void {
         $address = new RemoteAddress($value);
 
-        $this->assertEquals('10.0.0.3', $address->getOne());
+        $this->assertEquals('10.0.0.3', $address->getClientAddress());
     }
 
     /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getOne
+     * @covers \Keruald\OmniTools\HTTP\Requests\RemoteAddress::getClientAddress
      * @dataProvider provideTenZeroZeroThreeHeaderValues
      */
     public function testGetAll (string $value) : void {

@@ -19,7 +19,7 @@ trait WithRemoteAddress {
      * @return string the remote address
      */
     public static function getRemoteAddress () : string {
-        return RemoteAddress::fromServer()->getOne();
+        return RemoteAddress::fromServer()->getClientAddress();
     }
 
 }
