@@ -59,6 +59,10 @@ class OmniString {
         return StringUtilities::endsWith($this->value, $end);
     }
 
+    public function len () : int {
+        return mb_strlen($this->value, $this->encoding);
+    }
+
     /**
      * @return string
      */

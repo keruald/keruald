@@ -45,4 +45,8 @@ class OmniStringTest extends TestCase {
         $this->assertFalse($this->string->endsWith("bar"));
     }
 
+    public function testLen () : void {
+        $this->assertEquals(3, $this->string->len());
+    }
+
 }
