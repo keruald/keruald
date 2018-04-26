@@ -36,4 +36,14 @@ class UUIDTest extends TestCase {
         $this->assertNotEquals(UUID::UUIDv4(), UUID::UUIDv4());
     }
 
+    public function testIsUUID () : void {
+        $this->assertTrue(UUID::isUUID("e14d5045-4959-11e8-a2e6-0007cb03f249"));
+        $this->assertFalse(
+            UUID::isUUID("e14d5045-4959-11e8-a2e6-0007cb03f249c"),
+            "The method shouldn't allow arbitrary size strings."
+        );
+        $this->assertFalse(UUID::isUUID("d825a90a27e7f161a07161c3a37dce8e"));
+
+    }
+
 }

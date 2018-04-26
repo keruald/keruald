@@ -5,6 +5,8 @@ namespace Keruald\OmniTools\Identifiers;
 
 class UUID {
 
+    const UUID_REGEXP = "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/";
+
     /**
      * @return string A RFC 4122 compliant v4 UUID
      */
@@ -38,6 +40,10 @@ class UUID {
 
     public static function UUIDv4WithoutHyphens () : string {
         return str_replace("-", "", self::UUIDv4());
+    }
+
+    public static function isUUID ($string) : bool {
+        return (bool)preg_match(self::UUID_REGEXP, $string);
     }
 
 }
