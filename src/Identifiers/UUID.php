@@ -36,4 +36,8 @@ class UUID {
         );
     }
 
+    public static function UUIDv4WithoutHyphens () : string {
+        return str_replace("-", "", self::UUIDv4());
+    }
+
 }

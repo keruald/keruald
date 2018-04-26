@@ -20,6 +20,18 @@ class UUIDTest extends TestCase {
         $this->assertRegExp($re, $uuid);
     }
 
+    public function testUUIDv4WithoutHyphens () : void {
+        $uuid = UUID::UUIDv4WithoutHyphens();
+
+        $this->assertEquals(
+            32, strlen($uuid),
+            "UUID size must be 36 characters, and there are 4 hyphens, so here 32 characters are expected."
+        );
+
+        $re = "/[0-9a-f]/";
+        $this->assertRegExp($re, $uuid);
+    }
+
     public function testUUIDv4AreUnique () : void {
         $this->assertNotEquals(UUID::UUIDv4(), UUID::UUIDv4());
     }
