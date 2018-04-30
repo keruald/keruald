@@ -8,6 +8,10 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase {
 
+    ///
+    /// Tests
+    ///
+
     /**
      * @covers \Keruald\OmniTools\HTTP\Requests\Request::getRemoteAddress
      * @backupGlobals enabled
@@ -44,5 +48,70 @@ class RequestTest extends TestCase {
             Request::getAcceptedLanguages()
         );
     }
+
+    /**
+     * @backupGlobals enabled
+     * @dataProvider provideServerURLs
+     */
+    public function testGetServerURL (array $server, string $url) : void {
+        $_SERVER = $server;
+
+        $this->assertEquals($url, Request::getServerURL());
+    }
+
+    ///
+    /// Data providers
+    ///
+
+    public function provideServerURLs () : iterable {
+        yield [[], "http://localhost"];
+        yield [["UNRELATED" => "ANYTHING"], "http://localhost"];
+
+        yield [
+            [
+                "SERVER_PORT" => "80",
+                "SERVER_NAME" => "acme.tld",
+            ],
+            "http://acme.tld"
+        ];
+
+        yield [
+            [
+                "SERVER_PORT" => "443",
+                "SERVER_NAME" => "acme.tld",
+            ],
+            "https://acme.tld"
+        ];
+
+        yield [
+            [
+                "SERVER_PORT" => "80",
+                "SERVER_NAME" => "acme.tld",
+                "HTTP_X_FORWARDED_PROTO" => "https",
+            ],
+            "https://acme.tld"
+        ];
+
+        yield [
+            [
+                "SERVER_PORT" => "80",
+                "SERVER_NAME" => "acme.tld",
+                "HTTP_FORWARDED" => "for=192.0.2.43, for=\"[2001:db8:cafe::17]\", proto=https, by=203.0.113.43",
+            ],
+            "https://acme.tld"
+        ];
+
+        yield [
+            [
+                "SERVER_PORT" => "8443",
+                "SERVER_NAME" => "acme.tld",
+                "HTTPS" => "on",
+            ],
+            "https://acme.tld:8443"
+        ];
+
+
+    }
+
 
 }

@@ -53,4 +53,8 @@ class StringUtilities {
         return $length === 0 || mb_substr($string, -$length) === $end;
     }
 
+    public static function contains (string $string, string $needle) : bool {
+        return strpos($string, $needle) !== false;
+    }
+
 }
