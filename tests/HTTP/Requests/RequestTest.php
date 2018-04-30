@@ -30,4 +30,19 @@ class RequestTest extends TestCase {
         );
     }
 
+    /**
+     * @covers \Keruald\OmniTools\HTTP\Requests\Request::getAcceptedLanguages
+     * @backupGlobals enabled
+     */
+    public function testGetAcceptedLanguages () : void {
+        $_SERVER = [
+            'HTTP_ACCEPT_LANGUAGE' => 'fr,en-US;q=0.7,en;q=0.3',
+        ];
+
+        $this->assertEquals(
+            ["fr", "en-US", "en"],
+            Request::getAcceptedLanguages()
+        );
+    }
+
 }

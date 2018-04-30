@@ -5,6 +5,7 @@ namespace Keruald\OmniTools\HTTP\Requests;
 
 class Request {
 
+    use WithAcceptedLanguages;
     use WithRemoteAddress;
 
 }

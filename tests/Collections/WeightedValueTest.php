@@ -76,4 +76,26 @@ class WeightedValueTest extends TestCase {
         $this->highValue->compareTo(new \stdClass);
     }
 
+    /**
+     * @dataProvider provideExpressionstoParse
+     */
+    public function testParse ($expression, $expectedValue, $expectedWeight) : void {
+        $value = WeightedValue::Parse($expression);
+
+        $this->assertEquals($expectedValue, $value->getValue());
+        $this->assertEquals($expectedWeight, $value->getWeight());
+    }
+
+    ///
+    /// Data providers
+    ///
+
+    public function provideExpressionstoParse () : iterable {
+        yield ["", "", 1.0];
+        yield ["de", "de", 1.0];
+        yield ["de;q=1.0", "de", 1.0];
+        yield ["de;q=0.7", "de", 0.7];
+        yield [";;q=0.7", ";", 0.7];
+    }
+
 }

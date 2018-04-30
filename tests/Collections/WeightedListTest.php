@@ -37,6 +37,14 @@ class WeightedListTest extends TestCase {
         $this->assertEquals($count + 1, count($this->list));
     }
 
+    public function testAddWeightedValue () : void {
+        $count = count($this->list);
+
+        $this->list->addWeightedValue(new WeightedValue("ANOTHER"));
+
+        $this->assertEquals($count + 1, count($this->list));
+    }
+
     public function testClear () : void {
         $this->list->clear();
         $this->assertEquals(0, count($this->list));

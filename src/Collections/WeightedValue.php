@@ -28,12 +28,22 @@ class WeightedValue implements Comparable {
     private $value;
 
     ///
-    /// Constructor
+    /// Constructors
     ///
 
     public function __construct ($value, float $weight = self::DEFAULT_WEIGHT) {
         $this->value = $value;
         $this->weight = $weight;
+    }
+
+    public static function parse (string $expression) : WeightedValue {
+        $pair = explode(';q=', $expression);
+
+        if (count($pair) == 1) {
+            return new WeightedValue($pair[0]);
+        }
+
+        return new WeightedValue($pair[0], (float)$pair[1]);
     }
 
     ///
