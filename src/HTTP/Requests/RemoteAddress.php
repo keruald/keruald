@@ -31,15 +31,11 @@ class RemoteAddress {
     }
 
     public function getClientAddress () : string {
-        if (strpos($this->remoteAddress, ',') === false) {
-            // We only have one value, it's the IP
-            return $this->remoteAddress;
-        }
-
         // Header contains 'clientIP, proxyIP, anotherProxyIP'
+        //              or 'clientIP proxyIP anotherProxyIP'
         // The first value is so the one to return.
         // See draft-ietf-appsawg-http-forwarded-10.
-        $ips = explode(',', $this->remoteAddress, 2);
+        $ips = preg_split("/[\s,]+/", $this->remoteAddress, 2);
         return trim($ips[0]);
     }
 

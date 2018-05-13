@@ -35,6 +35,26 @@ class RequestTest extends TestCase {
     }
 
     /**
+     * @covers \Keruald\OmniTools\HTTP\Requests\Request::getClientAddress
+     * @backupGlobals enabled
+     */
+    public function testGetRemoteAddressWithSeveralAddresses () : void {
+        $_SERVER = [
+            'HTTP_X_FORWARDED_FOR' => '10.0.0.2 10.0.0.3',
+        ];
+        $this->assertEquals('10.0.0.2', Request::getRemoteAddress(),
+            "HTTP_X_FORWARDED_FOR could contain more than one address, the client one is the first"
+        );
+
+        $_SERVER = [
+            'HTTP_X_FORWARDED_FOR' => '10.0.0.2, 10.0.0.3',
+        ];
+        $this->assertEquals('10.0.0.2', Request::getRemoteAddress(),
+            "HTTP_X_FORWARDED_FOR could contain more than one address, the client one is the first"
+        );
+    }
+
+    /**
      * @covers \Keruald\OmniTools\HTTP\Requests\Request::getAcceptedLanguages
      * @backupGlobals enabled
      */
