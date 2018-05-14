@@ -64,6 +64,19 @@ class IPTest extends TestCase {
         yield ["1.2.3.4:1111:2222:3333:4444::5555"];
     }
 
+    public function provideValidLoopblackIP () : iterable {
+        yield ["127.0.0.1"];
+        yield ["127.0.0.3"];
+        yield ["::1"];
+    }
+
+    public function provideInvalidLoopblackIP () : iterable {
+        yield ["0.0.0.0"];
+        yield ["1.2.3.4"];
+        yield ["192.168.1.1"];
+        yield ["::2"];
+    }
+
     ///
     /// Test cases
     ///
@@ -116,5 +129,20 @@ class IPTest extends TestCase {
         $this->assertFalse(IP::isIPv6($ip), $message);
     }
 
+    /**
+     * @covers \Keruald\OmniTools\Network\IP::isLoopback
+     * @dataProvider provideValidLoopblackIP
+     */
+    public function testIsLoopback (string $ip) : void {
+        $this->assertTrue(IP::isLoopback($ip));
+    }
+
+    /**
+     * @covers \Keruald\OmniTools\Network\IP::isLoopback
+     * @dataProvider provideInvalidLoopblackIP
+     */
+    public function testIsLoopbackWhenItIsNot (string $ip) : void {
+        $this->assertFalse(IP::isLoopback($ip));
+    }
 
 }

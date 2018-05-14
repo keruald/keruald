@@ -26,10 +26,6 @@ class RemoteAddress {
     /// Format methods
     ///
 
-    public function has () : bool {
-        return $this->remoteAddress !== "";
-    }
-
     public function getClientAddress () : string {
         // Header contains 'clientIP, proxyIP, anotherProxyIP'
         //              or 'clientIP proxyIP anotherProxyIP'
@@ -39,9 +35,22 @@ class RemoteAddress {
         return trim($ips[0]);
     }
 
+    public function isFromLocalHost () : bool {
+        return IP::isLoopBack($this->getClientAddress());
+    }
+
     public function getAll () : string {
         return $this->remoteAddress;
     }
+
+
+    public function has () : bool {
+        return $this->remoteAddress !== "";
+    }
+
+    ///
+    /// Information methods
+    ///
 
     ///
     /// Helper methods to determine the remote address

@@ -17,4 +17,15 @@ class IP {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
     }
 
+    public static function isLoopback (string $ip) : bool {
+        $ranges = IPRange::getLoopbackRanges();
+        foreach ($ranges as $range) {
+            if ($range->contains($ip)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -22,4 +22,8 @@ trait WithRemoteAddress {
         return RemoteAddress::fromServer()->getClientAddress();
     }
 
+    public static function isFromLocalHost () : bool {
+        return RemoteAddress::fromServer()->isFromLocalHost();
+    }
+
 }
