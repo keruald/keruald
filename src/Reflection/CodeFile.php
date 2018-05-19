@@ -2,6 +2,8 @@
 
 namespace Keruald\OmniTools\Reflection;
 
+use Keruald\OmniTools\IO\File;
+
 class CodeFile extends File {
 
     ///

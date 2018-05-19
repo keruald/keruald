@@ -1,6 +1,6 @@
 <?php
 
-namespace Keruald\OmniTools\Reflection;
+namespace Keruald\OmniTools\IO;
 
 class File {
 
