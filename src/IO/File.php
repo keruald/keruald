@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Keruald\OmniTools\IO;
 
@@ -7,29 +8,30 @@ class File {
     /**
      * @var string
      */
-    private $filename;
+    private $path;
 
     ///
     /// Constructors
     ///
 
-    public static function from (string $filename) : self {
-        $instance = new self;
-        $instance->filename = $filename;
+    public function __construct (string $path = null) {
+        $this->path = $path;
+    }
 
-        return $instance;
+    public static function from (string $path) : self {
+        return new self($path);
     }
 
     ///
     /// Getters and setters
     ///
 
-    public function getFilename () : string {
-        return $this->filename;
+    public function getPath () : string {
+        return $this->path;
     }
 
-    public function setFilename (string $filename) : self {
-        $this->filename = $filename;
+    public function setPath (string $path) : self {
+        $this->path = $path;
 
         return $this;
     }
@@ -39,11 +41,31 @@ class File {
     ///
 
     public function exists () : bool {
-        return file_exists($this->filename);
+        return file_exists($this->path);
     }
 
     public function isReadable () : bool {
-        return is_readable($this->filename);
+        return is_readable($this->path);
+    }
+
+    public function getPathInfo () : array {
+        return pathinfo($this->path);
+    }
+
+    public function getDirectory () : string {
+        return pathinfo($this->path, PATHINFO_DIRNAME);
+    }
+
+    public function getFileName () : string {
+        return pathinfo($this->path, PATHINFO_BASENAME);
+    }
+
+    public function getFileNameWithoutExtension () : string {
+        return pathinfo($this->path, PATHINFO_FILENAME);
+    }
+
+    public function getExtension () : string {
+        return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 
     ///
@@ -55,7 +77,7 @@ class File {
             return false;
         }
 
-        include($this->filename);
+        include($this->path);
 
         return true;
     }
