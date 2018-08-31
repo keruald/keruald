@@ -23,6 +23,11 @@ class TraversableUtilities {
     }
 
     public static function isCountable ($countable) : bool {
+        if (function_exists('is_countable')) {
+            // PHP 7.3 has is_countable
+            return is_countable($countable);
+        }
+
         // https://github.com/Ayesh/is_countable-polyfill/blob/master/src/is_countable.php
         return is_array($countable)
                || $countable instanceof Countable
