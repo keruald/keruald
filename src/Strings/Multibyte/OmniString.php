@@ -63,6 +63,28 @@ class OmniString {
         return mb_strlen($this->value, $this->encoding);
     }
 
+    public function getChars () : array {
+        $chars = [];
+
+        $len = $this->len();
+        for ($i = 0 ; $i < $len ; $i++) {
+            $chars[] = mb_substr($this->value, $i, 1, $this->encoding);
+        }
+
+        return $chars;
+    }
+
+    public function getBigrams () {
+        $bigrams = [];
+
+        $len = $this->len();
+        for ($i = 0 ; $i < $len - 1 ; $i++) {
+            $bigrams[] = mb_substr($this->value, $i, 2, $this->encoding);
+        }
+
+        return $bigrams;
+    }
+
     /**
      * @return string
      */

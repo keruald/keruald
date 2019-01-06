@@ -49,4 +49,49 @@ class OmniStringTest extends TestCase {
         $this->assertEquals(3, $this->string->len());
     }
 
+    /**
+     * @dataProvider provideCharactersArrays
+     */
+    public function testGetChars (string $string, array $expectedCharacters) : void {
+        $actualCharacters = (new OmniString($string))->getChars();
+
+        $this->assertEquals($expectedCharacters, $actualCharacters);
+    }
+
+    /**
+     * @dataProvider provideCharactersBigrams
+     */
+    public function testBigrams (string $string, array $expectedBigrams) : void {
+        $actualBigrams = (new OmniString($string))->getBigrams();
+
+        $this->assertEquals($expectedBigrams, $actualBigrams);
+    }
+
+    ///
+    /// Data providers
+    ///
+
+    public function provideCharactersArrays () : iterable {
+        yield ["foo", ['f', 'o', 'o']];
+
+        yield [
+            'àèòàFOOàèòà',
+            ['à', 'è', 'ò', 'à', 'F', 'O', 'O', 'à', 'è', 'ò', 'à']
+        ];
+
+        yield ["🇩🇪", ["🇩", "🇪"]];
+
+        yield ["", []];
+    }
+
+    public function provideCharactersBigrams () : iterable {
+        yield ["foo", ['fo', 'oo']];
+
+        yield ["night", ['ni', 'ig', 'gh', 'ht']];
+
+        yield ["🇩🇪", ["🇩🇪"]];
+
+        yield ["", []];
+    }
+
 }
