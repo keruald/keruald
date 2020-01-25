@@ -4,7 +4,7 @@ The following people have authored code included in this library:
 https://www.dereckson.be<br> 
 _Car la connaissance s'accroît quand on la partage._
 
-* Ronald Ulysses Swanson aka Wes
+* Ronald Ulysses Swanson aka Wes<br>
 https://twitter.com/WesNetmo
 
 * Andrew Moore

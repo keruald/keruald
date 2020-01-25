@@ -1,6 +1,6 @@
 # Keruald OmniTools library
 
-This utilities library offers convenient function to solve common problems,
+This utilities library offers convenient functions to solve common problems,
 like parse an URL, generate a random string or validate an IP address.
 
 ## Getting started
@@ -43,7 +43,6 @@ The library is sorted in namespaces and contains mostly static methods.
 The library adheres to semantic versioning.
 The 0.* version will be used to integrate code from the sourcing projects,
 like Keruald/Pluton, Keruald/Xen, Azhàr or Zed.
-
 
 ## Credits
 
