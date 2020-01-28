@@ -2,7 +2,6 @@
 
 namespace Keruald\OmniTools\Network;
 
-use Countable;
 use InvalidArgumentException;
 
 class IPv6Range extends IPRange {
