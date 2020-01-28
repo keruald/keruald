@@ -92,8 +92,6 @@ class IPv4Range extends IPRange {
 
         return $ipAsLong >= $baseAsLong
             && $ipAsLong <= $baseAsLong + $this->count() - 1;
-
-        return false;
     }
 
     ///
