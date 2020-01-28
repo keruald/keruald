@@ -18,9 +18,9 @@
     "require": {
     },
     "require-dev": {
-        "nasqueron/codestyle": "dev-master",
-        "phan/phan": "^0.12.3",
-        "phpunit/phpunit": "^7",
-        "squizlabs/php_codesniffer": "^3"
+        "nasqueron/codestyle": "^0.0.1",
+        "phan/phan": "^2.4",
+        "phpunit/phpunit": "^7.5",
+        "squizlabs/php_codesniffer": "^3.5"
     }
 }
