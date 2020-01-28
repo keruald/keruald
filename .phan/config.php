@@ -234,6 +234,7 @@ return [
         'AlwaysReturnPlugin',
         'PregRegexCheckerPlugin',
         'UnreachableCodePlugin',
+        'WhitespacePlugin',
     ],
 
     // A list of directories that should be parsed for class and
