@@ -21,7 +21,7 @@ class CodeFile extends File {
     }
 
     public function canBeIncluded () : bool {
-        return $this->exists() &&$this->isReadable();
+        return $this->exists() && $this->isReadable();
     }
 
 }
