@@ -19,7 +19,7 @@ class File {
     }
 
     public static function from (string $path) : self {
-        return new self($path);
+        return new static($path);
     }
 
     ///
@@ -66,24 +66,6 @@ class File {
 
     public function getExtension () : string {
         return pathinfo($this->path, PATHINFO_EXTENSION);
-    }
-
-    ///
-    /// Include methods
-    ///
-
-    public function tryInclude () : bool {
-        if (!$this->canBeIncluded()) {
-            return false;
-        }
-
-        include($this->path);
-
-        return true;
-    }
-
-    public function canBeIncluded () : bool {
-        return $this->exists() &&$this->isReadable();
     }
 
 }

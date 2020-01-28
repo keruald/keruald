@@ -15,7 +15,7 @@ class CodeFile extends File {
             return false;
         }
 
-        include($this->getFilename());
+        include($this->getPath());
 
         return true;
     }
