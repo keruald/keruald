@@ -18,6 +18,9 @@ class File {
         $this->path = $path;
     }
 
+    /**
+     * @return static
+     */
     public static function from (string $path) : self {
         return new static($path);
     }
