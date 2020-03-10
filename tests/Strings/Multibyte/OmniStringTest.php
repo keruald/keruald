@@ -13,7 +13,7 @@ class OmniStringTest extends TestCase {
      */
     private $string;
 
-    protected function setUp () {
+    protected function setUp () : void {
         $this->string = new OmniString("foo");
     }
 
