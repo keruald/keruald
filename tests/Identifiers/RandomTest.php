@@ -8,6 +8,10 @@ use Phpunit\Framework\TestCase;
 
 class RandomTest extends TestCase {
 
+    ///
+    /// Tests
+    ///
+
     public function testGenerateHexadecimalHash () : void {
             $hash = Random::generateHexHash();
 
@@ -35,6 +39,10 @@ class RandomTest extends TestCase {
         $this->assertEquals($len, strlen($format));
         $this->assertRegExp($re, $string);
     }
+
+    ///
+    /// Data providers
+    ///
 
     public function provideRandomStringFormats() : iterable {
         yield ["AAA111", "/^[A-Z]{3}[0-9]{3}$/", 6];
