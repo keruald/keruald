@@ -57,4 +57,32 @@ class StringUtilities {
         return strpos($string, $needle) !== false;
     }
 
+    /**
+     * Encode a string using a variant of the MIME base64 compatible with URLs.
+     *
+     * The + and / characters used in base64 are replaced by - and _.
+     * The = padding is removed.
+     *
+     * @param string $string The string to encode
+     * @return string The encoded string
+     */
+    public static function encodeInBase64 (string $string) : string {
+        return str_replace(
+            ['+', '/', '='],
+            ['-', '_', ''],
+            base64_encode($string)
+        );
+    }
+
+    /**
+     * Decode a string encoded with StringUtilities::encodeInBase64
+     *
+     * @param string $string The string to decode
+     * @return string The decoded string
+     */
+    public static function decodeFromBase64 (string $string) : string {
+        $toDecode = str_replace(['-', '_'], ['+', '/'], $string);
+        return base64_decode($toDecode);
+    }
+
 }

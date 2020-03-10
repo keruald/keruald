@@ -54,6 +54,22 @@ class StringUtilitiesTest extends TestCase {
         $this->assertFalse(StringUtilities::endsWith("foo", "bar"));
     }
 
+    /**
+     * @dataProvider provideBase64
+     */
+    public function testEncodeInBase64 (string $decoded, string $encoded) : void {
+        $actual = StringUtilities::encodeInBase64($decoded);
+        $this->assertEquals($encoded, $actual);
+    }
+
+    /**
+     * @dataProvider provideBase64
+     */
+    public function testDecodeFromBase64 (string $decoded, string $encoded) : void {
+        $actual = StringUtilities::decodeFromBase64($encoded);
+        $this->assertEquals($decoded, $actual);
+    }
+
     ///
     /// Data providers
     ///
@@ -88,5 +104,19 @@ class StringUtilitiesTest extends TestCase {
         yield ['FOOBAR', "FOOBAR", 1, "àèò", STR_PAD_RIGHT];
         yield ['FOOBAR', "FOOBAR", 0, "àèò", STR_PAD_RIGHT];
         yield ['FOOBAR', "FOOBAR", -10, "àèò", STR_PAD_RIGHT];
+    }
+
+    public function provideBase64 () : iterable {
+        yield ['foo', 'Zm9v', "This is the regular base test without any exception."];
+        yield ['', '', "An empty string should remain an empty string."];
+        yield [
+            "J'ai fait mes 60 prières par terre dans la poudrière.",
+            'SidhaSBmYWl0IG1lcyA2MCBwcmnDqHJlcyBwYXIgdGVycmUgZGFucyBsYSBwb3VkcmnDqHJlLg',
+            "No padding should be used."
+        ];
+        yield [
+            "àèòàFOOàèòà", "w6DDqMOyw6BGT0_DoMOow7LDoA",
+            "Slashes / should be replaced by underscores _."
+        ];
     }
 }
