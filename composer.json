@@ -16,6 +16,7 @@
         }
     },
     "require": {
+        "ext-intl": "*"
     },
     "require-dev": {
         "nasqueron/codestyle": "^0.0.1",

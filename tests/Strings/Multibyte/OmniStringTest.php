@@ -67,6 +67,17 @@ class OmniStringTest extends TestCase {
         $this->assertEquals($expectedBigrams, $actualBigrams);
     }
 
+    /**
+     * @dataProvider provideExplosions
+     */
+    public function testExplode (string $delimiter, string $imploded, array $exploded) : void {
+        $actual = (new OmniString($imploded))
+            ->explode($delimiter)
+            ->toArray();
+
+        $this->assertEquals($exploded, $actual);
+    }
+
     ///
     /// Data providers
     ///
@@ -92,6 +103,15 @@ class OmniStringTest extends TestCase {
         yield ["🇩🇪", ["🇩🇪"]];
 
         yield ["", []];
+    }
+    public function provideExplosions () : iterable {
+        yield ["/", "a/b/c", ['a', 'b', 'c']];
+        yield ["/", "abc", ['abc']];
+        yield ["/", "/b/c", ['', 'b', 'c']];
+        yield ["/", "a/b/", ['a', 'b', '']];
+
+        yield ["", "a/b/c", ['a/b/c']];
+        yield ["x", "a/b/c", ['a/b/c']];
     }
 
 }

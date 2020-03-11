@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Collections;
 
+use Keruald\OmniTools\Strings\Multibyte\OmniString;
+
 class OmniArray {
 
     /**
@@ -42,6 +44,16 @@ class OmniArray {
         array_walk($this->items, ArrayUtilities::toIntegerCallback());
 
         return $this;
+    }
+
+    public function map (callable $callable) : self {
+        $items = array_map($callable, $this->items);
+
+        return new self($items);
+    }
+
+    public function implode(string $delimiter) : OmniString {
+        return new OmniString(implode($delimiter, $this->items));
     }
 
     ///

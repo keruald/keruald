@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Strings\Multibyte;
 
+use Keruald\OmniTools\Collections\OmniArray;
+
 class OmniString {
 
     use WithEncoding;
@@ -84,6 +86,27 @@ class OmniString {
 
         return $bigrams;
     }
+
+    ///
+    /// Transformation methods
+    ///
+
+    public function explode (string $delimiter,
+                             int $limit = PHP_INT_MAX) : OmniArray {
+        if ($delimiter === "") {
+            if ($limit < 0) {
+                return new OmniArray;
+            }
+
+            return new OmniArray([$this->value]);
+        }
+
+        return new OmniArray(explode($delimiter, $this->value, $limit));
+    }
+
+    ///
+    /// Getters and setters
+    ///
 
     /**
      * @return string
