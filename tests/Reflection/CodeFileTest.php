@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Tests\Reflection;
 
+use Keruald\OmniTools\OS\CurrentProcess;
 use Keruald\OmniTools\Reflection\CodeFile;
 use Keruald\OmniTools\Tests\WithData;
 use PHPUnit\Framework\TestCase;
@@ -36,6 +37,12 @@ class CodeFileTest extends TestCase {
     }
 
     public function testCanBeIncludedWhenFileModeForbidsReading () : void {
+        if (CurrentProcess::isPrivileged()) {
+            $this->markTestSkipped(
+                "This test requires non-root access to run properly."
+            );
+        }
+
         $file = $this->getNonReadableFile();
 
         $this->assertFalse(CodeFile::From($file)->canBeIncluded());
@@ -55,6 +62,12 @@ class CodeFileTest extends TestCase {
     }
 
     public function testIsReadableWhenFileModeForbidsReading () : void {
+        if (CurrentProcess::isPrivileged()) {
+            $this->markTestSkipped(
+                "This test requires non-root access to run properly."
+            );
+        }
+
         $file = $this->getNonReadableFile();
 
         $this->assertFalse(CodeFile::From($file)->isReadable());
