@@ -1,6 +1,6 @@
 <?php
 
-/* This code is intentionnally left in the global namespace. */
+/* This code is intentionally left in the global namespace. */
 
 use Keruald\OmniTools\Debug\Debugger;
 

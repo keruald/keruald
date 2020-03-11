@@ -18,7 +18,7 @@ final class Solver {
     private $path;
 
     /**
-     * @var string The fully qualif class name
+     * @var string The fully qualified class name
      */
     private $class;
 

@@ -77,7 +77,7 @@ class WeightedValueTest extends TestCase {
     }
 
     /**
-     * @dataProvider provideExpressionstoParse
+     * @dataProvider provideExpressionsToParse
      */
     public function testParse ($expression, $expectedValue, $expectedWeight) : void {
         $value = WeightedValue::Parse($expression);
@@ -90,7 +90,7 @@ class WeightedValueTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideExpressionstoParse () : iterable {
+    public function provideExpressionsToParse () : iterable {
         yield ["", "", 1.0];
         yield ["de", "de", 1.0];
         yield ["de;q=1.0", "de", 1.0];

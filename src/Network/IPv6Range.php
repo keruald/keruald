@@ -79,11 +79,11 @@ class IPv6Range extends IPRange {
         }
 
         $base = inet_pton($this->getFirst());
-        $mask = inet_pton($this->getInversedMask());
+        $mask = inet_pton($this->getInverseMask());
         return inet_ntop($base | $mask);
     }
 
-    private function getInversedMask () : string {
+    private function getInverseMask () : string {
         $bits = array_fill(0, $this->networkBits, 0) + array_fill(0, 128, 1);
 
         return (string)IPv6::fromBinaryBits($bits);

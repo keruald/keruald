@@ -64,13 +64,13 @@ class IPTest extends TestCase {
         yield ["1.2.3.4:1111:2222:3333:4444::5555"];
     }
 
-    public function provideValidLoopblackIP () : iterable {
+    public function provideValidLoopbackIP () : iterable {
         yield ["127.0.0.1"];
         yield ["127.0.0.3"];
         yield ["::1"];
     }
 
-    public function provideInvalidLoopblackIP () : iterable {
+    public function provideInvalidLoopbackIP () : iterable {
         yield ["0.0.0.0"];
         yield ["1.2.3.4"];
         yield ["192.168.1.1"];
@@ -131,7 +131,7 @@ class IPTest extends TestCase {
 
     /**
      * @covers \Keruald\OmniTools\Network\IP::isLoopback
-     * @dataProvider provideValidLoopblackIP
+     * @dataProvider provideValidLoopbackIP
      */
     public function testIsLoopback (string $ip) : void {
         $this->assertTrue(IP::isLoopback($ip));
@@ -139,7 +139,7 @@ class IPTest extends TestCase {
 
     /**
      * @covers \Keruald\OmniTools\Network\IP::isLoopback
-     * @dataProvider provideInvalidLoopblackIP
+     * @dataProvider provideInvalidLoopbackIP
      */
     public function testIsLoopbackWhenItIsNot (string $ip) : void {
         $this->assertFalse(IP::isLoopback($ip));
