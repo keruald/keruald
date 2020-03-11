@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\HTTP\Requests;
 
+use Keruald\OmniTools\Network\IP;
+
 class RemoteAddress {
 
     /**
