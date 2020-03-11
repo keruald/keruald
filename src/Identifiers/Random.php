@@ -6,6 +6,8 @@ namespace Keruald\OmniTools\Identifiers;
 use Closure;
 use InvalidArgumentException;
 
+use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
+
 class Random {
 
     /**
@@ -38,6 +40,13 @@ class Random {
      */
     public static function generateCharacter (string $format) : string {
         return self::getPicker(self::normalizeFormat($format))();
+    }
+
+
+    public static function generateIdentifier (int $bytes_count) : string {
+        $bytes = random_bytes($bytes_count);
+
+        return StringUtilities::encodeInBase64($bytes);
     }
 
     ///

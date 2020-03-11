@@ -40,6 +40,13 @@ class RandomTest extends TestCase {
         $this->assertRegExp($re, $string);
     }
 
+    public function testGenerateIdentifier() : void {
+        $identifier = Random::generateIdentifier(20);
+
+        $this->assertEquals(27, strlen($identifier));
+        $this->assertRegExp("/^[A-Z0-9\-_]*$/i", $identifier);
+    }
+
     ///
     /// Data providers
     ///
