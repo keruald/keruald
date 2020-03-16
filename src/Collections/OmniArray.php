@@ -32,8 +32,10 @@ class OmniArray {
         }
     }
 
-    public static function explode (string $delimiter, string $string, int $limit = PHP_INT_MAX) : self {
-        return new OmniArray(explode($delimiter, $string, $limit));
+    public static function explode (string $delimiter, string $string,
+                                    int $limit = PHP_INT_MAX) : self {
+        return (new OmniString($string))
+            ->explode($delimiter, $limit);
     }
 
     ///

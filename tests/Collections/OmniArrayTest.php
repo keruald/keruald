@@ -32,4 +32,16 @@ class OmniArrayTest extends TestCase {
         $this->assertEquals("abc", $actual);
     }
 
+    public function testExplode() : void {
+        $actual = OmniArray::explode(".", "a.b.c");
+
+        $this->assertEquals(["a", "b", "c"], $actual->toArray());
+    }
+
+    public function testExplodeWithoutDelimiter() : void {
+        $actual = OmniArray::explode("", "a.b.c");
+
+        $this->assertEquals(["a.b.c"], $actual->toArray());
+    }
+
 }
