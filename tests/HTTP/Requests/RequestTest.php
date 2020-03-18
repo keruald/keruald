@@ -79,6 +79,24 @@ class RequestTest extends TestCase {
         $this->assertEquals($url, Request::getServerURL());
     }
 
+    /**
+     * @backupGlobals enabled
+     * @dataProvider provideServerURLs
+     */
+    public function testCreateLocalURL (array $server, string $url) : void {
+        $_SERVER = $server;
+
+        $this->assertEquals(
+            $url . "/",
+            Request::createLocalURL()->__toString()
+        );
+
+        $this->assertEquals(
+            $url . "/foo",
+            Request::createLocalURL("foo")->__toString()
+        );
+    }
+
     ///
     /// Data providers
     ///

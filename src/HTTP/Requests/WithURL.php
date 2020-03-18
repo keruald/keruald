@@ -2,6 +2,7 @@
 
 namespace Keruald\OmniTools\HTTP\Requests;
 
+use Keruald\OmniTools\HTTP\URL;
 use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
 
 trait WithURL {
@@ -82,6 +83,20 @@ trait WithURL {
             "HTTP_X_FORWARDED_SSL" => "on",
             "HTTP_X_URL_SCHEME" => "https",
         ];
+    }
+
+    /**
+     * Create a URL object, using the current request server URL for protocol
+     * and domain name.
+     *
+     * @param string $query      The query part of the URL [facultative]
+     * @param int    $encodeMode Encoding to use for the query [facultative]
+     */
+    public static function createLocalURL (string $query = "",
+                                           int $encodeMode = URL::ENCODE_RFC3986_SLASH_EXCEPTED
+    ) : URL {
+        return (new URL(self::getServerURL()))
+            ->setQuery($query, $encodeMode);
     }
 
 }
