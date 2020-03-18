@@ -73,20 +73,37 @@ class URL {
         return "";
     }
 
+    private function getUrlParts() : array {
+        preg_match("@://(.*)@", $this->url, $matches);
+        return explode("/", $matches[1], 2);
+    }
+
     public function getDomain () : string {
-        if (preg_match("@://(.*?)/@", $this->url, $matches)) {
-            return self::beautifyDomain($matches[1]);
+        if (strpos($this->url, "://") === false) {
+            return "";
         }
 
-        return "";
+        $domain = $this->getUrlParts()[0];
+
+        if ($domain === "") {
+            return "";
+        }
+
+        return self::beautifyDomain($domain);
     }
 
     public function getQuery () : string {
-        if (preg_match("@(://.*?)?(/.*)@", $this->url, $matches)) {
-            return $this->beautifyQuery($matches[2]);
+        if (strpos($this->url, "://") === false) {
+            return $this->url;
         }
 
-        return "";
+        $parts = $this->getUrlParts();
+
+        if (count($parts) < 2 || $parts[1] === "" || $parts[1] === "/") {
+            return "/";
+        }
+
+        return "/" . $this->beautifyQuery($parts[1]);
     }
 
     public function setProtocol ($protocol) : self {

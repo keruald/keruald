@@ -66,19 +66,25 @@ class URLTest extends TestCase {
     /**
      * @dataProvider provideURLsAndComponents
      */
-    public function testCompose ($expectedUrl, $domain, $protocol, $query) {
+    public function testCompose ($url, $domain, $protocol, $query,
+                                 $expectedUrl = null) {
         $this->assertEquals(
-            $expectedUrl,
+            $expectedUrl ?? $url,
             URL::compose($protocol, $domain, $query)->__toString()
         );
     }
 
     public function provideURLsAndComponents () : iterable {
+        // base URL, domain, protocol, query[, expected URL]
+        // When omitted, the expected URL is the base URL.
+
         yield ["http://foo/bar", "foo", "http", "/bar"];
         yield ["https://xn--dghrefn-mxa.nasqueron.org/", "dæghrefn.nasqueron.org", "https", "/"];
         yield ["://foo/bar", "foo", "", "/bar"];
         yield ["/bar", "", "", "/bar"];
         yield ["http://foo/bar%20quux", "foo", "http", "/bar quux"];
+        yield ["https://foo/", "foo", "https", "/"];
+        yield ["https://foo", "foo", "https", "/", "https://foo/"];
     }
 
 }
