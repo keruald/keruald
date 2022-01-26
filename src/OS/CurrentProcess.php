@@ -24,7 +24,7 @@ class CurrentProcess {
         if (!function_exists('posix_geteuid')) {
             // POSIX PHP functions aren't always available, e.g. on FreeBSD
             // In such cases, `id` will probably be available.
-            return trim(shell_exec('id -u')) === '0';
+            return trim((string)shell_exec('id -u')) === '0';
         }
 
         /** @noinspection PhpComposerExtensionStubsInspection */
