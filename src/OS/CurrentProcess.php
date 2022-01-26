@@ -27,7 +27,6 @@ class CurrentProcess {
             return trim((string)shell_exec('id -u')) === '0';
         }
 
-        /** @noinspection PhpComposerExtensionStubsInspection */
         return posix_geteuid() === 0;
     }
 
