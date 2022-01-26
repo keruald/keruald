@@ -78,6 +78,13 @@ class OmniStringTest extends TestCase {
         $this->assertEquals($exploded, $actual);
     }
 
+    public function testExplodeWithEmptyOmniArray () : void {
+        $array = (new OmniString("foo"))
+            ->explode("", -1);
+
+        $this->assertEquals(0, count($array->toArray()));
+    }
+
     ///
     /// Data providers
     ///

@@ -16,7 +16,7 @@ class OmniArray {
     /// Constructors
     ///
 
-    public function __construct (?iterable $items) {
+    public function __construct (?iterable $items = null) {
         if ($items === null) {
             return;
         }
