@@ -3,6 +3,7 @@
 namespace Keruald\OmniTools\Tests\IO;
 
 use Keruald\OmniTools\IO\File;
+use Keruald\OmniTools\OS\CurrentOS;
 use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase {
@@ -15,6 +16,10 @@ class FileTest extends TestCase {
      * @dataProvider provideFilesAndDirectories
      */
     public function testGetDirectory (string $filename, string $expected) : void {
+        if (CurrentOS::isPureWindows()) {
+            $this->markTestSkipped("This test is intended for UNIX systems.");
+        }
+
         $this->assertSame($expected, File::from($filename)->getDirectory());
     }
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Tests\Reflection;
 
+use Keruald\OmniTools\OS\CurrentOS;
 use Keruald\OmniTools\OS\CurrentProcess;
 use Keruald\OmniTools\Reflection\CodeFile;
 use Keruald\OmniTools\Tests\WithData;
@@ -37,6 +38,10 @@ class CodeFileTest extends TestCase {
     }
 
     public function testCanBeIncludedWhenFileModeForbidsReading () : void {
+        if (CurrentOS::isPureWindows()) {
+            $this->markTestSkipped("This test is intended for UNIX systems.");
+        }
+
         if (CurrentProcess::isPrivileged()) {
             $this->markTestSkipped(
                 "This test requires non-root access to run properly."
@@ -62,6 +67,10 @@ class CodeFileTest extends TestCase {
     }
 
     public function testIsReadableWhenFileModeForbidsReading () : void {
+        if (CurrentOS::isPureWindows()) {
+            $this->markTestSkipped("This test is intended for UNIX systems.");
+        }
+
         if (CurrentProcess::isPrivileged()) {
             $this->markTestSkipped(
                 "This test requires non-root access to run properly."
