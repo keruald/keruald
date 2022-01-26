@@ -17,7 +17,7 @@ class UUIDTest extends TestCase {
         );
 
         $re = "/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/";
-        $this->assertRegExp($re, $uuid);
+        $this->assertMatchesRegularExpression($re, $uuid);
     }
 
     public function testUUIDv4WithoutHyphens () : void {
@@ -29,7 +29,7 @@ class UUIDTest extends TestCase {
         );
 
         $re = "/[0-9a-f]/";
-        $this->assertRegExp($re, $uuid);
+        $this->assertMatchesRegularExpression($re, $uuid);
     }
 
     public function testUUIDv4AreUnique () : void {

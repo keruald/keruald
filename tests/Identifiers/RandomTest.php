@@ -20,7 +20,7 @@ class RandomTest extends TestCase {
                 "$hash size must be 32 characters"
             );
 
-            $this->assertRegExp("/[0-9a-f]{32}/", $hash);
+            $this->assertMatchesRegularExpression("/[0-9a-f]{32}/", $hash);
     }
 
     public function testHexadecimalHashesAreUnique() : void {
@@ -37,14 +37,14 @@ class RandomTest extends TestCase {
         $string = Random::generateString($format);
 
         $this->assertEquals($len, strlen($format));
-        $this->assertRegExp($re, $string);
+        $this->assertMatchesRegularExpression($re, $string);
     }
 
     public function testGenerateIdentifier() : void {
         $identifier = Random::generateIdentifier(20);
 
         $this->assertEquals(27, strlen($identifier));
-        $this->assertRegExp("/^[A-Z0-9\-_]*$/i", $identifier);
+        $this->assertMatchesRegularExpression("/^[A-Z0-9\-_]*$/i", $identifier);
     }
 
     ///
