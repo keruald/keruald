@@ -39,10 +39,8 @@ final class Autoloader {
     }
 
     public function register () : void {
-        $loader = $this;
-
-        spl_autoload_register(function ($class) use ($loader) {
-            $solver = $loader->getSolver($class);
+        spl_autoload_register(function ($class) {
+            $solver = $this->getSolver($class);
 
             if (!$solver->canResolve()) {
                 return;
