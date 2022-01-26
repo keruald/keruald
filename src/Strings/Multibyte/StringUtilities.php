@@ -60,8 +60,8 @@ class StringUtilities {
     /**
      * Encode a string using a variant of the MIME base64 compatible with URLs.
      *
-     * The + and / characters used in base64 are replaced by - and _.
-     * The = padding is removed.
+     * The '+' and '/' characters used in base64 are replaced by '-' and '_'.
+     * The '=' padding is removed.
      *
      * @param string $string The string to encode
      * @return string The encoded string

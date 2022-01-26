@@ -14,7 +14,7 @@ class CurrentProcess {
     public static function isPrivileged () : bool {
         if (CurrentOS::isWindows()) {
             // `net session` is known to only work as privileged process.
-            // To wrap in cmd allows to avoid /dev/null for Cygwin,
+            // To wrap in cmd allows avoiding /dev/null for Cygwin,
             // or $null when invoked from PowerShell. NUL: will always be used.
             exec('cmd /C "net session >NUL 2>&1"', $_, $exitCode);
 

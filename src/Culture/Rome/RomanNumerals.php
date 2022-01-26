@@ -21,7 +21,7 @@ final class RomanNumerals {
 
     /**
      * Provides a canonical table with hindu arabic numerals as keys,
-     * and roman numerals as values.
+     * and Roman numerals as values.
      */
     public static function getHinduArabicTable () : array {
         return [

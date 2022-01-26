@@ -11,7 +11,7 @@ class IPTest extends TestCase {
     ///
     /// Data providers for IP addresses
     ///
-    /// These data providers methods allow to provide IP addresses
+    /// These data providers methods allow providing IP addresses
     /// to validate or invalidate.
     ///
     /// The advanced IPv6 tests have been curated by Stephen Ryan

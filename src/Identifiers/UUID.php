@@ -8,7 +8,7 @@ class UUID {
     const UUID_REGEXP = "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/";
 
     /**
-     * @return string A RFC 4122 compliant v4 UUID
+     * @return string An RFC 4122 compliant v4 UUID
      */
     public static function UUIDv4 () : string {
         // Code by Andrew Moore

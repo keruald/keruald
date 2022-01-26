@@ -31,7 +31,7 @@ class RemoteAddress {
     public function getClientAddress () : string {
         // Header contains 'clientIP, proxyIP, anotherProxyIP'
         //              or 'clientIP proxyIP anotherProxyIP'
-        // The first value is so the one to return.
+        // The client address to return is then the first value.
         // See draft-ietf-appsawg-http-forwarded-10.
         $ips = preg_split("/[\s,]+/", $this->remoteAddress, 2);
         return trim($ips[0]);
