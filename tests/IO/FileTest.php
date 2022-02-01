@@ -6,6 +6,8 @@ use Keruald\OmniTools\IO\File;
 use Keruald\OmniTools\OS\CurrentOS;
 use PHPUnit\Framework\TestCase;
 
+use TypeError;
+
 class FileTest extends TestCase {
 
     ///
@@ -42,6 +44,19 @@ class FileTest extends TestCase {
      */
     public function testGetExtension (string $filename, string $expected) : void {
         $this->assertSame($expected, File::from($filename)->getExtension());
+    }
+
+    ///
+    /// Issues
+    ///
+
+    /**
+     * @see https://devcentral.nasqueron.org/D2494
+     */
+    public function testNullPathIsNotAllowed () : void {
+        $this->expectException(TypeError::class);
+
+        $file = new File(null);
     }
 
     ///
