@@ -1,0 +1,26 @@
+{
+    "name": "keruald/database",
+    "description": "Allow to query a database",
+    "type": "library",
+    "require-dev": {
+        "phan/phan": "^5.3.2",
+        "squizlabs/php_codesniffer": "^3.6.2",
+        "phpunit/phpunit": "^9.5",
+        "nasqueron/codestyle": "^0.0.1"
+    },
+    "scripts": {
+        "lint-src": "find src -type f -name '*.php' | xargs -n1 php -l",
+        "lint-tests": "find tests -type f -name '*.php' | xargs -n1 php -l",
+        "test": "vendor/bin/phpunit"
+    },
+    "license": "BSD-2-Clause",
+    "autoload": {
+        "psr-4": {
+            "Keruald\\Database\\": "src/",
+            "Keruald\\Database\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "ext-mysqli": "*"
+    }
+}
