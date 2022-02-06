@@ -30,4 +30,30 @@ class CurrentProcess {
         return posix_geteuid() === 0;
     }
 
+    /**
+     * Determines the username of the current process, ie the PHP interpreter.
+     */
+    public static function getUsername () : string {
+        if (!extension_loaded("posix")) {
+            // POSIX PHP functions aren't always available.
+            // In such cases, `whoami` will probably be available.
+            $username = trim((string)shell_exec("whoami"));
+
+            if (CurrentOS::isWindows() && str_contains('\\', $username)) {
+                // Perhaps the domain information could be useful if the user
+                // can belong to an AD domain, to disambiguate between local
+                // accounts and AD accounts.
+                //
+                // If not attached to a domain, the PC hostname is used.
+                //
+                // We return only the username part to be coherent with UNIX.
+                return explode('\\', $username, 2)[1];
+            }
+
+            return $username;
+        }
+
+        return posix_getpwuid(posix_geteuid())["name"];
+    }
+
 }
