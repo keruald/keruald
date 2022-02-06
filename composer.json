@@ -19,8 +19,5 @@
             "Keruald\\Database\\": "src/",
             "Keruald\\Database\\Tests\\": "tests/"
         }
-    },
-    "require": {
-        "ext-mysqli": "*"
     }
 }
