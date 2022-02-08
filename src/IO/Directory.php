@@ -75,4 +75,15 @@ class Directory {
         );
     }
 
+    /**
+     * @return Directory[]
+     */
+    public function getSubdirectories () : array {
+        return array_map(
+            function ($dir) {
+                return new Directory($dir);
+            }, glob("$this->path/*", GLOB_ONLYDIR)
+        );
+    }
+
 }
