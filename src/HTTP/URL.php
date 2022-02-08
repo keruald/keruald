@@ -194,11 +194,11 @@ class URL {
     }
 
     public static function normalizeDomain (string $domain) : string {
-        return idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
+        return \idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
     }
 
     public static function beautifyDomain (string $domain) : string {
-        return idn_to_utf8($domain, 0, INTL_IDNA_VARIANT_UTS46);
+        return \idn_to_utf8($domain, 0, INTL_IDNA_VARIANT_UTS46);
     }
 
     public function __toString () {

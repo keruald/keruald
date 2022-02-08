@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Strings\Multibyte;
 
-use Keruald\OmniTools\Collections\OmniArray;
+use Keruald\OmniTools\Collections\Vector;
 
 class OmniString {
 
@@ -54,11 +54,11 @@ class OmniString {
     }
 
     public function startsWith (string $start) : bool {
-        return StringUtilities::startsWith($this->value, $start);
+        return str_starts_with($this->value, $start);
     }
 
     public function endsWith (string $end) : bool {
-        return StringUtilities::endsWith($this->value, $end);
+        return str_ends_with($this->value, $end);
     }
 
     public function len () : int {
@@ -76,7 +76,7 @@ class OmniString {
         return $chars;
     }
 
-    public function getBigrams () {
+    public function getBigrams () : array {
         $bigrams = [];
 
         $len = $this->len();
@@ -92,16 +92,16 @@ class OmniString {
     ///
 
     public function explode (string $delimiter,
-                             int $limit = PHP_INT_MAX) : OmniArray {
+                             int $limit = PHP_INT_MAX) : Vector {
         if ($delimiter === "") {
             if ($limit < 0) {
-                return new OmniArray;
+                return new Vector;
             }
 
-            return new OmniArray([$this->value]);
+            return new Vector([$this->value]);
         }
 
-        return new OmniArray(explode($delimiter, $this->value, $limit));
+        return new Vector(explode($delimiter, $this->value, $limit));
     }
 
     ///
@@ -118,7 +118,7 @@ class OmniString {
     /**
      * @param string $value
      */
-    public function setValue (string $value) {
+    public function setValue (string $value) : void {
         $this->value = $value;
     }
 

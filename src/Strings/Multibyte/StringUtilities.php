@@ -43,18 +43,27 @@ class StringUtilities {
         return false;
     }
 
-    public static function startsWith (string $string, string $start) {
+    /**
+     * @deprecated Since PHP 8.0, we can replace by \str_starts_with
+     */
+    public static function startsWith (string $string, string $start) : bool {
         $length = mb_strlen($start);
         return mb_substr($string, 0, $length) === $start;
     }
 
-    public static function endsWith (string $string, string $end) {
+    /**
+     * @deprecated Since PHP 8.0, we can replace by \str_ends_with
+     */
+    public static function endsWith (string $string, string $end) : bool {
         $length = mb_strlen($end);
         return $length === 0 || mb_substr($string, -$length) === $end;
     }
 
+    /**
+     * @deprecated Since PHP 8.0, we can replace by \str_contains
+     */
     public static function contains (string $string, string $needle) : bool {
-        return strpos($string, $needle) !== false;
+        return str_contains($string, $needle);
     }
 
     /**

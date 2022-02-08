@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\DateTime;
 
-use Keruald\OmniTools\Collections\OmniArray;
+use Keruald\OmniTools\Collections\Vector;
 
 use DateTime;
 use InvalidArgumentException;
@@ -47,7 +47,7 @@ class DateStamp {
     public static function parse (string $date) : self {
         if (preg_match("/^[0-9]{4}\-[0-1][0-9]\-[0-3][0-9]$/", $date)) {
             // YYYY-MM-DD
-            $args = OmniArray::explode("-", $date)
+            $args = Vector::explode("-", $date)
                         ->toIntegers()
                         ->toArray();
 
