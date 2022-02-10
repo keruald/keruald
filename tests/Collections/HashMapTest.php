@@ -104,6 +104,16 @@ class HashMapTest extends TestCase {
             $this->map->get("The Culture"));
     }
 
+    public function testUnset() {
+        $this->map->unset("The Culture");
+        $this->assertFalse($this->map->contains("Iain Banks"));
+    }
+
+    public function testUnsetNotExistingKey() {
+        $this->map->unset("Not existing");
+        $this->assertEquals(4, $this->map->count());
+    }
+
     public function testHas () {
         $this->assertTrue($this->map->has("The Culture"));
         $this->assertFalse($this->map->has("Not existing key"));
@@ -274,6 +284,38 @@ class HashMapTest extends TestCase {
 
         $actual = $this->map->filterKeys($callback)->toArray();
         $this->assertEquals($expected, $actual);
+    }
+
+    ///
+    /// ArrayAccess
+    ///
+
+    public function testOffsetExists () : void {
+        $this->assertTrue(isset($this->map["The Culture"]));
+        $this->assertFalse(isset($this->map["Not existing"]));
+    }
+
+    public function testOffsetSetWithoutOffset () : void {
+        $this->expectException(InvalidArgumentException::class);
+        $this->map[] = "Another Author";
+    }
+
+    public function testOffsetSet () : void {
+        $this->map["The Culture"] = "Iain M. Banks";
+        $this->assertEquals("Iain M. Banks", $this->map["The Culture"]);
+    }
+
+    public function testOffsetUnset () : void {
+        unset($this->map["Barrayar"]);
+
+        $expected = [
+            "The Culture" => "Iain Banks",
+            "Radchaai Empire" => "Ann Leckie",
+            // "Barrayar" => "Lois McMaster Bujold",   UNSET ENTRY
+            "Hainish" => "Ursula K. Le Guin",
+        ];
+
+        $this->assertEquals($expected, $this->map->toArray());
     }
 
 }

@@ -6,9 +6,10 @@ namespace Keruald\OmniTools\Collections;
 use Keruald\OmniTools\Reflection\CallableElement;
 use Keruald\OmniTools\Strings\Multibyte\OmniString;
 
+use ArrayAccess;
 use InvalidArgumentException;
 
-class Vector implements BaseCollection {
+class Vector extends BaseCollection implements ArrayAccess {
 
     ///
     /// Properties
@@ -87,10 +88,15 @@ class Vector implements BaseCollection {
         return $this;
     }
 
+    public function unset (int $key) : static {
+        unset($this->items[$key]);
+
+        return $this;
+    }
+
     public function contains (mixed $value) : bool {
         return in_array($value, $this->items);
     }
-
 
     ///
     /// Interact with collection content at collection level
@@ -106,6 +112,12 @@ class Vector implements BaseCollection {
 
     public function clear () : self {
         $this->items = [];
+
+        return $this;
+    }
+
+    public function push (mixed $item) : self {
+        $this->items[] = $item;
 
         return $this;
     }
@@ -205,6 +217,50 @@ class Vector implements BaseCollection {
 
     public function implode(string $delimiter) : OmniString {
         return new OmniString(implode($delimiter, $this->items));
+    }
+
+    ///
+    /// ArrayAccess
+    /// Interface to provide accessing objects as arrays.
+    ///
+
+    private static function ensureOffsetIsInteger (mixed $offset) {
+        if (is_int($offset)) {
+            return;
+        }
+
+        throw new InvalidArgumentException(
+            "Offset of a vector must be an integer."
+        );
+    }
+
+    public function offsetExists (mixed $offset) : bool {
+        self::ensureOffsetIsInteger($offset);
+
+        return array_key_exists($offset, $this->items);
+    }
+
+    public function offsetGet (mixed $offset) : mixed {
+        self::ensureOffsetIsInteger($offset);
+
+        return $this->get($offset);
+    }
+
+    public function offsetSet (mixed $offset, mixed $value) : void {
+        if ($offset === null) {
+            $this->push($value);
+            return;
+        }
+
+        self::ensureOffsetIsInteger($offset);
+
+        $this->set($offset, $value);
+    }
+
+    public function offsetUnset (mixed $offset) : void {
+        self::ensureOffsetIsInteger($offset);
+
+        $this->unset($offset);
     }
 
 }

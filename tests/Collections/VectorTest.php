@@ -82,6 +82,12 @@ class VectorTest extends TestCase {
         $this->assertTrue($this->vector->isEmpty());
     }
 
+    public function testPush () : void {
+        $this->vector->push(6);
+
+        $this->assertEquals([1, 2, 3, 4, 5, 6], $this->vector->toArray());
+    }
+
     public function testAppend () : void {
         $this->vector->append([6, 7, 8]);
 
@@ -93,7 +99,6 @@ class VectorTest extends TestCase {
 
         $this->assertEquals([1, 2, 3, 4, 5, 6, 7 ,8], $this->vector->toArray());
     }
-
 
     public function testMap () : void {
         $actual = $this->vector
@@ -172,6 +177,45 @@ class VectorTest extends TestCase {
         $actual = Vector::explode("", "a.b.c");
 
         $this->assertEquals(["a.b.c"], $actual->toArray());
+    }
+
+    ///
+    /// ArrayAccess
+    ///
+
+    public function testArrayAccessFailsWithStringKey () : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->vector["foo"];
+    }
+
+    public function testOffsetExists () : void {
+        $this->assertTrue(isset($this->vector[0]));
+        $this->assertFalse(isset($this->vector[8]));
+    }
+
+    public function testOffsetSetWithoutOffset () : void {
+        $this->vector[] = 6;
+        $this->assertEquals(6, $this->vector[5]);
+    }
+
+    public function testOffsetSet () : void {
+        $this->vector[0] = 9;
+        $this->assertEquals(9, $this->vector[0]);
+    }
+
+    public function testOffsetUnset () : void {
+        unset($this->vector[2]);
+
+        $expected = [
+            0 => 1,
+            1 => 2,
+            // vector[2] has been unset
+            3 => 4,
+            4 => 5,
+        ];
+
+        $this->assertEquals($expected, $this->vector->toArray());
     }
 
 }

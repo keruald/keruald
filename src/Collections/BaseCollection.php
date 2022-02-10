@@ -3,26 +3,26 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Collections;
 
-interface BaseCollection {
+abstract class BaseCollection {
 
     ///
     /// Constructors
     ///
 
-    public static function from (iterable $items) : static;
+    public static abstract function from (iterable $items) : static;
 
     ///
     /// Getters
     ///
 
-    public function toArray () : array;
+    public abstract function toArray () : array;
 
     ///
     /// Properties
     ///
 
-    public function count () : int;
+    public abstract function count () : int;
 
-    public function isEmpty () : bool;
+    public abstract function isEmpty () : bool;
 
 }

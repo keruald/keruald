@@ -14,7 +14,7 @@ use InvalidArgumentException;
  * This class can be used as a service container,
  * an application context, to store configuration.
  */
-class HashMap implements BaseCollection, BaseMap {
+class HashMap extends BaseMap {
 
     ///
     /// Properties
@@ -58,7 +58,17 @@ class HashMap implements BaseCollection, BaseMap {
     }
 
     public function set (mixed $key, mixed $value) : static {
+        if ($key === null) {
+            throw new InvalidArgumentException("Key can't be null");
+        }
+
         $this->map[$key] = $value;
+
+        return $this;
+    }
+
+    public function unset (mixed $key) : static {
+        unset($this->map[$key]);
 
         return $this;
     }
