@@ -5,7 +5,9 @@ namespace Keruald\OmniTools\Collections;
 
 use Keruald\OmniTools\Reflection\CallableElement;
 
+use ArrayIterator;
 use InvalidArgumentException;
+use Traversable;
 
 /**
  * An associative array allowing the use of chained
@@ -176,6 +178,14 @@ class HashMap extends BaseMap {
         return new self(
             array_filter($this->map, $callable, ARRAY_FILTER_USE_KEY)
         );
+    }
+
+    ///
+    /// IteratorAggregate
+    ///
+
+    public function getIterator () : Traversable {
+        return new ArrayIterator($this->map);
     }
 
 }

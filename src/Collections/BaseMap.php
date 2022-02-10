@@ -3,8 +3,10 @@
 namespace Keruald\OmniTools\Collections;
 
 use ArrayAccess;
+use IteratorAggregate;
 
-abstract class BaseMap extends BaseCollection implements ArrayAccess {
+abstract class BaseMap extends BaseCollection
+                       implements ArrayAccess, IteratorAggregate {
 
     ///
     /// Methods to implement

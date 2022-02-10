@@ -7,9 +7,12 @@ use Keruald\OmniTools\Reflection\CallableElement;
 use Keruald\OmniTools\Strings\Multibyte\OmniString;
 
 use ArrayAccess;
+use ArrayIterator;
 use InvalidArgumentException;
+use IteratorAggregate;
+use Traversable;
 
-class Vector extends BaseCollection implements ArrayAccess {
+class Vector extends BaseCollection implements ArrayAccess, IteratorAggregate {
 
     ///
     /// Properties
@@ -263,4 +266,11 @@ class Vector extends BaseCollection implements ArrayAccess {
         $this->unset($offset);
     }
 
+    ///
+    /// IteratorAggregate
+    ///
+
+    public function getIterator () : Traversable {
+        return new ArrayIterator($this->items);
+    }
 }

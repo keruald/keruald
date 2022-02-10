@@ -318,4 +318,12 @@ class HashMapTest extends TestCase {
         $this->assertEquals($expected, $this->map->toArray());
     }
 
+    ///
+    /// IteratorAggregate
+    ///
+
+    public function testGetIterator () : void {
+        $this->assertEquals(self::MAP_CONTENT, iterator_to_array($this->map));
+    }
+
 }

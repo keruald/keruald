@@ -218,4 +218,12 @@ class VectorTest extends TestCase {
         $this->assertEquals($expected, $this->vector->toArray());
     }
 
+    ///
+    /// IteratorAggregate
+    ///
+
+    public function testGetIterator () : void {
+        $this->assertEquals([1, 2, 3, 4, 5], iterator_to_array($this->vector));
+    }
+
 }
