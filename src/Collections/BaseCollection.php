@@ -23,4 +23,6 @@ interface BaseCollection {
 
     public function count () : int;
 
+    public function isEmpty () : bool;
+
 }

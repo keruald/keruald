@@ -100,6 +100,10 @@ class Vector implements BaseCollection {
         return count($this->items);
     }
 
+    public function isEmpty () : bool {
+        return $this->count() === 0;
+    }
+
     public function clear () : self {
         $this->items = [];
 

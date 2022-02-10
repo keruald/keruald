@@ -79,6 +79,10 @@ class HashMap implements BaseCollection, BaseMap {
         return count($this->map);
     }
 
+    public function isEmpty () : bool {
+        return $this->count() === 0;
+    }
+
     public function clear () : self {
         $this->map = [];
 

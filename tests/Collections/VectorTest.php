@@ -76,6 +76,12 @@ class VectorTest extends TestCase {
         $this->assertEquals(0, $this->vector->count());
     }
 
+    public function testIsEmpty () : void {
+        $this->vector->clear();
+
+        $this->assertTrue($this->vector->isEmpty());
+    }
+
     public function testAppend () : void {
         $this->vector->append([6, 7, 8]);
 

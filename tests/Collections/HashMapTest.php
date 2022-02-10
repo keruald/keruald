@@ -127,6 +127,12 @@ class HashMapTest extends TestCase {
         $this->assertSame(0, $this->map->count());
     }
 
+    public function testIsEmpty () : void {
+        $this->map->clear();
+
+        $this->assertTrue($this->map->isEmpty());
+    }
+
     public function testMerge () {
         $iterable = [
             "The Culture" => "Iain M. Banks", // existing key
