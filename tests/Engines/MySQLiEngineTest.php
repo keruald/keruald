@@ -13,8 +13,10 @@ class MySQLiEngineTest extends TestCase {
 
     private MySQLiEngine $db;
 
+    const DB_NAME = "test_keruald_db";
+
     protected function setUp (): void {
-        $this->db = new MySQLiEngine('localhost', '', '', 'test_keruald_db');
+        $this->db = new MySQLiEngine('localhost', '', '', self::DB_NAME);
     }
 
     public function testLoad () {
@@ -22,7 +24,7 @@ class MySQLiEngineTest extends TestCase {
             'host' => 'localhost',
             'username' => '',
             'password' => '',
-            'database' => 'test_keruald_db',
+            'database' => self::DB_NAME,
         ]);
 
         $this->assertInstanceOf("mysqli", $instance->getUnderlyingDriver());
@@ -35,7 +37,7 @@ class MySQLiEngineTest extends TestCase {
             'host' => 'localhost',
             'username' => 'notexisting',
             'password' => 'notexistingeither',
-            'database' => 'test_keruald_db',
+            'database' => self::DB_NAME,
         ]);
     }
 
@@ -173,6 +175,34 @@ class MySQLiEngineTest extends TestCase {
         $this->db->query("TRUNCATE not_existing");
 
         $this->assertEquals($expected, $this->db->error());
+    }
+
+    public function testIsView () {
+        $this->assertTrue($this->db->isView(self::DB_NAME, "ships_count"));
+    }
+
+    public function testIsViewWhenItIsTable () {
+        $this->assertFalse($this->db->isView(self::DB_NAME, "ships"));
+    }
+
+    public function testIsViewWhenNotExisting () {
+        $this->assertFalse($this->db->isView(self::DB_NAME, "notexisting"));
+    }
+
+    public function testIsExisting () {
+        $this->assertTrue($this->db->isExistingTable(self::DB_NAME, "ships"));
+    }
+
+    public function testIsExistingWithView () {
+        $this->assertTrue($this->db->isExistingTable(
+            self::DB_NAME, "ships_count")
+        );
+    }
+
+    public function testIsExistingWhenNotExisting () {
+        $this->assertFalse($this->db->isExistingTable(
+            self::DB_NAME, "notexisting")
+        );
     }
 
 }

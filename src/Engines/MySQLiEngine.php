@@ -16,6 +16,8 @@ use mysqli_sql_exception;
 
 class MySQLiEngine extends DatabaseEngine {
 
+    use WithMySQL;
+
     /**
      * The connection identifier
      */

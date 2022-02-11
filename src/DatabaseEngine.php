@@ -30,6 +30,13 @@ abstract class DatabaseEngine {
 
     protected abstract function getExceptionContext (): array;
 
+    /**
+     * Determines if the specified table or view exists.
+     */
+    public abstract function isExistingTable (
+        string $database, string $table
+    ) : bool;
+
     ///
     /// Engine mechanics
     ///
