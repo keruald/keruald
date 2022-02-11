@@ -13,11 +13,11 @@ class OutputDisplayTest extends TestCase {
      */
     private $display;
 
-    public function setUp () {
+    public function setUp () : void {
         $this->display = new OutputDisplay;
     }
 
-    public function testOut () {
+    public function testOut () : void {
         $this->expectOutputString("Hello world!\n");
         $this->display->out("Hello world!");
     }

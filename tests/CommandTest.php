@@ -21,37 +21,36 @@ class CommandTest extends TestCase {
     private $display;
 
 
-    public function setUp () {
+    public function setUp () : void {
         $this->display = new ArrayDisplay();
         $this->command = new SunsetCommand(1, ["sunset"], $this->display);
     }
 
-    public function testGetArgc () {
+    public function testGetArgc () : void {
         $this->assertEquals(1, $this->command->getArgc());
     }
 
-    public function testGetArgv () {
+    public function testGetArgv () : void {
         $this->assertEquals(["sunset"], $this->command->getArgv());
     }
 
-    public function testGetCommandName() {
+    public function testGetCommandName() : void {
         $this->assertEquals("sunset", $this->command->getCommandName());
     }
 
-    public function testDisplayBeforeRun() {
+    public function testDisplayBeforeRun() : void {
         $this->assertEmpty($this->display->getOut());
         $this->assertEmpty($this->display->getError());
     }
 
-    public function testDisplayAfterRun() {
+    public function testDisplayAfterRun() : void {
         $this->command->main();
         $this->assertEquals(1, $this->display->countOut());
         $this->assertEquals(0, $this->display->countError());
     }
 
-    public function testReturnCode () {
+    public function testReturnCode () : void {
         $this->assertEquals(ExitCode::SUCCESS, $this->command->main());
     }
 
 }
-

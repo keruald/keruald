@@ -13,11 +13,11 @@ class ArrayDisplayTest extends TestCase {
      */
     private $display;
 
-    public function setUp () {
+    public function setUp () : void {
         $this->display = new ArrayDisplay;
     }
 
-    public function testOut () {
+    public function testOut () : void {
         $this->display->out("Hello world!");
 
         $this->assertEquals(["Hello world!"], $this->display->getOut());
@@ -27,7 +27,7 @@ class ArrayDisplayTest extends TestCase {
         $this->assertEquals(0, $this->display->countError());
     }
 
-    public function testClearOut () {
+    public function testClearOut () : void {
         $this->display->out("Lorem");
         $this->display->out("Ipsum");
         $this->display->out("Dolor");
@@ -36,7 +36,7 @@ class ArrayDisplayTest extends TestCase {
         $this->assertEquals(0, $this->display->countOut());
     }
 
-    public function testClearError () {
+    public function testClearError () : void {
         $this->display->error("Lorem");
         $this->display->error("Ipsum");
         $this->display->error("Dolor");
@@ -45,7 +45,7 @@ class ArrayDisplayTest extends TestCase {
         $this->assertEquals(0, $this->display->countError());
     }
 
-    public function testCountOut () {
+    public function testCountOut () : void {
         $this->display->out("Lorem");
         $this->display->out("Ipsum");
         $this->display->out("Dolor");
@@ -53,7 +53,7 @@ class ArrayDisplayTest extends TestCase {
         $this->assertEquals(3, $this->display->countOut());
     }
 
-    public function testCountError () {
+    public function testCountError () : void {
         $this->display->error("Lorem");
         $this->display->error("Ipsum");
         $this->display->error("Dolor");
