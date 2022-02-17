@@ -31,9 +31,7 @@ class MarkdownOutput extends Output {
             $propertyMaxLength = max($propertyMaxLength, strlen($key));
             $maxValue = max($maxValue, strlen($value));
         }
-        if ($propertyMaxLength < 8) {
-            $propertyMaxLength = 8;
-        }
+        $propertyMaxLength = max(8, $propertyMaxLength);
 
         $send[] = '| Property' . str_repeat(' ', $propertyMaxLength - 8) . ' | '
                   . str_repeat(' ', $maxValue) . ' |';
