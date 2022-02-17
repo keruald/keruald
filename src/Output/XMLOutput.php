@@ -7,7 +7,7 @@ namespace Keruald\Reporting\Output;
 class XMLOutput extends Output {
 
     public function render () : string {
-        $report = $this->report;
+
         $document = xmlwriter_open_memory();
 
         xmlwriter_set_indent($document, true);
@@ -17,10 +17,10 @@ class XMLOutput extends Output {
 
         xmlwriter_start_element($document, 'report');
         xmlwriter_start_attribute($document, 'title');
-        xmlwriter_text($document, $report->title);
+        xmlwriter_text($document, $this->report->title);
         xmlwriter_end_attribute($document);
 
-        foreach ($report->sections as $section) {
+        foreach ($this->report->sections as $section) {
             xmlwriter_start_element($document, 'section');
             xmlwriter_start_attribute($document, 'title');
             xmlwriter_text($document, $section->title);
@@ -47,7 +47,7 @@ class XMLOutput extends Output {
         xmlwriter_text($document, "Properties");
         xmlwriter_end_attribute($document);
 
-        foreach ($report->properties as $key => $value) {
+        foreach ($this->report->properties as $key => $value) {
             xmlwriter_start_element($document, 'entry');
 
             xmlwriter_start_element($document, 'key');
