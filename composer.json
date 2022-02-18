@@ -1,0 +1,27 @@
+{
+    "name": "keruald/omnitools",
+    "description": "Utilities classes",
+    "type": "library",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Sébastien Santoro",
+            "email": "dereckson@espace-win.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Keruald\\OmniTools\\": "src/",
+            "Keruald\\OmniTools\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "ext-intl": "*"
+    },
+    "require-dev": {
+        "nasqueron/codestyle": "^0.0.1",
+        "phan/phan": "^5.3.1",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6"
+    }
+}

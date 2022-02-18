@@ -1,0 +1,5 @@
+<pre class='debug'>Array
+(
+    [foo] => bar
+)
+</pre>

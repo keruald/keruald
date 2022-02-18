@@ -1,0 +1,5 @@
+<pre class='debug'>Acme\Counter Object
+(
+    [counter:Acme\Counter:private] => 4
+)
+</pre>
