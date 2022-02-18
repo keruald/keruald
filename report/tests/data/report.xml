@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report title="Sneakers">
+    <section title="Air Max">
+        <entry title="Air Max 90">
+            <text>One of the more icon color is the infrared.</text>
+        </entry>
+        <entry title="Air Max 95">
+            <text>Launched in 1995, designed by Sergio Lozano.</text>
+        </entry>
+        <entry title="Air Max 97">
+            <text>Well highlighted Air bubble.
+
+Inspired by mountain bikes, while an urban legend quotes Japan bullet trains as inspiration.</text>
+        </entry>
+    </section>
+    <section title="Other Nike Air">
+        <entry title="Introduction">
+            <text>Because there are other sneakers than Air Max.</text>
+        </entry>
+        <entry title="Air Force 1">
+            <text>« Air Force 1. Zéro fan, que des fanatiques. » -- LTA</text>
+        </entry>
+    </section>
+    <section title="👟"/>
+    <data title="Properties">
+        <entry>
+            <key>Date</key>
+            <value>9999-99-99</value>
+        </entry>
+        <entry>
+            <key>Topic</key>
+            <value>Urban culture</value>
+        </entry>
+    </data>
+</report>
