@@ -7,29 +7,13 @@ use Keruald\Commands\Display\OutputDisplay;
 
 abstract class Command {
 
-    /**
-     * @var int
-     */
-    private $argc;
-
-    /**
-     * @var array
-     */
-    private $argv;
-
-    /**
-     * @var \Keruald\Commands\Display\Display
-     */
-    protected $display;
+    protected Display $display;
 
     public function __construct (
-        int $argc,
-        array $argv,
+        public int $argc,
+        public array $argv,
         Display $display = null
     ) {
-        $this->argc = $argc;
-        $this->argv = $argv;
-
         if ($display === null) {
             $display = self::getDefaultDisplay();
         }
@@ -46,21 +30,33 @@ abstract class Command {
     /// Getters and setters
     ///
 
+    /**
+     * @deprecated Use directly Command::$argc
+     */
     public function getArgc () : int {
         return $this->argc;
     }
 
+    /**
+     * @deprecated Use directly Command::$argc
+     */
     public function setArgc (int $argc) : Command {
         $this->argc = $argc;
 
         return $this;
     }
 
+    /**
+     * @deprecated Use directly Command::$argv
+     */
     public function getArgv () : array {
         return $this->argv;
     }
 
 
+    /**
+     * @deprecated Use directly Command::$argv
+     */
     public function setArgv (array $argv) : Command {
         $this->argv = $argv;
 

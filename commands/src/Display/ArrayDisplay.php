@@ -12,14 +12,14 @@ namespace Keruald\Commands\Display;
 class ArrayDisplay extends Display {
 
     /**
-     * @var array
+     * @var string[]
      */
-    private $out = [];
+    private array $out = [];
 
     /**
-     * @var array
+     * @var string[]
      */
-    private $error = [];
+    private array $error = [];
 
     ///
     /// Implement Display
