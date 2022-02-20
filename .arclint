@@ -1,0 +1,53 @@
+{
+    "exclude": [
+        "(vendor/)"
+    ],
+    "linters": {
+        "chmod": {
+            "type": "chmod"
+        },
+        "filename": {
+            "type": "filename"
+        },
+        "json": {
+            "type": "json",
+            "include": [
+                "(^\\.arcconfig$)",
+                "(^\\.arclint$)",
+                "(\\.json$)"
+            ]
+        },
+        "merge-conflict": {
+            "type": "merge-conflict"
+        },
+        "php": {
+            "type": "php",
+            "include": "(\\.php$)"
+        },
+        "phpcs": {
+            "type": "phpcs",
+            "bin": "vendor/bin/phpcs",
+            "phpcs.standard": "phpcs.xml",
+            "include": [
+                "(src/.*\\.php$)",
+                "(tests/.*\\.php$)"
+            ]
+        },
+        "python": {
+            "type": "flake8",
+            "severity": {
+                "F821": "advice"
+            },
+            "include": [
+                "(\\.py$)"
+            ]
+        },
+        "spelling": {
+            "type": "spelling"
+        },
+        "xml": {
+            "type": "xml",
+            "include": "(\\.xml$)"
+        }
+    }
+}
