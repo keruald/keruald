@@ -1,0 +1,34 @@
+#   -------------------------------------------------------------
+#   Metadata for Keruald packages
+#   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#   Project:        Keruald
+#   Description:    Configuration for utilities
+#   License:        Trivial work, not eligible to copyright.
+#
+#                   If eligible, this data is made available under
+#                   the Public Domain Dedication and License v1.0
+#                   whose full text can be found at:
+#                   http://opendatacommons.org/licenses/pddl/1.0/
+#   -------------------------------------------------------------
+
+#   -------------------------------------------------------------
+#   Packages
+#   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#   Each package matches the following artifacts:
+#
+#    — a subdirectory here
+#    — a main repository on DevCentral
+#    — a mirror repository on GitHub in keruald/ organization
+#   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+packages:
+    - commands
+    - database
+    - omnitools
+    - report
+
+packages_namespaces:
+    commands: Keruald\Commands
+    database: Keruald\Database
+    omnitools: Keruald\OmniTools
+    report: Keruald\Reporting
