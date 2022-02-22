@@ -1,0 +1,57 @@
+{
+    "name": "keruald/keruald",
+    "type": "library",
+    "description": "Modular libraries to build frameworks and applications",
+    "keywords": [
+        "framework",
+        "keruald"
+    ],
+    "license": "BSD-2-Clause",
+    "homepage": "https://keruald.nasqueron.org",
+    "authors": [
+        {
+            "name": "Sébastien Santoro",
+            "email": "dereckson@espace-win.org"
+        },
+        {
+            "name": "Keruald contributors"
+        }
+    ],
+    "require": {
+        "ext-intl": "*"
+    },
+    "require-dev": {
+        "ext-mbstring": "*",
+        "ext-mysqli": "*",
+        "ext-xmlwriter": "*",
+        "nasqueron/codestyle": "^0.0.1",
+        "phan/phan": "^5.3.1",
+        "phpunit/phpunit": "^9.5",
+        "symfony/yaml": "^6.0.3",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "replace": {
+        "keruald/commands": "self.version",
+        "keruald/database": "self.version",
+        "keruald/omnitools": "self.version",
+        "keruald/report": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Keruald\\Commands\\": "commands/src/",
+            "Keruald\\Commands\\Tests\\": "commands/tests/",
+            "Keruald\\Database\\": "database/src/",
+            "Keruald\\Database\\Tests\\": "database/tests/",
+            "Keruald\\OmniTools\\": "omnitools/src/",
+            "Keruald\\OmniTools\\Tests\\": "omnitools/tests/",
+            "Keruald\\Reporting\\": "report/src/",
+            "Keruald\\Reporting\\Tests\\": "report/tests/"
+        }
+    },
+    "scripts": {
+        "lint-src": "find */src -type f -name '*.php' | xargs -n1 php -l",
+        "lint-tests": "find */tests -type f -name '*.php' | xargs -n1 php -l",
+        "test": "vendor/bin/phpunit"
+    },
+    "minimum-stability": "dev"
+}

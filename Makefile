@@ -37,10 +37,13 @@ vendor:
 #   Build targets for monorepo maintenance
 #   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-build-repo: $(GENERATED_FROM_TEMPLATES)
+build-repo: $(GENERATED_FROM_TEMPLATES) composer.json
 
 clean-repo:
-	${RM} $(GENERATED_FROM_TEMPLATES)
+	${RM} $(GENERATED_FROM_TEMPLATES) composer.json
 
 $(GENERATED_FROM_TEMPLATES):
 	_utils/templates/resolve.py _templates/$@.in > $@
+
+composer.json:
+	_utils/templates/generate-compose-json.php > composer.json
