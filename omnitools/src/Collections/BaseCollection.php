@@ -12,6 +12,12 @@ abstract class BaseCollection {
     public static abstract function from (iterable $items) : static;
 
     ///
+    /// Constants
+    ///
+
+    const CB_ZERO_ARG = "Callback function should have at least one argument";
+
+    ///
     /// Getters
     ///
 

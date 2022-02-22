@@ -120,6 +120,58 @@ class VectorTest extends TestCase {
 
     }
 
+    public function testFlatMap () : void {
+        $expected = [
+            // Squares and cubes
+            1, 1,
+            4, 8,
+            9, 27,
+            16, 64,
+            25, 125
+        ];
+
+        $callback = function ($n) {
+            yield $n * $n;
+            yield $n * $n * $n;
+        };
+
+        $actual = $this->vector->flatMap($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFlatMapWithKeyValueCallback() : void {
+        $vector = new Vector(["foo", "bar", "quux", "xizzy"]);
+
+        $callback = function (int $key, string $value) {
+            yield "$key::$value";
+            yield "$value ($key)";
+        };
+
+        $expected = [
+            "0::foo",
+            "foo (0)",
+
+            "1::bar",
+            "bar (1)",
+
+            "2::quux",
+            "quux (2)",
+
+            "3::xizzy",
+            "xizzy (3)",
+        ];
+
+        $actual = $vector->flatMap($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFlatMapWithCallbackWithoutArgument() : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $callback = function () {};
+        $this->vector->flatMap($callback);
+    }
+
     public function testFilter () : void {
         $vector = new Vector(["foo", "bar", "quux", "xizzy"]);
 

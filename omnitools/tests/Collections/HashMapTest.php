@@ -226,6 +226,114 @@ class HashMapTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
+    public function testMapKeysAndValues () : void {
+        $callback = function ($civilization, $author) {
+            return [$author[0], "$author, $civilization"];
+        };
+
+        $expected = [
+            // Some sci-fi civilizations and author
+            "I" => "Iain Banks, The Culture",
+            "A" => "Ann Leckie, Radchaai Empire",
+            "L" => "Lois McMaster Bujold, Barrayar",
+            "U"=> "Ursula K. Le Guin, Hainish",
+        ];
+
+        $actual = $this->map->mapValuesAndKeys($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testMapKeysAndValuesForVectors () : void {
+        $callback = function ($author) {
+            return [$author[0], "author:" . $author];
+        };
+
+        $expected = [
+            // Some sci-fi civilizations and author
+            "I" => "author:Iain Banks",
+            "A" => "author:Ann Leckie",
+            "L" => "author:Lois McMaster Bujold",
+            "U" => "author:Ursula K. Le Guin",
+        ];
+
+        $actual = $this->map->mapValuesAndKeys($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testMapKeysAndValuesWithCallbackWithoutArgument() : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $callback = function () {};
+        $this->map->mapValuesAndKeys($callback);
+    }
+
+    public function testFlatMap(): void {
+        $callback = function ($key, $value) {
+            $items = explode(" ", $value);
+
+            foreach ($items as $item) {
+                yield $item => $key;
+            }
+        };
+
+        $expected = [
+            "Iain" => "The Culture",
+            "Banks" => "The Culture",
+
+            "Ann" => "Radchaai Empire",
+            "Leckie" => "Radchaai Empire",
+
+            "Lois" => "Barrayar",
+            "McMaster" => "Barrayar",
+            "Bujold" => "Barrayar",
+
+            "Ursula"=> "Hainish",
+            "K."=> "Hainish",
+            "Le"=> "Hainish",
+            "Guin"=> "Hainish",
+        ];
+
+        $actual = $this->map->flatMap($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFlatMapForVectors() : void {
+        $callback = function ($value) {
+            $items = explode(" ", $value);
+
+            foreach ($items as $item) {
+                yield $item => $value;
+            }
+        };
+
+        $expected = [
+            "Iain" => "Iain Banks",
+            "Banks" => "Iain Banks",
+
+            "Ann" => "Ann Leckie",
+            "Leckie" => "Ann Leckie",
+
+            "Lois" => "Lois McMaster Bujold",
+            "McMaster" => "Lois McMaster Bujold",
+            "Bujold" => "Lois McMaster Bujold",
+
+            "Ursula"=> "Ursula K. Le Guin",
+            "K."=> "Ursula K. Le Guin",
+            "Le"=> "Ursula K. Le Guin",
+            "Guin"=> "Ursula K. Le Guin",
+        ];
+
+        $actual = $this->map->flatMap($callback)->toArray();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFlatMapWithCallbackWithoutArgument() : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $callback = function () {};
+        $this->map->flatMap($callback);
+    }
+
     public function testFilter () {
         // Let's filter to keep names with 3 parts or more
 

@@ -154,12 +154,10 @@ class HashMap extends BaseMap {
     public function filter (callable $callable) : self {
         $argc = (new CallableElement($callable))->countArguments();
         if ($argc === 0) {
-            throw new InvalidArgumentException(
-                "Callback should have at least one argument"
-            );
+            throw new InvalidArgumentException(self::CB_ZERO_ARG);
         }
-        $mode = (int)($argc > 1);
 
+        $mode = (int)($argc > 1);
         return new self(
             array_filter($this->map, $callable, $mode)
         );
@@ -172,6 +170,38 @@ class HashMap extends BaseMap {
         }
 
         return new self($mappedMap);
+    }
+
+    public function mapValuesAndKeys (callable $callable) : self {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        $newMap = [];
+        foreach ($this->map as $key => $value) {
+            [$newKey, $newValue] = match($argc) {
+                0 => throw new InvalidArgumentException(self::CB_ZERO_ARG),
+                1 => $callable($value),
+                default => $callable($key, $value),
+            };
+            $newMap[$newKey] = $newValue;
+        }
+
+        return new self($newMap);
+    }
+
+    public function flatMap (callable $callable) : self {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        $newMap = new self;
+        foreach ($this->map as $key => $value) {
+            $toAdd = match($argc) {
+                0 => throw new InvalidArgumentException(self::CB_ZERO_ARG),
+                1 => $callable($value),
+                default => $callable($key, $value),
+            };
+            $newMap->update($toAdd);
+        }
+
+        return $newMap;
     }
 
     public function filterKeys (callable $callable) : self {

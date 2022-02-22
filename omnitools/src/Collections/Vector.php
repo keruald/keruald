@@ -202,6 +202,22 @@ class Vector extends BaseCollection implements ArrayAccess, IteratorAggregate {
         return new self($mappedVector);
     }
 
+    public function flatMap (callable $callable) : self {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        $newMap = new self;
+        foreach ($this->items as $key => $value) {
+            $toAdd = match($argc) {
+                0 => throw new InvalidArgumentException(self::CB_ZERO_ARG),
+                1 => $callable($value),
+                default => $callable($key, $value),
+            };
+            $newMap->append($toAdd);
+        }
+
+        return $newMap;
+    }
+
     public function filterKeys (callable $callable) : self {
         return new self(
             array_filter($this->items, $callable, ARRAY_FILTER_USE_KEY)
