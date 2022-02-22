@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Registration\PSR4;
 
-use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
-
 final class Solver {
 
     /**
@@ -43,7 +41,7 @@ final class Solver {
     }
 
     public function canResolve () : bool {
-        return StringUtilities::startsWith($this->class, $this->namespace);
+        return str_starts_with($this->class, $this->namespace);
     }
 
     public static function getPathFor (string $name) : string {
