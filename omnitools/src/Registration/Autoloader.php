@@ -19,6 +19,12 @@ class Autoloader {
     ///
 
     public static function selfRegister () : void {
+        // The PSR-4 autoloader needs those classes as dependencies:
+        require_once __DIR__ . "/PSR4/Autoloader.php";
+        require_once __DIR__ . "/PSR4/Solver.php";
+        require_once __DIR__ . "/../IO/File.php";
+        require_once __DIR__ . "/../Reflection/CodeFile.php";
+
         self::registerPSR4("Keruald\\OmniTools\\", self::getLibraryPath());
     }
 
