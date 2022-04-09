@@ -46,6 +46,10 @@ class Vector extends BaseVector {
             ->explode($delimiter, $limit);
     }
 
+    public static function range (int $start, int $end, int $step = 1) : self {
+        return new Vector(range($start, $end, $step));
+    }
+
     ///
     /// HOF :: specialized
     ///

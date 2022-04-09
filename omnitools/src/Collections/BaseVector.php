@@ -228,6 +228,35 @@ abstract class BaseVector extends BaseCollection implements ArrayAccess, Iterato
         return new OmniString(implode($delimiter, $this->items));
     }
 
+    public function bigrams () : Vector {
+        return $this->ngrams(2);
+    }
+
+    public function trigrams () : Vector {
+        return $this->ngrams(3);
+    }
+
+    public function ngrams (int $n) : Vector {
+        if ($n < 1) {
+            throw new InvalidArgumentException(
+                "n-grams must have a n strictly positive"
+            );
+        }
+
+        if ($n == 1) {
+            return Vector::from($this->map(fn ($value) => [$value]));
+        }
+
+        $len = $this->count();
+        if ($len <= $n) {
+            // We only have one slice.
+            return Vector::from([$this->items]);
+        }
+
+        return Vector::range(0, $len - $n)
+            ->map(fn($i) => array_slice($this->items, $i, $n));
+    }
+
     ///
     /// ArrayAccess
     /// Interface to provide accessing objects as arrays.

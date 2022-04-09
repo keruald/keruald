@@ -135,4 +135,33 @@ class Random {
         throw new InvalidArgumentException();
     }
 
+    /**
+     * @throw InvalidArgumentException if [$min, $max] doesn't have at least $count elements.
+     * @throws Exception if an appropriate source of randomness cannot be found.
+     */
+    public static function generateIntegerMonotonicSeries (
+        int $min, int $max, int $count
+    ) : array {
+        if ($max - $min < $count) {
+            throw new InvalidArgumentException("Can't build a monotonic series of n elements if the range has fewer elements.");
+        }
+
+        $series = [];
+
+        $n = 0;
+        while ($n < $count) {
+            $candidate = random_int($min, $max);
+
+            if (in_array($candidate, $series)) {
+                continue;
+            }
+
+            $series[] = $candidate;
+            $n++;
+        }
+
+        sort($series);
+        return $series;
+
+    }
 }

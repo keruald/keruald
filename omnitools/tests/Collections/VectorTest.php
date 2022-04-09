@@ -250,6 +250,83 @@ class VectorTest extends TestCase {
     }
 
     ///
+    /// n-grams
+    ///
+
+    public function testBigrams() : void {
+        $expected = Vector::from([
+            [1, 2],
+            [2, 3],
+            [3, 4],
+            [4, 5],
+        ]);
+
+        $this->assertEquals($expected, $this->vector->bigrams());
+    }
+
+    public function testTrigrams() : void {
+        $expected = Vector::from([
+            [1, 2, 3],
+            [2, 3, 4],
+            [3, 4, 5],
+        ]);
+
+        $this->assertEquals($expected, $this->vector->trigrams());
+    }
+
+    public function testNgrams() : void {
+        $expected = Vector::from([
+            [1, 2, 3, 4],
+            [2, 3, 4, 5],
+        ]);
+
+        $this->assertEquals($expected, $this->vector->ngrams(4));
+    }
+
+    public function testNgramsWithN1 () : void {
+        $expected = Vector::from([
+            [1],
+            [2],
+            [3],
+            [4],
+            [5],
+        ]);
+
+        $this->assertEquals($expected, $this->vector->ngrams(1));
+    }
+
+    private function provideLowN () : iterable {
+        yield [0];
+        yield [-1];
+        yield [PHP_INT_MIN];
+    }
+
+    /**
+     * @dataProvider provideLowN
+     */
+    public function testNgramsWithTooLowN ($n) : void {
+        $this->expectException(InvalidArgumentException::class);
+        $this->vector->ngrams($n);
+    }
+
+    private function provideLargeN () : iterable {
+        yield [5];
+        yield [6];
+        yield [PHP_INT_MAX];
+    }
+
+    /**
+     * @dataProvider provideLargeN
+     */
+    public function testNgramsWithTooLargeN ($n) : void {
+        $expected = Vector::from([
+            [1, 2, 3, 4, 5],
+        ]);
+
+        $this->assertEquals($expected, $this->vector->ngrams($n));
+    }
+
+    ///
     /// ArrayAccess
     ///
 
