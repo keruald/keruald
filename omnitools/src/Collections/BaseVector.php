@@ -131,6 +131,27 @@ abstract class BaseVector extends BaseCollection implements ArrayAccess, Iterato
     }
 
     /**
+     * Replaces a part of the vector by the specified iterable.
+     *
+     * @param int $offset Allow to replace a part inside the vector by an iterable with keys starting at 0, by adding the specified offset.
+     * @param int $len The maximum amount of elements to read. If 0, the read isn't bounded.
+     */
+    public function replace(iterable $iterable, int $offset = 0, int $len = 0) : self {
+        $itemsCount = 0;
+
+        foreach ($iterable as $key => $value) {
+            $this->items[$key + $offset] = $value;
+
+            $itemsCount++;
+            if ($len > 0 && $itemsCount >= $len) {
+                break;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets a copy of the internal vector.
      *
      * Scalar values (int, strings) are cloned.
@@ -192,6 +213,15 @@ abstract class BaseVector extends BaseCollection implements ArrayAccess, Iterato
         return new static(
             array_filter($this->items, $callable, ARRAY_FILTER_USE_KEY)
         );
+    }
+
+    public function chunk (int $length): Vector {
+        return new Vector(array_chunk($this->items, $length));
+    }
+
+    public function slice (int $offset, int $length) : self {
+        $slice = array_slice($this->items, $offset, $length);
+        return new static($slice);
     }
 
     public function implode(string $delimiter) : OmniString {

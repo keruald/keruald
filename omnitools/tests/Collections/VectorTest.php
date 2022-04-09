@@ -11,6 +11,10 @@ use InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @covers \Keruald\OmniTools\Collections\Vector
+ * @covers \Keruald\OmniTools\Collections\BaseVector
+ */
 class VectorTest extends TestCase {
 
     private Vector $vector;
@@ -201,6 +205,20 @@ class VectorTest extends TestCase {
             ->toArray();
 
         $this->assertEquals([0, 2, 4], array_keys($actual));
+    }
+
+    public function testChunk () : void {
+        $vector = new Vector([1, 2, 3, 4, 5, 6]);
+
+        $this->assertEquals(
+            [[1, 2], [3, 4], [5, 6]],
+            $vector->chunk(2)->toArray()
+        );
+    }
+
+    public function testSlice () : void {
+        $actual = $this->vector->slice(2, 3);
+        $this->assertEquals([3, 4, 5], $actual->toArray());
     }
 
     public function testImplode() : void {
