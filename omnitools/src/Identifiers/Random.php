@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Identifiers;
 
 use Closure;
+use Exception;
 use InvalidArgumentException;
 
 use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
@@ -43,6 +44,9 @@ class Random {
     }
 
 
+    /**
+     * @throws Exception if an appropriate source of randomness cannot be found.
+     */
     public static function generateIdentifier (int $bytes_count) : string {
         $bytes = random_bytes($bytes_count);
 
@@ -105,14 +109,20 @@ class Random {
         ];
     }
 
+    /**
+     * @throws Exception if an appropriate source of randomness cannot be found.
+     */
     public static function pickLetter () : string {
-        $asciiCode = 65 + mt_rand() % 26;
+        $asciiCode = 65 + self::pickDigit(26);
 
         return chr($asciiCode);
     }
 
+    /**
+     * @throws Exception if an appropriate source of randomness cannot be found.
+     */
     public static function pickDigit (int $base = 10) : int {
-        return mt_rand() % $base;
+        return random_int(0, $base - 1);
     }
 
     private static function getPicker (string $format) : Closure {
