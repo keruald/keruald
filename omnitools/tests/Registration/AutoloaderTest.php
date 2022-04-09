@@ -22,6 +22,8 @@ class AutoloaderTest extends TestCase {
 
         Autoloader::registerPSR4("Acme\\MockLib\\", $this->getDataPath("MockLib"));
         $this->assertTrue(class_exists($class));
+
+        $this->assertFalse(class_exists("NotExisting"));
     }
 
     public function testGetLibraryPath () : void {
