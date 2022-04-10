@@ -14,4 +14,11 @@ class SorensenDiceCoefficientTest extends TestCase {
         $this->assertEquals(0.25, $actual->compute());
     }
 
+    public function testComputeFor () : void {
+        $score = SorensenDiceCoefficient::computeFor('night', 'nacht');
+
+        $this->assertGreaterThan(0, $score);
+        $this->assertLessThan(1, $score);
+    }
+
 }
