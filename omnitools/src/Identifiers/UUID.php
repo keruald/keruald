@@ -11,21 +11,58 @@ use Keruald\OmniTools\Collections\Vector;
 use Keruald\OmniTools\DateTime\UUIDv1TimeStamp;
 use Keruald\OmniTools\DateTime\UUIDv7TimeStamp;
 
+/**
+ * Allow generating and representing UUID by implementing both RFC 4122
+ * and proposed extension to UUIDv6, UUIDv7 and UUIDv8.
+ *
+ * A UUID is a universal identified with good local and global uniqueness
+ * on the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx where x is hexadecimal.
+ *
+ * To generate a random identified, you can use `UUID::UUIDv4()`.
+ *
+ * When you need a monotonic series of always growing identifiers,
+ * you can call `UUID::UUIDv7()`, time-dependent, with 74 bits of randomness,
+ * or `UUID::batchOfUUIDv7(10)`, with at least 62 bits of randomness warranted.
+ */
 class UUID {
 
-    const UUID_REGEXP = "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/";
+    /**
+     * A regular expression to detect if a lowercase string is a valid UUID.
+     */
+    public const UUID_REGEXP = "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/";
 
-    const MAX_12 = 4095;
-    const MAX_48 = 281_474_976_710_655;
-    const MAX_62 = 4_611_686_018_427_387_903;
+    /**
+     * The maximal signed integer representable in 12 bits.
+     */
+    private const MAX_12 = 4095;
 
-    const UUIDV7_QUANTITY_PER_MS = 63;
+    /**
+     * The maximal signed integer representable in 48 bits.
+     */
+    private const MAX_48 = 281_474_976_710_655;
+
+    /**
+     * The maximal signed integer representable in 62 bits.
+     */
+    private const MAX_62 = 4_611_686_018_427_387_903;
+
+    /**
+     * The quantity of UUIDv7 in a batch allowed to share the same timestamp.
+     */
+    private const UUIDV7_QUANTITY_PER_MS = 63;
 
     ///
     /// Public constants from RFC 4122 and draft-peabody-dispatch-new-uuid-format-03
     ///
 
+    /**
+     * A null value for a UUID, as defined in RFC 4122.
+     */
     public const NIL = "00000000-0000-0000-0000-000000000000";
+
+    /**
+     * The maximum value for a UUID.
+     */
     public const MAX = "ffffffff-ffff-ffff-ffff-ffffffffffff";
 
     ///
@@ -33,12 +70,14 @@ class UUID {
     ///
 
     /**
+     * Generate a UUIDv1, as defined in RFC 4122.
+     *
      * @param int    $clk_seq_hi_res
      * @param int    $clk_seq_low
      * @param string $mac The node information, normally the MAC address ; if
      *                    omitted, a random value will be generated.
      *
-     * @return string
+     * @return string The UUID
      * @throws Exception if $mac is not specified, and an appropriate source of randomness cannot be found.
      * @throws InvalidArgumentException if $mac is specified and doesn't contain exactly 12 hexadecimal characters.
      */
@@ -60,6 +99,18 @@ class UUID {
         );
     }
 
+    /**
+     * Generate a UUIDv1, as defined in RFC 4122, from specified values.
+     *
+     * That method can be used to reproduce a UUID from known parameters.
+     *
+     * @param UUIDv1TimeStamp $timestamp A 60 bits timestamp
+     * @param int             $clk_seq_hi_res A 6 bits signed integer
+     * @param int             $clk_seq_low A 8 bits signed integer
+     * @param BitsVector      $node A 48 bits vector
+     *
+     * @return string The UUID
+     */
     public static function UUIDv1FromValues (
         UUIDv1TimeStamp $timestamp,
         int             $clk_seq_hi_res,
@@ -87,6 +138,11 @@ class UUID {
     ///
 
     /**
+     * Generate a UUIDv4, as defined in RFC 4122.
+     *
+     * This UUID offers 122 bits of randomness, built from cryptographically
+     * secure pseudo-random integers.
+     *
      * @return string An RFC 4122 compliant v4 UUID
      * @throws Exception if an appropriate source of randomness cannot be found.
      */
@@ -118,6 +174,13 @@ class UUID {
         );
     }
 
+    /**
+     * Generate a UUIDv4, as defined in RFC 4122, without hyphens.
+     *
+     * @see UUID::UUIDv4()
+     * @return string
+     * @throws Exception
+     */
     public static function UUIDv4WithoutHyphens () : string {
         return str_replace("-", "", self::UUIDv4());
     }
@@ -127,12 +190,30 @@ class UUID {
     ///
 
     /**
+     * Generate a UUIDv6, as defined in draft-peabody-dispatch-new-uuid-format-03.
+     *
+     * This format is similar to UUIDv1, with bits reordered to allow
+     * monotonicity. It is mainly designed to use when compatibility with
+     * UUIDv1 is required. For new systems, UUIDv7 use is recommended.
+     *
+     * This UUID is deterministic, built from a 60 bits timestamp, a clock
+     * sequence and a node information. It doesn't contain any source of
+     * randomness, excepted if node information is replaced by 48 random bits,
+     * and as such, isn't suitable to be used to generate credentials,
+     * or an identified difficult to guess ; use UUIDv7 or UUIDv4 in such cases.
+     *
+     * The RFC 4122 recommends the use of the MAC address when available,
+     * as a good way to ensure global uniqueness of the UUID. Such use will leak
+     * your MAC address, while the warranty of global uniqueness will be false
+     * if the MAC address is spoofed, or automatically generated for a VM.
+     * As such, proposed draft don't recommend to use MAC address anymore.
+     *
      * @param int    $clk_seq_hi_res
      * @param int    $clk_seq_low
      * @param string $mac The node information, normally the MAC address ; if
      *                    omitted, a random value will be generated.
      *
-     * @return string
+     * @return string The UUID
      * @throws Exception if $mac is not specified, and an appropriate source of randomness cannot be found.
      * @throws InvalidArgumentException if $mac is specified and doesn't contain exactly 12 hexadecimal characters.
      */
@@ -154,6 +235,21 @@ class UUID {
         );
     }
 
+    /**
+     * Generate a UUIDv6, as defined in draft-peabody-dispatch-new-uuid-format-03,
+     * from known values.
+     *
+     * @see UUID::UUIDv6()
+     *
+     * @param UUIDv1TimeStamp $timestamp A 60 bits precision timestamp
+     * @param int             $clk_seq_hi_res
+     * @param int             $clk_seq_low
+     * @param BitsVector      $node A 48 bits vector to identify the node
+     *
+     * @return string The UUID
+     * @throws Exception if $mac is not specified, and an appropriate source of randomness cannot be found.
+     * @throws InvalidArgumentException if $mac is specified and doesn't contain exactly 12 hexadecimal characters.
+     */
     public static function UUIDv6FromValues (
         UUIDv1TimeStamp $timestamp,
         int             $clk_seq_hi_res,
@@ -176,6 +272,12 @@ class UUID {
         return self::reformat($bits->toHexString());
     }
 
+    /**
+     * Convert RFC 4122 UUIDv1 to proposed draft UUIDv6.
+
+     * @param string $uuid The UUIDv1 to convert
+     * @return string A UUIDv6 with the same information as the UUIDv1.
+     */
     public static function UUIDv1ToUUIDv6 (string $uuid) : string {
         $bits = BitsVector::fromDecoratedHexString($uuid);
         UUIDv1TimeStamp::fromUUIDv1($uuid)->writeToUUIDv6($bits);
@@ -186,6 +288,12 @@ class UUID {
         return self::reformat($bits->toHexString());
     }
 
+    /**
+     * Convert proposed draft UUIDv6 to RFC 4122 UUIDv1.
+
+     * @param string $uuid The UUIDv6 to convert
+     * @return string A UUIDv1 with the same information as the UUIDv6.
+     */
     public static function UUIDv6ToUUIDv1 (string $uuid) : string {
         $bits = BitsVector::fromDecoratedHexString($uuid);
         UUIDv1TimeStamp::fromUUIDv6($uuid)->writeToUUIDv1($bits);
@@ -201,8 +309,17 @@ class UUID {
     ///
 
     /**
+     * Generate a UUIDv7, as defined in draft-peabody-dispatch-new-uuid-format-03.
+     *
+     * This UUID associates a 48 bits timestamp to 74 bits of randomness.
+     *
+     * When called at 1 ms intervals, it gives a monotonicity warranty, ie each
+     * UUID generated will be greater than the previous one. When you need
+     * several UUIDv7 immediately, use `UUID::batchOfUUIDv7($count)` to get
+     * the same warranty.
+     *
      * @throws Exception if an appropriate source of randomness cannot be found.
-     *@see UUID::batchOfUUIDv7()
+     * @see UUID::batchOfUUIDv7() when you need a monotonic series of UUIDv7
      */
     public static function UUIDv7 () : string {
         return self::UUIDv7FromBits(
@@ -213,11 +330,18 @@ class UUID {
     }
 
     /**
-     * A batch of UUIDv7 with monotonicity warranty.
+     * Generate in batch UUIDv7 with monotonicity warranty among them.
+     *
+     * UUID in small batches  share the same timestamp,
+     * but to maintain some bits of randomness and enough entropy,
+     * a new timestamp will be used every 64 timestamps.
+     *
+     * When generating a very large batch (> 10000), this method will be slow,
+     * as 1 ms break is needed every 64 timestamps, and random_int() can also
+     * wait for a source of entropy.
      *
      * @param int $count The number of UUIDv7 to generate
-     *
-     * @return array
+     * @return string[] An array of UUIDv7 with monotonic warranty.
      */
     public static function batchOfUUIDv7 (int $count) : array {
         if ($count > self::UUIDV7_QUANTITY_PER_MS) {
@@ -252,7 +376,15 @@ class UUID {
         ));
     }
 
-
+    /**
+     * Generate a UUIDv7 for known timestamp and known random values.
+     *
+     * @param BitsVector $unixTimestampMs A 48 bits timestamp
+     * @param int        $randA A 12 bits value for random A number
+     * @param int        $randB A 62 bits value for random B number
+     *
+     * @return string The UUIDv7
+     */
     public static function UUIDv7FromBits (
         BitsVector $unixTimestampMs,
         int        $randA,
@@ -272,6 +404,16 @@ class UUID {
         return self::reformat($bits->toHexString());
     }
 
+    /**
+     * Allow to generate a UUIDv7 for known timestamp and known random values,
+     * when the timestamp is available as a signed 48-bits integer.
+     *
+     * @param int $unixTimestampMs A 48 bits signed integer for timestamp
+     * @param int $randA A 12 bits value for random A number
+     * @param int $randB A 62 bits value for random B number
+     *
+     * @return string The UUIDv7
+     */
     public static function UUIDv7FromValues (
         int $unixTimestampMs,
         int $randA,
@@ -289,8 +431,15 @@ class UUID {
     /**
      * Generate a UUIDv8 with three custom values.
      *
-     * The UUIDv8 lets the implementation decide of the bits' layout.
-     * This implementation will write values like big-endian unsigned numbers.
+     * According to proposed draft, the UUIDv8 lets the implementation decides
+     * of the bits' layout.  Accordingly, this method give you the control
+     * of the data you want to use in the UUID. It will write specified values
+     * like big-endian signed numbers.
+     *
+     * @param int $a A 48 bits integer for custom_a field
+     * @param int $b A 12 bits integer for custom_b field
+     * @param int $c A 62 bits integer for custom_c field
+     * @return string The generated UUID
      */
     public static function UUIDv8 (int $a, int $b, int $c) : string {
         if ($a > self::MAX_48) {
@@ -320,6 +469,12 @@ class UUID {
     /// Helper methods
     ///
 
+    /**
+     * Reformat a 32 or 36 hexadecimal string to a lowercase 36 uuid string.
+     *
+     * @param string $uuid a hexadecimal string with or without hyphens
+     * @return string A formatted UUID.
+     */
     public static function reformat (string $uuid) : string {
         $uuid = strtolower($uuid);
 
@@ -336,10 +491,26 @@ class UUID {
         };
     }
 
+    /**
+     * Determine if the specified string is a valid UUID
+     *
+     * @param string A well-formatted, lowercase string
+     * @return bool
+     */
     public static function isUUID ($string) : bool {
         return (bool)preg_match(self::UUID_REGEXP, $string);
     }
 
+    /**
+     * Determine the version of the specified UUID.
+     *
+     * Normally, the proposed draft recommends treating UUID as an opaque value
+     * and refrain to inspect bits. However, where necessary, inspectors method
+     * for version and variants are allowed.
+     *
+     * @param string $uuid
+     * @return int The UUID version
+     */
     public static function getVersion (string $uuid) : int {
         // bits 48 -> 51 represent version
         return BitsVector::fromDecoratedHexString($uuid)
@@ -347,6 +518,16 @@ class UUID {
                          ->toInteger();
     }
 
+    /**
+     * Determine the variant of the specified UUID.
+     *
+     * Normally, the proposed draft recommends treating UUID as an opaque value
+     * and refrain to inspect bits. However, where necessary, inspectors method
+     * for version and variants are allowed.
+     *
+     * @param string $uuid
+     * @return int The UUID variant
+     */
     public static function getVariant (string $uuid) : int {
         // bits 64 -> 65 represent variant
         return BitsVector::fromDecoratedHexString($uuid)
