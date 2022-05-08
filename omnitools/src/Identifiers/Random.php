@@ -136,7 +136,7 @@ class Random {
     }
 
     /**
-     * @throw InvalidArgumentException if [$min, $max] doesn't have at least $count elements.
+     * @throws InvalidArgumentException if [$min, $max] doesn't have at least $count elements.
      * @throws Exception if an appropriate source of randomness cannot be found.
      */
     public static function generateIntegerMonotonicSeries (
