@@ -57,9 +57,37 @@ class HashMapTest extends TestCase {
         $this->assertSame($expected, $map->toArray());
     }
 
-    public function testFrom () {
-        $map = HashMap::from(self::MAP_CONTENT);
-        $this->assertSame(self::MAP_CONTENT, $map->toArray());
+    private function provideDeepArrays() : iterable {
+        yield [self::MAP_CONTENT, self::MAP_CONTENT];
+
+        yield [[], []];
+        yield [null, []];
+
+        $caps = new \stdClass;
+        $caps->color = "red";
+        $caps->logo = "HCKR";
+        yield [$caps, [
+            "color" => "red",
+            "logo" => "HCKR",
+        ]];
+
+        $sizedCaps = clone $caps;
+        $sizedCaps->size = new \stdClass;
+        $sizedCaps->size->h = 8;
+        $sizedCaps->size->r = 20;
+        yield [$sizedCaps, [
+            "color" => "red",
+            "logo" => "HCKR",
+            "size" => ["h" => 8, "r" => 20],
+        ]];
+    }
+
+    /**
+     * @dataProvider provideDeepArrays
+     */
+    public function testFrom($from, array $expected) : void {
+        $map = HashMap::from($from);
+        $this->assertEquals($expected, $map->toArray());
     }
 
     ///

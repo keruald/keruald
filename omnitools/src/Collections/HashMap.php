@@ -39,7 +39,35 @@ class HashMap extends BaseMap {
         }
     }
 
-    public static function from (iterable $items) : static {
+    ///
+    /// Convert to HashMap
+    ///
+
+    private static function convertToArray ($data) {
+        if (is_iterable($data) || is_object($data)) {
+            $result = [];
+            foreach ($data as $key => $value) {
+                $result[$key] = self::convertToArray($value);
+            }
+            return $result;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Converts deeply an element to a map.
+     *
+     * If $from is an object or iterable, each element will be:
+     *   - converted to an array (deep array) if iterable or object
+     *   - kept as is if it's a scalar
+     */
+    public static function from (iterable|object|null $from) : static {
+        if ($from === null) {
+            return new self;
+        }
+
+        $items = self::convertToArray($from);
         return new self($items);
     }
 
