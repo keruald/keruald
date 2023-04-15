@@ -13,4 +13,8 @@ class CurrentOS {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }
 
+    public static function isBSD () : bool {
+        return substr(PHP_OS, -3) === "BSD" || PHP_OS === "DragonFly";
+    }
+
 }
