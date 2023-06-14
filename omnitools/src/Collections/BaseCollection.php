@@ -5,6 +5,8 @@ namespace Keruald\OmniTools\Collections;
 
 abstract class BaseCollection {
 
+    use WithCollection;
+
     ///
     /// Constructors
     ///

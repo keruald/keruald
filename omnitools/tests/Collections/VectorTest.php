@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
 use IteratorAggregate;
+use OutOfRangeException;
 use Traversable;
 
 /**
@@ -371,6 +372,31 @@ class VectorTest extends TestCase {
 
     public function testGetIterator () : void {
         $this->assertEquals([1, 2, 3, 4, 5], iterator_to_array($this->vector));
+    }
+
+    ///
+    /// WithCollection trait
+    ///
+
+    public function testFirst () : void {
+        $this->assertEquals(1, $this->vector->first());
+    }
+
+    public function testFirstWhenEmpty () : void {
+        $vector = new Vector;
+
+        $this->expectException(OutOfRangeException::class);
+        $vector->first();
+    }
+
+    public function testFirstOr () : void {
+        $this->assertEquals(1, $this->vector->firstOr(2));
+    }
+
+    public function testFirstOrWhenEmpty () : void {
+        $vector = new Vector;
+
+        $this->assertEquals(2, $vector->firstOr(2));
     }
 
 }

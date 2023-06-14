@@ -2,12 +2,14 @@
 
 namespace Keruald\OmniTools\Tests\Collections;
 
+use Keruald\OmniTools\Collections\BitsVector;
 use Keruald\OmniTools\Collections\HashMap;
 
 use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
 use IteratorAggregate;
+use OutOfRangeException;
 use Traversable;
 
 class HashMapTest extends TestCase {
@@ -460,6 +462,34 @@ class HashMapTest extends TestCase {
 
     public function testGetIterator () : void {
         $this->assertEquals(self::MAP_CONTENT, iterator_to_array($this->map));
+    }
+
+    ///
+    /// WithCollection trait
+    ///
+
+    public function testFirst () : void {
+        $this->assertEquals("Iain Banks", $this->map->first());
+    }
+
+    public function testFirstWhenEmpty () : void {
+        $map = new HashMap();
+
+        $this->expectException(OutOfRangeException::class);
+        $map->first();
+    }
+
+    public function testFirstOr () : void {
+        $bits = BitsVector::new(4);
+        $bits[2] = 1;
+
+        $this->assertEquals("Iain Banks", $this->map->firstOr("Anonymous"));
+    }
+
+    public function testFirstOrWhenEmpty () : void {
+        $map = new HashMap();
+
+        $this->assertEquals("Anonymous", $map->firstOr("Anonymous"));
     }
 
 }

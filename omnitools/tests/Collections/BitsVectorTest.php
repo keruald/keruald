@@ -3,6 +3,7 @@
 namespace Keruald\OmniTools\Tests\Collections;
 
 use InvalidArgumentException;
+use OutOfRangeException;
 
 use Keruald\OmniTools\Collections\BitsVector;
 use PHPUnit\Framework\TestCase;
@@ -228,6 +229,37 @@ class BitsVectorTest extends TestCase {
         $bits[2] = 1;
 
         $this->assertEquals([0, 0, 1, 0], $bits->toArray());
+    }
+
+    ///
+    /// WithCollection trait
+    ///
+
+    public function testFirst () : void {
+        $bits = BitsVector::new(4);
+        $bits[2] = 1;
+
+        $this->assertEquals(0, $bits->first());
+    }
+
+    public function testFirstWhenEmpty () : void {
+        $bits = BitsVector::new(0);
+
+        $this->expectException(OutOfRangeException::class);
+        $bits->first();
+    }
+
+    public function testFirstOr () : void {
+        $bits = BitsVector::new(4);
+        $bits[2] = 1;
+
+        $this->assertEquals(0, $bits->firstOr(2));
+    }
+
+    public function testFirstOrWhenEmpty () : void {
+        $bits = BitsVector::new(0);
+
+        $this->assertEquals(2, $bits->firstOr(2));
     }
 
 }
