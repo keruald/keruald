@@ -28,7 +28,15 @@
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps">
         <exclude-pattern>*/_register_to_global_space.php</exclude-pattern>
     </rule>
-    
+
+    <!--
+    Database exception
+    Allow unused parameters
+    -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+    <exclude-pattern>database/src/*</exclude-pattern>
+    </rule>
+
     <file>commands/src</file>
     <file>commands/tests</file>
     

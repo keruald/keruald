@@ -34,3 +34,21 @@ For example:
 The mysql extension has been deprecated in PHP 5.7 and removed in PHP 7.
 As such, this extension isn't supported anymore. You can use straightforwardly
 replace 'MySQL' by 'MySQLi' as engine.
+
+## Specialized drivers
+### Blackhole
+
+The blackhole engine does nothing and always returns `true` as query result.
+
+This engine can be used for mocks:
+
+  - directly, when database behavior does not matter
+  - to build a mock by overriding behavior of query() or any other method
+
+It can also be used with the loader, without any engine-specific configuration:
+
+```php
+[
+    'engine' => Keruald\Database\Engines\BlackholeEngine::class,
+]
+```
