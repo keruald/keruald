@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Reflection;
 
 use Closure;
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
