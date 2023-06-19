@@ -3,6 +3,7 @@
 namespace Keruald\Database\Engines;
 
 use Keruald\Database\DatabaseEngine;
+use Keruald\Database\Result\DatabaseResult;
 
 class BlackholeEngine extends DatabaseEngine {
 
@@ -10,7 +11,7 @@ class BlackholeEngine extends DatabaseEngine {
         return $expression;
     }
 
-    public function query (string $query) : bool {
+    public function query (string $query) : bool|DatabaseResult {
         return true;
     }
 
