@@ -80,9 +80,9 @@ class MySQLiEngineTest extends TestCase {
 
         // First, we get associative arrays like [0 => 10,     10u => 10]
         //                                        ^ position   ^ column name
-        $this->assertEquals(10, $this->db->fetchRow($result)[0]);
-        $this->assertEquals(20, $this->db->fetchRow($result)[0]);
-        $this->assertEquals(30, $this->db->fetchRow($result)[0]);
+        $this->assertEquals(10, $this->db->fetchRow($result)[10]);
+        $this->assertEquals(20, $this->db->fetchRow($result)[10]);
+        $this->assertEquals(30, $this->db->fetchRow($result)[10]);
 
         // Then, we get a null value
         $this->assertEquals(null, $this->db->fetchRow($result));
@@ -93,6 +93,20 @@ class MySQLiEngineTest extends TestCase {
         $result = $this->db->query($sql);
 
         $expected = [
+            // By column name
+            "score" => 10,
+            "limit" => 50
+        ];
+
+        $this->assertEquals($expected, $this->db->fetchRow($result));
+    }
+
+    public function testArrayShapeForFetchRowWithFetchModeBoth () {
+        $sql = "SELECT 10 as score, 50 as `limit`";
+        $this->db->setFetchMode(MYSQLI_BOTH);
+        $result = $this->db->query($sql);
+
+        $expected = [
             // By position
             0 => 10,
             1 => 50,
@@ -100,6 +114,20 @@ class MySQLiEngineTest extends TestCase {
             // By column name
             "score" => 10,
             "limit" => 50
+        ];
+
+        $this->assertEquals($expected, $this->db->fetchRow($result));
+    }
+
+    public function testArrayShapeForFetchRowWithFetchModeEnum () {
+        $sql = "SELECT 10 as score, 50 as `limit`";
+        $this->db->setFetchMode(MYSQLI_NUM);
+        $result = $this->db->query($sql);
+
+        $expected = [
+            // By position
+            0 => 10,
+            1 => 50,
         ];
 
         $this->assertEquals($expected, $this->db->fetchRow($result));

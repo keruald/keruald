@@ -9,13 +9,14 @@ The properties and values depend on the engine you want to use.
 
 ### MySQLi
 
-|    Key   | Value                                |          |
-|----------|--------------------------------------|:--------:|
-| engine   | MySQLiEngine class reference         |          |
-| host     | The MySQL hostname, e.g. "localhost" |          |
-| username | The MySQL user to use for connection |          |
-| password | The clear text password to use       |          |
-| database | The default db to select for queries | optional |
+| Key        | Value                                |                |
+|------------|--------------------------------------|:---------------|
+| engine     | MySQLiEngine class reference         |                |
+| host       | The MySQL hostname, e.g. "localhost" |                |
+| username   | The MySQL user to use for connection |                |
+| password   | The clear text password to use       |                |
+| database   | The default db to select for queries | (optional)     |
+| fetch_mode | The default mode to fetch rows       | `MYSQLI_ASSOC` |
 
 For example:
 
@@ -28,6 +29,21 @@ For example:
     'database' => 'app',          // optional
 ]
 ```
+
+#### About fetch_mode parameter
+
+The `fetch_mode` parameter is used to determine how to represent results:
+
+  * `MYSQLI_ASSOC` will use column names
+  * `MYSQLI_NUM` will use an enumerated array (0, 1, 2, …)
+  * `MYSQLI_BOTH` will use both of them
+
+The code offers `MYSQLI_ASSOC` as default value to allow to directly represent
+a row result as API output and encourage to take care of the column names for
+better code maintenance. If you wish to switch to default MySQLi behavior,
+use `MYSQLI_BOTH` instead.
+
+Those constants are defined by the MySQLi extension.
 
 ## Legacy drivers
 

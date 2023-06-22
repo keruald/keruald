@@ -86,7 +86,16 @@ abstract class DatabaseEngine {
 
         // Fetches first row of the query, and return the first element
         // If there isn't any result row, returns an empty string.
-        return $result->fetchRow()[0] ?? "";
+        $row = $result->fetchRow();
+        if ($row === null) {
+            return "";
+        }
+
+        $key = array_key_first($row);
+        return match ($key) {
+            null => "",
+            default => $row[$key],
+        };
     }
 
     ///

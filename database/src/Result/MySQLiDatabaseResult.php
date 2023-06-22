@@ -13,7 +13,7 @@ class MySQLiDatabaseResult extends DatabaseResult {
 
     public function __construct (
         private mysqli_result $result,
-        private int $resultType = MYSQLI_BOTH
+        private int $resultType = MYSQLI_ASSOC
     ) { }
 
     ///

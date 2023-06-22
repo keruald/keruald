@@ -12,6 +12,7 @@ class MySQLiDatabaseResultTest extends TestCase {
 
     protected function setUp () : void {
         $db = new MySQLiEngine('localhost', '', '', 'test_keruald_db');
+        $db->setFetchMode(MYSQLI_BOTH);
 
         $sql = "SELECT id, name, category FROM ships";
         $this->result = $db->query($sql);

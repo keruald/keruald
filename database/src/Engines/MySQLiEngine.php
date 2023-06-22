@@ -28,6 +28,8 @@ class MySQLiEngine extends DatabaseEngine {
      */
     private mysqli_driver $driver;
 
+    private int $fetchMode = MYSQLI_ASSOC;
+
     /**
      * Initializes a new instance of the database abstraction class,
      * for MySQLi engine.
@@ -83,7 +85,7 @@ class MySQLiEngine extends DatabaseEngine {
             return $result;
         }
 
-        return new MySQLiDatabaseResult($result);
+        return new MySQLiDatabaseResult($result, $this->fetchMode);
     }
 
     /**
@@ -134,6 +136,10 @@ class MySQLiEngine extends DatabaseEngine {
        $this->db->set_charset($encoding);
     }
 
+    public function setFetchMode (int $mode) {
+        $this->fetchMode = $mode;
+    }
+
     ///
     /// Engine mechanics methods
     ///
@@ -157,6 +163,7 @@ class MySQLiEngine extends DatabaseEngine {
             'username' => '',
             'password' => '',
             'database' => '',
+            'fetch_mode' => MYSQLI_ASSOC,
         ];
     }
 
@@ -192,6 +199,9 @@ class MySQLiEngine extends DatabaseEngine {
 
         // Restore report mode as previously configured
         $driver->report_mode = $configuredReportMode;
+
+        // Extra configuration
+        $instance->setFetchMode($config["fetch_mode"]);
 
         return $instance;
     }
