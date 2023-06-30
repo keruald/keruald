@@ -23,6 +23,20 @@ class CodeClassTest extends TestCase {
         $this->class = new CodeClass(AcmeApplication::class);
     }
 
+    public function testGetClassName () {
+        $this->assertEquals(
+            AcmeApplication::class,
+            $this->class->getClassName(),
+        );
+    }
+
+    public function testGetShortClassName () {
+        $this->assertEquals(
+            "AcmeApplication",
+            $this->class->getShortClassName(),
+        );
+    }
+
     public function testNewInstanceFromServices () {
         $services = [
             // Some objects (in different order than the constructor)

@@ -22,6 +22,23 @@ class CodeClass {
     }
 
     ///
+    /// Class name helper methods
+    ///
+
+    public function getClassName () : string {
+        return $this->className;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function getShortClassName () : string {
+        $class = new ReflectionClass($this->className);
+
+        return $class->getShortName();
+    }
+
+    ///
     /// Represented class constructor helper methods
     ///
 
