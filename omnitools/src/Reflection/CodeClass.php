@@ -21,6 +21,10 @@ class CodeClass {
     ) {
     }
 
+    public static function from (object $object) : self {
+        return new self($object::class);
+    }
+
     ///
     /// Class name helper methods
     ///

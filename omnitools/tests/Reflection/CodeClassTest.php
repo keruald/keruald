@@ -23,6 +23,14 @@ class CodeClassTest extends TestCase {
         $this->class = new CodeClass(AcmeApplication::class);
     }
 
+    public function testFrom () {
+        $date = new DateStamp(2010, 11, 25);
+        $class = CodeClass::from($date);
+
+        $this->assertInstanceOf(CodeClass::class, $class);
+        $this->assertEquals(DateStamp::class, $class->getClassName());
+    }
+
     public function testGetClassName () {
         $this->assertEquals(
             AcmeApplication::class,
