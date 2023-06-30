@@ -364,6 +364,40 @@ class HashMapTest extends TestCase {
         $this->map->flatMap($callback);
     }
 
+    public function testMapToVector() : void {
+        $expected = [
+            "The Culture by Iain Banks",
+            "Radchaai Empire by Ann Leckie",
+            "Barrayar by Lois McMaster Bujold",
+            "Hainish by Ursula K. Le Guin",
+        ];
+
+        $fn = fn($key, $value) => "$key by $value";
+
+        $this->assertEquals($expected, $this->map->mapToVector($fn)->toArray());
+    }
+
+    public function testMapToVectorWithOnlyValueParameter() : void {
+        $expected = [
+            "Author: Iain Banks",
+            "Author: Ann Leckie",
+            "Author: Lois McMaster Bujold",
+            "Author: Ursula K. Le Guin",
+        ];
+
+        $fn = fn($value) => "Author: $value";
+
+        $this->assertEquals($expected, $this->map->mapToVector($fn)->toArray());
+    }
+
+    public function testMapToVectorWithoutParameter() : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $fn = fn() => "";
+
+        $this->map->mapToVector($fn);
+    }
+
     public function testFilter () {
         // Let's filter to keep names with 3 parts or more
 

@@ -232,6 +232,21 @@ class HashMap extends BaseMap {
         return $newMap;
     }
 
+    public function mapToVector (callable $callable) : Vector {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        $vector = [];
+        foreach ($this->map as $key => $value) {
+            $vector[] = match($argc) {
+                0 => throw new InvalidArgumentException(self::CB_ZERO_ARG),
+                1 => $callable($value),
+                default => $callable($key, $value),
+            };
+        }
+
+        return new Vector($vector);
+    }
+
     public function filterKeys (callable $callable) : self {
         return new self(
             array_filter($this->map, $callable, ARRAY_FILTER_USE_KEY)
