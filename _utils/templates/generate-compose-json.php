@@ -9,8 +9,9 @@
 #   Dependencies:   symfony/yaml, keruald/omnitools
 #   -------------------------------------------------------------
 
-use Symfony\Component\Yaml\Parser as YamlParser;
+use Keruald\OmniTools\Collections\Vector;
 use Keruald\OmniTools\Collections\HashMap;
+use Symfony\Component\Yaml\Parser as YamlParser;
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
@@ -31,8 +32,79 @@ function getAutoload(array $packages_namespaces) : array {
 
 function getReplace(array $packages) : array {
     return HashMap::from($packages)
-                  ->mapValuesAndKeys(fn($v) => ["keruald/$v", "self.version"])
+                  ->mapValuesAndKeys(
+                      fn($v) => ["keruald/$v", getPackageVersion($v)]
+                  )
                   ->toArray();
+}
+
+function getPackageVersion (string $package) : string {
+    $tags = PackagesTags::load();
+
+    return $tags->packages[$package] ?? "self.version";
+}
+
+class PackagesTags {
+
+    ///
+    /// Singleton pattern
+    ///
+
+    private static ?self $instance = null;
+
+    public static function load () : self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    ///
+    /// Properties
+    ///
+
+    public HashMap $packages;
+
+    ///
+    /// Constructor
+    ///
+
+    public function __construct () {
+        $this->packages = self::getPackagesLastTags();
+    }
+
+    ///
+    /// Read metadata from Git repository
+    ///
+
+    private static function getPackagesLastTags () : HashMap {
+        $map = new HashMap;
+
+        $tags = self::getRepositoryTags();
+        foreach ($tags as $tag) {
+            [$package, $version] = explode("/", $tag);
+
+            if (!$map->has($package)) {
+                $map->set($package, $version);
+                continue;
+            }
+
+            if (version_compare($map[$package], $version) == -1) {
+                $map->set($package, $version);
+            }
+        }
+
+        return $map;
+    }
+
+    private static function getRepositoryTags () : Vector {
+        exec("git tag", $tags);
+
+        return Vector::from($tags)
+                     ->filter(fn($tag) => str_contains($tag, "/"));
+    }
+
 }
 
 #   -------------------------------------------------------------
