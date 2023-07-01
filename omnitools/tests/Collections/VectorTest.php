@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Tests\Collections;
 
+use Keruald\OmniTools\Collections\HashMap;
 use Keruald\OmniTools\Collections\Vector;
 
 use PHPUnit\Framework\TestCase;
@@ -176,6 +177,38 @@ class VectorTest extends TestCase {
         $callback = function () {};
         $this->vector->flatMap($callback);
     }
+
+    public function testMapToHashMap () : void {
+        $expected = [
+            1 => 1,
+            2 => 4,
+            3 => 9,
+            4 => 16,
+            5 => 25,
+        ];
+
+        $fn = fn($value) => [$value, $value * $value];
+        $map =  $this->vector->mapToHashMap($fn);
+
+        $this->assertInstanceOf(HashMap::class, $map);
+        $this->assertEquals($expected, $map->toArray());
+    }
+
+    public function testMapToHashMapWithCallbackWithoutArgument() : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $callback = function () {};
+        $this->vector->mapToHashMap($callback);
+    }
+
+    public function testMapToHashMapWithBadCallback () : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        $callback = fn($key, $value) : bool => false; // not an array
+
+        $this->vector->mapToHashMap($callback);
+    }
+
 
     public function testFilter () : void {
         $vector = new Vector(["foo", "bar", "quux", "xizzy"]);

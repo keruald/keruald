@@ -193,6 +193,37 @@ abstract class BaseVector extends BaseCollection implements ArrayAccess, Iterato
         return new static($mappedVector);
     }
 
+    /**
+     * Allows to map each vector elements into key/value pairs
+     * and collect them into a HashMap.
+     *
+     * @param callable $callable A method to return [$key, $value] array
+     *
+     * @return HashMap
+     */
+    public function mapToHashMap (callable $callable) : HashMap {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        $map = new HashMap;
+        foreach ($this->items as $key => $value) {
+            $toAdd = match($argc) {
+                0 => throw new InvalidArgumentException(self::CB_ZERO_ARG),
+                1 => $callable($value),
+                default => $callable($key, $value),
+            };
+
+            if (!is_array($toAdd) || count($toAdd) != 2) {
+                throw new InvalidArgumentException(
+                    "Callback must return an array with 2 items: [key, value]"
+                );
+            }
+
+            $map->set($toAdd[0], $toAdd[1]);
+        }
+
+        return $map;
+    }
+
     public function flatMap (callable $callable) : self {
         $argc = (new CallableElement($callable))->countArguments();
 
