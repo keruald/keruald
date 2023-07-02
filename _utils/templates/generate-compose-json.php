@@ -77,7 +77,7 @@ function getTemplate(array $metadata) : array {
             "ext-xmlwriter" => "*",
             "nasqueron/codestyle" => "^0.0.1",
             "phan/phan" => "^5.3.1",
-            "phpunit/phpunit" => "^9.5",
+            "phpunit/phpunit" => "^10.2",
             "symfony/yaml" => "^6.0.3",
             "squizlabs/php_codesniffer" => "^3.6",
         ],
