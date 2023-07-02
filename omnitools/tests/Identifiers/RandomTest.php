@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Identifiers;
 
 use Keruald\OmniTools\Identifiers\Random;
-use Phpunit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 class RandomTest extends TestCase {
 
@@ -30,9 +31,7 @@ class RandomTest extends TestCase {
         );
     }
 
-    /**
-     * @dataProvider provideRandomStringFormats
-     */
+    #[DataProvider('provideRandomStringFormats')]
     public function testRandomString($format, $re, $len) : void {
         $string = Random::generateString($format);
 
@@ -51,7 +50,7 @@ class RandomTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideRandomStringFormats() : iterable {
+    public static function provideRandomStringFormats() : iterable {
         yield ["AAA111", "/^[A-Z]{3}[0-9]{3}$/", 6];
         yield ["AAA123", "/^[A-Z]{3}[0-9]{3}$/", 6];
         yield ["ABC123", "/^[A-Z]{3}[0-9]{3}$/", 6];

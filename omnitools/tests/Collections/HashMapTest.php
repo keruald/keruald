@@ -5,6 +5,7 @@ namespace Keruald\OmniTools\Tests\Collections;
 use Keruald\OmniTools\Collections\BitsVector;
 use Keruald\OmniTools\Collections\HashMap;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
@@ -59,7 +60,7 @@ class HashMapTest extends TestCase {
         $this->assertSame($expected, $map->toArray());
     }
 
-    private function provideDeepArrays() : iterable {
+    public static function provideDeepArrays() : iterable {
         yield [self::MAP_CONTENT, self::MAP_CONTENT];
 
         yield [[], []];
@@ -84,9 +85,7 @@ class HashMapTest extends TestCase {
         ]];
     }
 
-    /**
-     * @dataProvider provideDeepArrays
-     */
+    #[DataProvider('provideDeepArrays')]
     public function testFrom($from, array $expected) : void {
         $map = HashMap::from($from);
         $this->assertEquals($expected, $map->toArray());

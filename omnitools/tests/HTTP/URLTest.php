@@ -4,31 +4,26 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\HTTP;
 
 use Keruald\OmniTools\HTTP\URL;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class URLTest extends TestCase {
 
-    /**
-     * @dataProvider provideURLsAndComponents
-     */
+    #[DataProvider('provideURLsAndComponents')]
     public function testGetDomain ($url, $expectedDomain) : void {
         $url = new URL($url);
 
         $this->assertEquals($expectedDomain, $url->getDomain());
     }
 
-    /**
-     * @dataProvider provideURLsAndComponents
-     */
+    #[DataProvider('provideURLsAndComponents')]
     public function testGetProtocol ($url, $_, $expectedProtocol) : void {
         $url = new URL($url);
 
         $this->assertEquals($expectedProtocol, $url->getProtocol());
     }
 
-    /**
-     * @dataProvider provideURLsAndComponents
-     */
+    #[DataProvider('provideURLsAndComponents')]
     public function testGetQuery ($url, $_, $__, $expectedQuery) : void {
         $url = new URL($url);
 
@@ -63,9 +58,7 @@ class URLTest extends TestCase {
         $this->assertEquals("/xizzy", $url->getQuery());
     }
 
-    /**
-     * @dataProvider provideURLsAndComponents
-     */
+    #[DataProvider('provideURLsAndComponents')]
     public function testCompose ($url, $domain, $protocol, $query,
                                  $expectedUrl = null) {
         $this->assertEquals(
@@ -74,7 +67,7 @@ class URLTest extends TestCase {
         );
     }
 
-    public function provideURLsAndComponents () : iterable {
+    public static function provideURLsAndComponents () : iterable {
         // base URL, domain, protocol, query[, expected URL]
         // When omitted, the expected URL is the base URL.
 

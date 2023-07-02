@@ -6,6 +6,7 @@ namespace Keruald\OmniTools\Tests\Registration\PSR4;
 use Keruald\OmniTools\Registration\PSR4\PSR4Namespace;
 
 use Keruald\OmniTools\Tests\WithData;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class PSR4NamespaceTest extends TestCase {
@@ -23,9 +24,7 @@ class PSR4NamespaceTest extends TestCase {
         "Acme\\SolarSystemLib\\Planets\\Inner\\Venus",
     ];
 
-    /**
-     * @dataProvider provideClasses
-     */
+    #[DataProvider('provideClasses')]
     public function testDiscover (
         string $path, string $prefix, array $expected
     ) : void {
@@ -55,7 +54,7 @@ class PSR4NamespaceTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideClasses () : iterable {
+    public static function provideClasses () : iterable {
         // [string $path, string $prefix, string[] $expectedClasses]
         yield ["MockLib", "Acme\\MockLib", [
             "Acme\\MockLib\\Bar",

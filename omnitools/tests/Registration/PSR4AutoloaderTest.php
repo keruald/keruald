@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Registration;
 
 use Keruald\OmniTools\Registration\PSR4\Solver;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class PSR4AutoloaderTest extends TestCase {
@@ -11,10 +12,7 @@ class PSR4AutoloaderTest extends TestCase {
     ///
     /// Tests
     ///
-
-    /**
-     * @dataProvider providePaths
-     */
+    #[DataProvider('providePaths')]
     public function testGetPathFor (string $class, string $expected) : void {
         $this->assertEquals($expected, Solver::getPathFor($class));
     }
@@ -23,7 +21,7 @@ class PSR4AutoloaderTest extends TestCase {
     /// Data provider
     ///
 
-    public function providePaths () : iterable {
+    public static function providePaths () : iterable {
         // Example from PSR-4 canonical document
         yield ['File_Writer', 'File_Writer.php'];
         yield ['Response\Status', 'Response/Status.php'];

@@ -5,6 +5,7 @@ namespace Keruald\OmniTools\Tests\Collections;
 
 use Keruald\OmniTools\Collections\TraversableUtilities;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use Countable;
@@ -14,33 +15,25 @@ use Traversable;
 
 class TraversableUtilitiesTest extends TestCase {
 
-    /**
-     * @dataProvider provideCountables
-     */
+    #[DataProvider('provideCountables')]
     public function testCount ($expectedCount, $countable) {
         $this->assertEquals(
             $expectedCount, TraversableUtilities::count($countable)
         );
     }
 
-    /**
-     * @dataProvider provideNotCountables
-     */
+    #[DataProvider('provideNotCountables')]
     public function testCountWithNotCountables ($notCountable) {
         $this->expectException("TypeError");
         TraversableUtilities::count($notCountable);
     }
 
-    /**
-     * @dataProvider providePureCountables
-     */
+    #[DataProvider('providePureCountables')]
     public function testIsCountable ($countable) {
         $this->assertTrue(TraversableUtilities::isCountable($countable));
     }
 
-    /**
-     * @dataProvider provideIterableAndFirst
-     */
+    #[DataProvider('provideIterableAndFirst')]
     public function testIsFirst($expected, $iterable) {
         $this->assertEquals($expected, TraversableUtilities::first($iterable));
     }
@@ -51,9 +44,7 @@ class TraversableUtilitiesTest extends TestCase {
         TraversableUtilities::first([]);
     }
 
-    /**
-     * @dataProvider provideIterableAndFirst
-     */
+    #[DataProvider('provideIterableAndFirst')]
     public function testIsFirstOr($expected, $iterable) {
         $actual = TraversableUtilities::firstOr($iterable, 666);
         $this->assertEquals($expected, $actual);
@@ -68,7 +59,7 @@ class TraversableUtilitiesTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideCountables () : iterable {
+    public static function provideCountables () : iterable {
         yield [0, null];
         yield [0, false];
         yield [0, []];
@@ -81,7 +72,7 @@ class TraversableUtilitiesTest extends TestCase {
         ];
     }
 
-    public function providePureCountables () : iterable {
+    public static function providePureCountables () : iterable {
         yield [[]];
         yield [["a", "b", "c"]];
         yield [new class implements Countable {
@@ -92,7 +83,7 @@ class TraversableUtilitiesTest extends TestCase {
         ];
     }
 
-    public function provideNotCountables () : iterable {
+    public static function provideNotCountables () : iterable {
         yield [true];
         yield [new \stdClass];
         yield [0];
@@ -100,7 +91,7 @@ class TraversableUtilitiesTest extends TestCase {
         yield ["abc"];
     }
 
-    public function provideIterableAndFirst() : iterable {
+    public static function provideIterableAndFirst() : iterable {
         yield ["a", ["a", "b", "c"]];
 
         yield ["apple", ["fruit" => "apple", "vegetable" => "leeks"]];

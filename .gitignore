@@ -4,3 +4,4 @@ composer.lock
 
 # Caches
 .phpunit.result.cache
+.phpunit.cache/

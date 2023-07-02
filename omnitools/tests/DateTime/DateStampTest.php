@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\DateTime;
 
 use Keruald\OmniTools\DateTime\DateStamp;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use DateTime;
@@ -68,9 +69,7 @@ class DateStampTest extends TestCase {
         );
     }
 
-    /**
-     * @dataProvider provideInvalidDateStamps
-     */
+    #[DataProvider('provideInvalidDateStamps')]
     public function testParseWithInvalidFormat ($dateStamp) : void {
         $this->expectException("InvalidArgumentException");
         DateStamp::parse($dateStamp);
@@ -80,7 +79,7 @@ class DateStampTest extends TestCase {
     /// Data provider
     ///
 
-    public function provideInvalidDateStamps () : iterable {
+    public static function provideInvalidDateStamps () : iterable {
         yield ["10-11-25"];
         yield ["2010-41-25"];
         yield ["2010-11-99"];

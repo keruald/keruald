@@ -19,11 +19,9 @@
 -->
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
+         cacheDirectory=".phpunit.cache"
          stopOnFailure="false">
     <php>
         <ini name="display_errors" value="On" />
@@ -38,12 +36,12 @@
         </testsuite>
         {%- endfor %}
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
 
             {%- for package in packages %}
             <directory suffix=".php">{{ package }}/src/</directory>
             {%- endfor %}
         </include>
-    </coverage>
+    </source>
 </phpunit>

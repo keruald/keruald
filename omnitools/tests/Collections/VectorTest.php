@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Tests\Collections;
 
+use Keruald\OmniTools\Collections\BaseVector;
 use Keruald\OmniTools\Collections\HashMap;
 use Keruald\OmniTools\Collections\Vector;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
@@ -13,10 +16,8 @@ use IteratorAggregate;
 use OutOfRangeException;
 use Traversable;
 
-/**
- * @covers \Keruald\OmniTools\Collections\Vector
- * @covers \Keruald\OmniTools\Collections\BaseVector
- */
+#[CoversClass(Vector::class)]
+#[CoversClass(BaseVector::class)]
 class VectorTest extends TestCase {
 
     private Vector $vector;
@@ -329,29 +330,25 @@ class VectorTest extends TestCase {
         $this->assertEquals($expected, $this->vector->ngrams(1));
     }
 
-    private function provideLowN () : iterable {
+    public static function provideLowN () : iterable {
         yield [0];
         yield [-1];
         yield [PHP_INT_MIN];
     }
 
-    /**
-     * @dataProvider provideLowN
-     */
+    #[DataProvider('provideLowN')]
     public function testNgramsWithTooLowN ($n) : void {
         $this->expectException(InvalidArgumentException::class);
         $this->vector->ngrams($n);
     }
 
-    private function provideLargeN () : iterable {
+    public static function provideLargeN () : iterable {
         yield [5];
         yield [6];
         yield [PHP_INT_MAX];
     }
 
-    /**
-     * @dataProvider provideLargeN
-     */
+    #[DataProvider('provideLargeN')]
     public function testNgramsWithTooLargeN ($n) : void {
         $expected = Vector::from([
             [1, 2, 3, 4, 5],

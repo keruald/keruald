@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Collections;
 
 use Keruald\OmniTools\Collections\WeightedValue;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class WeightedValueTest extends TestCase {
@@ -76,9 +77,7 @@ class WeightedValueTest extends TestCase {
         $this->highValue->compareTo(new \stdClass);
     }
 
-    /**
-     * @dataProvider provideExpressionsToParse
-     */
+    #[DataProvider('provideExpressionsToParse')]
     public function testParse ($expression, $expectedValue, $expectedWeight) : void {
         $value = WeightedValue::Parse($expression);
 
@@ -90,7 +89,7 @@ class WeightedValueTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideExpressionsToParse () : iterable {
+    public static function provideExpressionsToParse () : iterable {
         yield ["", "", 1.0];
         yield ["de", "de", 1.0];
         yield ["de;q=1.0", "de", 1.0];

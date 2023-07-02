@@ -4,14 +4,13 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Culture\Rome;
 
 use Keruald\OmniTools\Culture\Rome\RomanNumerals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 
 class RomanNumeralsTest extends TestCase {
 
-    /**
-     * @dataProvider provideRomanAndHinduArabicNumerals
-     */
+    #[DataProvider('provideRomanAndHinduArabicNumerals')]
     public function testFromHindiArabicNumeral (
         string $roman,
         int $hinduArabic
@@ -22,7 +21,7 @@ class RomanNumeralsTest extends TestCase {
         );
     }
 
-    public function provideRomanAndHinduArabicNumerals () : iterable {
+    public static function provideRomanAndHinduArabicNumerals () : iterable {
         yield ['i', 1];
         yield ['xi', 11];
         yield ['xlii', 42];

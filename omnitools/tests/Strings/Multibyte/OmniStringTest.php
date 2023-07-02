@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Strings\Multibyte;
 
 use Keruald\OmniTools\Strings\Multibyte\OmniString;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class OmniStringTest extends TestCase {
@@ -49,27 +50,21 @@ class OmniStringTest extends TestCase {
         $this->assertEquals(3, $this->string->len());
     }
 
-    /**
-     * @dataProvider provideCharactersArrays
-     */
+    #[DataProvider('provideCharactersArrays')]
     public function testGetChars (string $string, array $expectedCharacters) : void {
         $actualCharacters = (new OmniString($string))->getChars();
 
         $this->assertEquals($expectedCharacters, $actualCharacters);
     }
 
-    /**
-     * @dataProvider provideCharactersBigrams
-     */
+    #[DataProvider('provideCharactersBigrams')]
     public function testBigrams (string $string, array $expectedBigrams) : void {
         $actualBigrams = (new OmniString($string))->getBigrams();
 
         $this->assertEquals($expectedBigrams, $actualBigrams);
     }
 
-    /**
-     * @dataProvider provideExplosions
-     */
+    #[DataProvider('provideExplosions')]
     public function testExplode (string $delimiter, string $imploded, array $exploded) : void {
         $actual = (new OmniString($imploded))
             ->explode($delimiter)
@@ -89,7 +84,7 @@ class OmniStringTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideCharactersArrays () : iterable {
+    public static function provideCharactersArrays () : iterable {
         yield ["foo", ['f', 'o', 'o']];
 
         yield [
@@ -102,7 +97,7 @@ class OmniStringTest extends TestCase {
         yield ["", []];
     }
 
-    public function provideCharactersBigrams () : iterable {
+    public static function provideCharactersBigrams () : iterable {
         yield ["foo", ['fo', 'oo']];
 
         yield ["night", ['ni', 'ig', 'gh', 'ht']];
@@ -111,7 +106,7 @@ class OmniStringTest extends TestCase {
 
         yield ["", []];
     }
-    public function provideExplosions () : iterable {
+    public static function provideExplosions () : iterable {
         yield ["/", "a/b/c", ['a', 'b', 'c']];
         yield ["/", "abc", ['abc']];
         yield ["/", "/b/c", ['', 'b', 'c']];

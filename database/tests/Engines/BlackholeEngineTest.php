@@ -5,6 +5,7 @@ namespace Keruald\Database\Tests\Engines;
 use Keruald\Database\Database;
 use Keruald\Database\Engines\BlackholeEngine;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class BlackholeEngineTest extends TestCase {
@@ -31,15 +32,13 @@ class BlackholeEngineTest extends TestCase {
         $this->assertTrue($this->db->isExistingTable("quux", "quuxians"));
     }
 
-    public function provideStringsToEscape () : iterable {
+    public static function provideStringsToEscape () : iterable {
         yield ["Lorem ipsum"];
         yield [""];
         yield ["\\\\ \n"];
     }
 
-    /**
-     * @dataProvider provideStringsToEscape
-     */
+    #[DataProvider('provideStringsToEscape')]
     public function testEscape ($string) {
         $this->assertEquals($string, $this->db->escape($string));
     }

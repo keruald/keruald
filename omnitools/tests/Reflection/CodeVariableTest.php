@@ -4,6 +4,7 @@ namespace Keruald\OmniTools\Tests\Reflection;
 
 use Keruald\OmniTools\Collections\Vector;
 use Keruald\OmniTools\Reflection\CodeVariable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CodeVariableTest extends TestCase {
@@ -15,18 +16,14 @@ class CodeVariableTest extends TestCase {
         $this->assertTrue($variable->hasType(Vector::class));
     }
 
-    /**
-     * @dataProvider provideScalarsAndTypes
-     */
+    #[DataProvider('provideScalarsAndTypes')]
     public function testHasTypeWithScalar (mixed $scalar, string $type) {
         $variable =  CodeVariable::from($scalar);
 
         $this->assertTrue($variable->hasType($type));
     }
 
-    /**
-     * @dataProvider provideScalars
-     */
+    #[DataProvider('provideScalars')]
     public function testFromWithScalar (mixed $scalar) {
         $variable = CodeVariable::from($scalar);
 
@@ -44,7 +41,7 @@ class CodeVariableTest extends TestCase {
     /// Data providers
     ///
 
-    private function provideScalars () : iterable {
+    public static function provideScalars () : iterable {
         yield [0];
         yield [""];
         yield [19];
@@ -54,7 +51,7 @@ class CodeVariableTest extends TestCase {
         yield [null];
     }
 
-    private function provideScalarsAndTypes () : iterable {
+    public static function provideScalarsAndTypes () : iterable {
         yield [0, "integer"];
         yield ["", "string"];
         yield [19, "integer"];

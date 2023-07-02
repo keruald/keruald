@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\HTTP\Requests;
 
 use Keruald\OmniTools\HTTP\Requests\Request;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase {
@@ -11,11 +13,7 @@ class RequestTest extends TestCase {
     ///
     /// Tests
     ///
-
-    /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\Request::getRemoteAddress
-     * @backupGlobals enabled
-     */
+    #[BackupGlobals(true)]
     public function testGetRemoteAddress () : void {
         $this->assertEmpty(Request::getRemoteAddress());
 
@@ -34,10 +32,7 @@ class RequestTest extends TestCase {
         );
     }
 
-    /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\Request::getClientAddress
-     * @backupGlobals enabled
-     */
+    #[BackupGlobals(true)]
     public function testGetRemoteAddressWithSeveralAddresses () : void {
         $_SERVER = [
             'HTTP_X_FORWARDED_FOR' => '10.0.0.2 10.0.0.3',
@@ -54,10 +49,7 @@ class RequestTest extends TestCase {
         );
     }
 
-    /**
-     * @covers \Keruald\OmniTools\HTTP\Requests\Request::getAcceptedLanguages
-     * @backupGlobals enabled
-     */
+    #[BackupGlobals(true)]
     public function testGetAcceptedLanguages () : void {
         $_SERVER = [
             'HTTP_ACCEPT_LANGUAGE' => 'fr,en-US;q=0.7,en;q=0.3',
@@ -69,20 +61,16 @@ class RequestTest extends TestCase {
         );
     }
 
-    /**
-     * @backupGlobals enabled
-     * @dataProvider provideServerURLs
-     */
+    #[DataProvider('provideServerURLs')]
+    #[BackupGlobals(true)]
     public function testGetServerURL (array $server, string $url) : void {
         $_SERVER = $server;
 
         $this->assertEquals($url, Request::getServerURL());
     }
 
-    /**
-     * @backupGlobals enabled
-     * @dataProvider provideServerURLs
-     */
+    #[DataProvider('provideServerURLs')]
+    #[BackupGlobals(true)]
     public function testCreateLocalURL (array $server, string $url) : void {
         $_SERVER = $server;
 
@@ -101,7 +89,7 @@ class RequestTest extends TestCase {
     /// Data providers
     ///
 
-    public function provideServerURLs () : iterable {
+    public static function provideServerURLs () : iterable {
         yield [[], "http://localhost"];
         yield [["UNRELATED" => "ANYTHING"], "http://localhost"];
 

@@ -4,6 +4,7 @@ namespace Keruald\OmniTools\Tests\OS;
 
 use InvalidArgumentException;
 use Keruald\OmniTools\OS\Environment;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class EnvironmentTest extends TestCase {
@@ -20,35 +21,29 @@ class EnvironmentTest extends TestCase {
         // And quux isn't defined.
     }
 
-    public function provideEnvironment () : iterable {
+    public static function provideEnvironment () : iterable {
         yield ["foo", "bar"];
         yield ["bar", "lorem"];
         yield ["baz", "ipsum"];
     }
 
-    public function provideEnvironmentKeys () : iterable {
-        foreach ($this->provideEnvironment() as $kv) {
+    public static function provideEnvironmentKeys () : iterable {
+        foreach (self::provideEnvironment() as $kv) {
             yield [$kv[0]];
         }
     }
 
-    /**
-     * @dataProvider provideEnvironmentKeys
-     */
+    #[DataProvider('provideEnvironmentKeys')]
     public function testHas (string $key) : void {
         self::assertTrue(Environment::has($key));
     }
 
-    /**
-     * @dataProvider provideEnvironment
-     */
+    #[DataProvider('provideEnvironment')]
     public function testGet (string $key, string $value) : void {
         self::assertSame($value, Environment::get($key));
     }
 
-    /**
-     * @dataProvider provideEnvironment
-     */
+    #[DataProvider('provideEnvironment')]
     public function testGetOrWhenKeyExists (string $key, string $value) : void {
         self::assertSame($value, Environment::getOr($key, "default"));
     }

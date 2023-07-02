@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Strings\Multibyte;
 
 use Keruald\OmniTools\Strings\Multibyte\StringUtilities;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class StringUtilitiesTest extends TestCase {
@@ -11,10 +12,7 @@ class StringUtilitiesTest extends TestCase {
     ///
     /// Tests
     ///
-
-    /**
-     * @dataProvider providePadding
-     */
+    #[DataProvider('providePadding')]
     public function testPad (
         string $expected,
         string $input, int $padLength, string $padString, int $padType
@@ -54,17 +52,13 @@ class StringUtilitiesTest extends TestCase {
         $this->assertFalse(StringUtilities::endsWith("foo", "bar"));
     }
 
-    /**
-     * @dataProvider provideBase64
-     */
+    #[DataProvider('provideBase64')]
     public function testEncodeInBase64 (string $decoded, string $encoded) : void {
         $actual = StringUtilities::encodeInBase64($decoded);
         $this->assertEquals($encoded, $actual);
     }
 
-    /**
-     * @dataProvider provideBase64
-     */
+    #[DataProvider('provideBase64')]
     public function testDecodeFromBase64 (string $decoded, string $encoded) : void {
         $actual = StringUtilities::decodeFromBase64($encoded);
         $this->assertEquals($decoded, $actual);
@@ -74,7 +68,7 @@ class StringUtilitiesTest extends TestCase {
     /// Data providers
     ///
 
-    public function providePadding () : iterable {
+    public static function providePadding () : iterable {
         // Tests from http://3v4l.org/UnXTF
         // http://web.archive.org/web/20150711100913/http://3v4l.org/UnXTF
 
@@ -106,7 +100,7 @@ class StringUtilitiesTest extends TestCase {
         yield ['FOOBAR', "FOOBAR", -10, "àèò", STR_PAD_RIGHT];
     }
 
-    public function provideBase64 () : iterable {
+    public static function provideBase64 () : iterable {
         yield ['foo', 'Zm9v', "This is the regular base test without any exception."];
         yield ['', '', "An empty string should remain an empty string."];
         yield [

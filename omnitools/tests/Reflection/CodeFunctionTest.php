@@ -3,6 +3,7 @@
 namespace Keruald\OmniTools\Tests\Reflection;
 
 use Keruald\OmniTools\Reflection\CodeFunction;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
@@ -11,9 +12,7 @@ use ReflectionParameter;
 
 class CodeFunctionTest extends TestCase {
 
-    /**
-     * @dataProvider provideFunctionParameters
-     */
+    #[DataProvider('provideFunctionParameters')]
     public function testGetParameterType (ReflectionParameter $parameter, string $type) {
         $this->assertEquals($type, CodeFunction::getParameterType($parameter));
     }
@@ -31,7 +30,7 @@ class CodeFunctionTest extends TestCase {
     /// Data provider
     ///
 
-    public function provideFunctionParameters () : iterable {
+    public static function provideFunctionParameters () : iterable {
         // array_change_key_case(array $array, int $case = CASE_LOWER): array
         $function = new ReflectionFunction("array_change_key_case");
         $parameters = $function->getParameters();

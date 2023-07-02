@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use OutOfRangeException;
 
 use Keruald\OmniTools\Collections\BitsVector;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class BitsVectorTest extends TestCase {
@@ -85,7 +86,7 @@ class BitsVectorTest extends TestCase {
         );
     }
 
-    public function provideLengths () : iterable {
+    public static function provideLengths () : iterable {
         yield [1];
         yield [2];
         yield [8];
@@ -95,9 +96,7 @@ class BitsVectorTest extends TestCase {
         yield [0];
     }
 
-    /**
-     * @dataProvider provideLengths
-     */
+    #[DataProvider('provideLengths')]
     public function testRandom($length) : void {
         $bits = BitsVector::random($length);
         $this->assertEquals($length, $bits->count());
@@ -158,7 +157,7 @@ class BitsVectorTest extends TestCase {
         $this->assertEquals([1, 0, 0, 1], $bits->toArray());
     }
 
-    public function provideShapeArrays () : iterable {
+    public static function provideShapeArrays () : iterable {
         yield [[1, 0, 0, 1, 0, 0, 0, 0], 4, [1, 0, 0, 1]];
         yield [[1, 0, 0, 1], 4, [1, 0, 0, 1]];
         yield [[1, 0, 0, 1], 3, [1, 0, 0]];
@@ -168,9 +167,7 @@ class BitsVectorTest extends TestCase {
         yield [[], 4, [0, 0, 0, 0]];
     }
 
-    /**
-     * @dataProvider provideShapeArrays
-     */
+    #[DataProvider('provideShapeArrays')]
     public function testShapeCapacity (array $initial, int $length, array $final) : void {
         $bits = new BitsVector($initial);
         $bits->shapeCapacity($length);

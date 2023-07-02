@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Keruald\OmniTools\Tests\Debug;
 
 use Keruald\OmniTools\Debug\Debugger;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DebuggerTest extends TestCase {
@@ -30,10 +31,7 @@ class DebuggerTest extends TestCase {
     ///
     /// Integration tests
     ///
-
-    /**
-     * @dataProvider provideDebuggerScripts
-     */
+    #[DataProvider('provideDebuggerScripts')]
     public function testDebuggerScript ($script, $message) : void {
         $this->assertProgramMatchesOutput($script, $message);
     }
@@ -47,7 +45,7 @@ class DebuggerTest extends TestCase {
         $this->assertSame($expected, $actual, $message);
     }
 
-    public function provideDebuggerScripts () : iterable {
+    public static function provideDebuggerScripts () : iterable {
         yield ["dump_integer", "Can't dump a variable"];
         yield ["dump_array", "Can't dump an array"];
         yield ["dump_object", "Can't dump an object"];

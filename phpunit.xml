@@ -19,11 +19,9 @@
 -->
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
+         cacheDirectory=".phpunit.cache"
          stopOnFailure="false">
     <php>
         <ini name="display_errors" value="On" />
@@ -44,12 +42,13 @@
             <directory suffix="Test.php">./report/tests</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
+            <directory suffix=".php">cache/src/</directory>
             <directory suffix=".php">commands/src/</directory>
             <directory suffix=".php">database/src/</directory>
             <directory suffix=".php">omnitools/src/</directory>
             <directory suffix=".php">report/src/</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>

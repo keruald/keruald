@@ -9,7 +9,8 @@ use Keruald\OmniTools\Collections\BitsVector;
 use Keruald\OmniTools\Collections\Vector;
 use Keruald\OmniTools\DateTime\UUIDv1TimeStamp;
 use Keruald\OmniTools\Identifiers\UUID;
-use Phpunit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 class UUIDTest extends TestCase {
 
@@ -110,15 +111,13 @@ class UUIDTest extends TestCase {
         );
     }
 
-    public function provideUUIDV8OverflowValues () : iterable {
+    public static function provideUUIDV8OverflowValues () : iterable {
         yield [PHP_INT_MAX, 0x75B, 0xEC932D5F69181C0];
         yield [0x320C3D4DCC00, PHP_INT_MAX, 0xEC932D5F69181C0];
         yield [0x320C3D4DCC00, 0x75B, PHP_INT_MAX];
     }
 
-    /**
-     * @dataProvider provideUUIDV8OverflowValues
-     */
+    #[DataProvider('provideUUIDV8OverflowValues')]
     public function testUUIDV8WithOverflowValues ($a, $b, $c) : void {
         $this->expectException(InvalidArgumentException::class);
         UUID::UUIDv8($a, $b, $c);
@@ -172,7 +171,7 @@ class UUIDTest extends TestCase {
     /// Tests for helper methods
     ///
 
-    public function provideFormattedUUID () : iterable {
+    public static function provideFormattedUUID () : iterable {
         yield [
             "320c3d4dcc00875b8ec932d5f69181c0",
             "320c3d4d-cc00-875b-8ec9-32d5f69181c0",
@@ -189,9 +188,7 @@ class UUIDTest extends TestCase {
         ];
     }
 
-    /**
-     * @dataProvider provideFormattedUUID
-     */
+    #[DataProvider('provideFormattedUUID')]
     public function testReformat($uuidToReformat, $expected) {
         $this->assertEquals($expected, UUID::reformat($uuidToReformat));
     }
@@ -205,7 +202,7 @@ class UUIDTest extends TestCase {
         $this->assertFalse(UUID::isUUID("d825a90a27e7f161a07161c3a37dce8e"));
     }
 
-    private function provideUUIDsWithVersionAndVariant () : iterable {
+    public static function provideUUIDsWithVersionAndVariant () : iterable {
         // RFC 4122
         yield ["c232ab00-9414-11ec-b3c8-9e6bdeced846", 1, 2];
         yield ["f6244210-bbc3-3689-bb54-76528802d4d5", 3, 2];
@@ -222,16 +219,12 @@ class UUIDTest extends TestCase {
         yield [UUID::MAX, 15, 3];
     }
 
-    /**
-     * @dataProvider provideUUIDsWithVersionAndVariant
-     */
+    #[DataProvider('provideUUIDsWithVersionAndVariant')]
     public function testGetVersion (string $uuid, int $version, int $variant) : void {
         $this->assertEquals($version, UUID::getVersion($uuid));
     }
 
-    /**
-     * @dataProvider provideUUIDsWithVersionAndVariant
-     */
+    #[DataProvider('provideUUIDsWithVersionAndVariant')]
     public function testGetVariant (string $uuid, int $version, int $variant) : void {
         $this->assertEquals($variant, UUID::getVariant($uuid));
     }
