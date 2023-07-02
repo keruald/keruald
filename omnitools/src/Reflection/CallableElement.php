@@ -15,7 +15,7 @@ class CallableElement {
     private ReflectionFunctionAbstract $callable;
 
     /**
-     * @throws ReflectionException
+     * @throws ReflectionException if the callable does not exist.
      */
     public function __construct (callable $callable) {
         $this->callable = self::getReflectionFunction($callable);
