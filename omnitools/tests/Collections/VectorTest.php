@@ -242,6 +242,30 @@ class VectorTest extends TestCase {
         $this->assertEquals([0, 2, 4], array_keys($actual));
     }
 
+    public function testAny () : void {
+        $is_even = fn(int $item) : bool => $item % 2 === 0;
+
+        $this->assertTrue($this->vector->any($is_even));
+    }
+
+    public function testAnyWithAllFalseValues () : void {
+        $is_zero = fn(int $item) : bool => $item === 0;
+
+        $this->assertFalse($this->vector->any($is_zero));
+    }
+
+    public function testAll () : void {
+        $under_ten = fn(int $item) : bool => $item < 10;
+
+        $this->assertTrue($this->vector->all($under_ten));
+    }
+
+    public function testAllWithFalseValue () : void {
+        $is_even = fn(int $item) : bool => $item % 2 === 0;
+
+        $this->assertFalse($this->vector->all($is_even));
+    }
+
     public function testChunk () : void {
         $vector = new Vector([1, 2, 3, 4, 5, 6]);
 

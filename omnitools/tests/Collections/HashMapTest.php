@@ -458,6 +458,34 @@ class HashMapTest extends TestCase {
     }
 
     ///
+    /// HOF methods - WithCollection
+    ///
+
+    public function testAny () : void {
+        $author_is_Iain_Banks = fn($author) => $author === "Iain Banks";
+
+        $this->assertTrue($this->map->any($author_is_Iain_Banks));
+    }
+
+    public function testAnyWithAllFalseValues () : void {
+        $author_is_Isaac_Asimov = fn($author) => $author === "Isaac Asimov";
+
+        $this->assertFalse($this->map->any($author_is_Isaac_Asimov));
+    }
+
+    public function testAll () : void {
+        $author_contains_space = fn($author) => str_contains($author, " ");
+
+        $this->assertTrue($this->map->all($author_contains_space));
+    }
+
+    public function testAllWithFalseValue () : void {
+        $author_is_Iain_Banks = fn($author) => $author === "Iain Banks";
+
+        $this->assertFalse($this->map->all($author_is_Iain_Banks));
+    }
+
+    ///
     /// ArrayAccess
     ///
 
