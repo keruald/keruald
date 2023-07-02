@@ -140,7 +140,11 @@ function getTemplate(array $metadata) : array {
                 "name" => "Keruald contributors",
             ],
         ],
+        "provide" => [
+            "psr/simple-cache-implementation" => "1.0|2.0|3.0",
+        ],
         "require" => [
+            "psr/simple-cache" => "^1.0|^2.0|^3.0",
             "ext-intl" => "*",
         ],
         "require-dev" => [
@@ -152,6 +156,10 @@ function getTemplate(array $metadata) : array {
             "phpunit/phpunit" => "^10.2",
             "symfony/yaml" => "^6.0.3",
             "squizlabs/php_codesniffer" => "^3.6",
+        ],
+        "suggest" => [
+            "ext-memcached" => "*",
+            "ext-redis" => "*",
         ],
         "replace" => getReplace($metadata["packages"]),
         "autoload" => getAutoload($metadata["packages_namespaces"]),

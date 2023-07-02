@@ -22,12 +22,14 @@
 #   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 packages:
+    - cache
     - commands
     - database
     - omnitools
     - report
 
 packages_namespaces:
+    cache: Keruald\Cache
     commands: Keruald\Commands
     database: Keruald\Database
     omnitools: Keruald\OmniTools
