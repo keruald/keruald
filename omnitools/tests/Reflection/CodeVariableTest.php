@@ -23,6 +23,20 @@ class CodeVariableTest extends TestCase {
         $this->assertTrue($variable->hasType($type));
     }
 
+    public function testGetTypeWithObject () {
+        $object = new Vector;
+        $variable = CodeVariable::from($object);
+
+        $this->assertEquals(Vector::class, $variable->getType());
+    }
+
+    #[DataProvider('provideScalarsAndReturnedTypes')]
+    public function testGetTypeWithScalar (mixed $scalar, string $expected) {
+        $variable =  CodeVariable::from($scalar);
+
+        $this->assertEquals($expected, $variable->getType());
+    }
+
     #[DataProvider('provideScalars')]
     public function testFromWithScalar (mixed $scalar) {
         $variable = CodeVariable::from($scalar);
@@ -58,6 +72,16 @@ class CodeVariableTest extends TestCase {
         yield ["This is Sparta.", "string"];
         yield [true, "boolean"];
         yield [false, "boolean"];
+        yield [null, "NULL"];
+    }
+
+    public static function provideScalarsAndReturnedTypes () : iterable {
+        yield [0, "int"];
+        yield ["", "string"];
+        yield [19, "int"];
+        yield ["This is Sparta.", "string"];
+        yield [true, "bool"];
+        yield [false, "bool"];
         yield [null, "NULL"];
     }
 }

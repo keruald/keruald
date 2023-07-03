@@ -72,4 +72,35 @@ class CallableElement {
         return $this->callable->getNumberOfParameters();
     }
 
+    /**
+     * Determines if the callable has an explicit return type
+     * and that return type matches the specified type.
+     *
+     * Closure, arrow functions MUST declare explicitly the return type
+     * in the signature to be able to detect it. It will always be false if not.
+     */
+    public function hasReturnType (string $type) : bool {
+        if (!$this->callable->hasReturnType()) {
+            return false;
+        }
+
+        return $this->callable->getReturnType()->getName() === $type;
+    }
+
+    /**
+     * Gets the return type of the callable.
+     *
+     * @throws InvalidArgumentException if the callable doesn't have
+     *                                  an explicit return type.
+     */
+    public function getReturnType () : string {
+        if (!$this->callable->hasReturnType()) {
+            throw new InvalidArgumentException(
+                "Callable doesn't have an explicit return type"
+            );
+        }
+
+        return $this->callable->getReturnType()->getName();
+    }
+
 }

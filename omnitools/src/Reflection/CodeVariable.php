@@ -36,4 +36,18 @@ class CodeVariable {
         };
     }
 
+    public function getType () : string {
+        $type = gettype($this->variable);
+
+        // For scalar types, gettype() doesn't return the same types
+        // as does reflection classes.
+        return match ($type) {
+            "boolean" => "bool",
+            "integer" => "int",
+            "double" => "float",
+            "object" => $this->variable::class,
+            default => $type,
+        };
+    }
+
 }
