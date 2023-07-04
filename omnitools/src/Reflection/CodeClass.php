@@ -42,6 +42,27 @@ class CodeClass {
         return $class->getShortName();
     }
 
+    public static function extractClassName (string $fullClassName) : string {
+        // Trivial cases - no classes
+        if ($fullClassName === "" || $fullClassName[-1] === '\\') {
+            return "";
+        }
+
+        // When class exists, we can use ReflectionClass
+        try {
+            $class = new self($fullClassName);
+            return $class->getShortClassName();
+        } catch (ReflectionException) {
+        }
+
+        // Class doesn't exist in code, we can compute it
+        $pos = strrpos($fullClassName, "\\");
+        return match ($pos) {
+            false => $fullClassName,
+            default => substr($fullClassName, $pos + 1),
+        };
+    }
+
     ///
     /// Represented class constructor helper methods
     ///

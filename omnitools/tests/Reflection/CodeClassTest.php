@@ -11,6 +11,7 @@ use Keruald\OmniTools\HTTP\Requests\Request;
 use Keruald\OmniTools\Network\IPv4Range;
 use Keruald\OmniTools\Reflection\CodeClass;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use InvalidArgumentException;
@@ -43,6 +44,27 @@ class CodeClassTest extends TestCase {
             "AcmeApplication",
             $this->class->getShortClassName(),
         );
+    }
+
+    public static function provideFullyQualifiedClassNames () : iterable {
+        // Example from PSR-4 canonical document
+        // Fully qualified class name, class
+        yield [CodeClass::class, 'CodeClass'];
+        yield ['\Acme\Log\Writer\File_Writer', 'File_Writer'];
+        yield ['\Aura\Web\Response\Status', 'Status'];
+        yield ['\Symfony\Core\Request', 'Request'];
+
+        yield ['Foo', 'Foo'];
+        yield ['', ''];
+        yield ["Foo\\", ''];
+
+    }
+
+    #[DataProvider("provideFullyQualifiedClassNames")]
+    public function testExtractClassName ($class, $expected) {
+        $actual = CodeClass::extractClassName($class);
+
+        $this->assertEquals($expected, $actual);
     }
 
     public function testNewInstanceFromServices () {
