@@ -6,6 +6,16 @@ use InvalidArgumentException;
 
 class IPv6 extends IP {
 
+    ///
+    /// Constants
+    ///
+
+    const DOMAIN = 10; // AF_INET6
+
+    ///
+    /// Properties
+    ///
+
     /**
      * @var string
      */
@@ -50,6 +60,10 @@ class IPv6 extends IP {
 
     public function isValid () : bool {
         return IP::isIPv6($this->ip);
+    }
+
+    public function getDomain () : int {
+        return self::DOMAIN; // AF_INET6
     }
 
     public function increment (int $increment = 1) : self {
