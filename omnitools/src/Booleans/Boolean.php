@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Keruald\OmniTools\Booleans;
 
-class Boolean {
+readonly class Boolean {
 
     ///
     /// Properties
@@ -32,43 +32,41 @@ class Boolean {
     ///
 
     public function and (self|bool $other) : self {
-        if ($this->value === true) {
-            $this->value = self::toScalar($other);
-        }
+        $newValue = match($this->value) {
+            true => self::toScalar($other),
+            false => false,
+        };
 
-        return $this;
+        return new self($newValue);
     }
 
     public function or (self|bool $other) : self {
-        if ($this->value === false) {
-            $this->value = self::toScalar($other);
-        }
+        $newValue = match($this->value) {
+            true => true,
+            false => self::toScalar($other),
+        };
 
-        return $this;
+        return new self($newValue);
     }
 
     public function xor (self|bool $other) : self {
-        $this->value = ($this->value xor self::toScalar($other));
+        $newValue = ($this->value xor self::toScalar($other));
 
-        return $this;
+        return new self($newValue);
     }
 
     public function not () : self {
-        $this->value = !$this->value;
-
-        return $this;
+        return new self(!$this->value);
     }
 
     public function implication (self|bool $other) : self {
-        $this->value = $this->value === false || self::toScalar($other);
+        $newValue = $this->value === false || self::toScalar($other);
 
-        return $this;
+        return new self($newValue);
     }
 
     public function equivalence (self|bool $other) : self {
-        $this->value = $this->isEqualsTo($other);
-
-        return $this;
+        return new self($this->isEqualsTo($other));
     }
 
     ///
