@@ -28,8 +28,16 @@
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName.NotCamelCaps">
         <exclude-pattern>*/_register_to_global_space.php</exclude-pattern>
     </rule>
-    {% for package in packages %}
+
+    <!--
+    Database exception
+    Allow unused parameters
+    -->
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+        <exclude-pattern>database/src/*</exclude-pattern>
+    </rule>
+{% for package in packages %}
     <file>{{ package }}/src</file>
     <file>{{ package }}/tests</file>
-    {% endfor %}
+{% endfor %}
 </ruleset>

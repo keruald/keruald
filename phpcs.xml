@@ -34,19 +34,22 @@
     Allow unused parameters
     -->
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
-    <exclude-pattern>database/src/*</exclude-pattern>
+        <exclude-pattern>database/src/*</exclude-pattern>
     </rule>
+
+    <file>cache/src</file>
+    <file>cache/tests</file>
 
     <file>commands/src</file>
     <file>commands/tests</file>
-    
+
     <file>database/src</file>
     <file>database/tests</file>
-    
+
     <file>omnitools/src</file>
     <file>omnitools/tests</file>
-    
+
     <file>report/src</file>
     <file>report/tests</file>
-    
+
 </ruleset>

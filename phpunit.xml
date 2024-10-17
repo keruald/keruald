@@ -29,6 +29,9 @@
         <ini name="error_reporting" value="On" />
     </php>
     <testsuites>
+        <testsuite name="Unit tests for keruald/cache">
+            <directory suffix="Test.php">./cache/tests</directory>
+        </testsuite>
         <testsuite name="Unit tests for keruald/commands">
             <directory suffix="Test.php">./commands/tests</directory>
         </testsuite>
