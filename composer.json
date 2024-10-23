@@ -30,7 +30,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Keruald\\GitHub\\": ""
+      "Keruald\\GitHub\\": "src/",
+      "Keruald\\GitHub\\Tests\\": "tests/"
     }
   },
   "scripts": {
