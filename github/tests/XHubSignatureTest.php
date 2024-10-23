@@ -1,14 +1,16 @@
-<?php
+<?php declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 
 use Keruald\GitHub\XHubSignature;
 
 require 'XHubSignatureConstants.php';
 
-class XHubSignatureTest extends PHPUnit_Framework_TestCase {
+class XHubSignatureTest extends TestCase {
     protected $defaultInstance;
     protected $tigerInstance;
 
-    protected function setUp() {
+    protected function setUp() : void {
         $this->defaultInstance = new XHubSignature(SECRET);
         $this->tigerInstance = new XHubSignature(SECRET, TIGER_ALGO);
 
@@ -16,7 +18,7 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         $this->tigerInstance->payload = TIGER_PAYLOAD;
     }
 
-    public function testValidate () {
+    public function testValidate () : void {
         $this->defaultInstance->signature = "";
         $this->assertFalse($this->defaultInstance->validate());
 
@@ -27,7 +29,7 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($this->defaultInstance->validate());
     }
 
-    public function testCompute () {
+    public function testCompute () : void {
         $this->assertSame(
             DEFAULT_SIGNATURE,
             $this->defaultInstance->compute()
@@ -43,10 +45,8 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
     /// Test static helper methods
     ///
 
-    /**
-     * @covers XHubSignature::validatePayload
-     */
-    public function testhashPayload () {
+    #[CoversFunction(XHubSignature::validatePayload)]
+    public function testhashPayload () : void {
         $this->assertSame(
             EMPTY_DEFAULT_HASH_ALGO_SIGNATURE,
             XHubSignature::hashPayload("", "")
@@ -57,10 +57,8 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    /**
-     * @covers XHubSignature::validatePayload
-     */
-    public function testValidatePayload () {
+    #[CoversFunction(XHubSignature::validatePayload)]
+    public function testValidatePayload () : void {
         $this->assertFalse(XHubSignature::validatePayload("", "", ""));
 
         $this->assertTrue(XHubSignature::validatePayload(
@@ -71,7 +69,7 @@ class XHubSignatureTest extends PHPUnit_Framework_TestCase {
         ));
     }
 
-    public function testParseSignature () {
+    public function testParseSignature () : void {
         $this->assertSame(
             TIGER_SIGNATURE,
             XHubSignature::parseSignature(TIGER_SIGNATURE)
