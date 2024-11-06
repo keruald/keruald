@@ -46,6 +46,9 @@
     <file>database/src</file>
     <file>database/tests</file>
 
+    <file>github/src</file>
+    <file>github/tests</file>
+
     <file>omnitools/src</file>
     <file>omnitools/tests</file>
 

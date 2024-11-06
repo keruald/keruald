@@ -25,6 +25,7 @@ packages:
     - cache
     - commands
     - database
+    - github
     - omnitools
     - report
 
@@ -32,5 +33,6 @@ packages_namespaces:
     cache: Keruald\Cache
     commands: Keruald\Commands
     database: Keruald\Database
+    github: Keruald\GitHub
     omnitools: Keruald\OmniTools
     report: Keruald\Reporting

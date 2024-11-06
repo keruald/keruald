@@ -38,6 +38,9 @@
         <testsuite name="Unit tests for keruald/database">
             <directory suffix="Test.php">./database/tests</directory>
         </testsuite>
+        <testsuite name="Unit tests for keruald/github">
+            <directory suffix="Test.php">./github/tests</directory>
+        </testsuite>
         <testsuite name="Unit tests for keruald/omnitools">
             <directory suffix="Test.php">./omnitools/tests</directory>
         </testsuite>
@@ -50,6 +53,7 @@
             <directory suffix=".php">cache/src/</directory>
             <directory suffix=".php">commands/src/</directory>
             <directory suffix=".php">database/src/</directory>
+            <directory suffix=".php">github/src/</directory>
             <directory suffix=".php">omnitools/src/</directory>
             <directory suffix=".php">report/src/</directory>
         </include>

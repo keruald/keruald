@@ -42,6 +42,7 @@
         "keruald/cache": "0.1.0",
         "keruald/commands": "0.0.1",
         "keruald/database": "0.4.0",
+        "keruald/github": "0.2.1",
         "keruald/omnitools": "0.12.0",
         "keruald/report": "0.1.0"
     },
@@ -53,6 +54,8 @@
             "Keruald\\Commands\\Tests\\": "commands/tests/",
             "Keruald\\Database\\": "database/src/",
             "Keruald\\Database\\Tests\\": "database/tests/",
+            "Keruald\\GitHub\\": "github/src/",
+            "Keruald\\GitHub\\Tests\\": "github/tests/",
             "Keruald\\OmniTools\\": "omnitools/src/",
             "Keruald\\OmniTools\\Tests\\": "omnitools/tests/",
             "Keruald\\Reporting\\": "report/src/",
