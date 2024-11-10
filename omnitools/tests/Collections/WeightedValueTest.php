@@ -9,15 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 class WeightedValueTest extends TestCase {
 
-    /**
-     * @var WeightedValue
-     */
-    private $lowValue;
+    private WeightedValue $lowValue;
 
-    /**
-     * @var WeightedValue
-     */
-    private $highValue;
+    private WeightedValue $highValue;
 
     ///
     /// Fixtures

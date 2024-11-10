@@ -9,10 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class WeightedListTest extends TestCase {
 
-    /**
-     * @var WeightedList
-     */
-    private $list;
+    private WeightedList $list;
 
     ///
     /// Fixtures

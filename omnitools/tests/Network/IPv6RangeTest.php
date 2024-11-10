@@ -7,10 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class IPv6RangeTest extends TestCase {
 
-    /**
-     * @var IPRange
-     */
-    protected $range;
+    protected IPRange $range;
 
     ///
     /// Fixtures

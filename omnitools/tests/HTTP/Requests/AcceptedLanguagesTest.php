@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class AcceptedLanguagesTest extends TestCase {
 
-    /**
-     * @var AcceptedLanguages
-     */
-    private $languages;
+    private AcceptedLanguages $languages;
 
     protected function setUp () : void {
         $this->languages = new AcceptedLanguages("en-US,en;q=0.9,fr;q=0.8");

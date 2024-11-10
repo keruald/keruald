@@ -15,15 +15,9 @@ class CodeFileTest extends TestCase {
 
     use WithData;
 
-    /**
-     * @var CodeFile
-     */
-    private $validCodeFile;
+    private CodeFile $validCodeFile;
 
-    /**
-     * @var CodeFile
-     */
-    private $notExistingCodeFile;
+    private CodeFile $notExistingCodeFile;
 
     public function setUp () : void {
         $file = $this->getDataPath("MockLib/Bar.php");

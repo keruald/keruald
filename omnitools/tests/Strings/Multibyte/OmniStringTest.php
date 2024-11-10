@@ -9,10 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class OmniStringTest extends TestCase {
 
-    /**
-     * @var OmniString
-     */
-    private $string;
+    private OmniString $string;
 
     protected function setUp () : void {
         $this->string = new OmniString("foo");

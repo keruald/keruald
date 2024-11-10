@@ -15,10 +15,7 @@ class DateStampTest extends TestCase {
     /// Private members
     ///
 
-    /**
-     * @var DateStamp
-     */
-    private $dateStamp;
+    private DateStamp $dateStamp;
 
     ///
     /// Fixtures
