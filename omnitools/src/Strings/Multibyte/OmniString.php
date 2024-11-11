@@ -5,6 +5,10 @@ namespace Keruald\OmniTools\Strings\Multibyte;
 
 use Keruald\OmniTools\Collections\Vector;
 
+/**
+ * Represents a multibyte string and perform operations with the grapheme
+ * library for UTF-8 encoding, and mbstring for other encodings.
+ */
 class OmniString {
 
     use WithEncoding;
@@ -13,10 +17,7 @@ class OmniString {
     /// Private members
     ///
 
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
     ///
     /// Constructor
@@ -61,25 +62,82 @@ class OmniString {
         return str_ends_with($this->value, $end);
     }
 
+    /**
+     * @deprecated Use more specific method to express your intent:
+     *             countBytes, countCodePoints or countGraphemes
+     */
     public function len () : int {
+        return $this->countGraphemes();
+    }
+
+    public function countBytes () : int {
+        return strlen($this->value);
+    }
+
+    public function countCodePoints () : int {
         return mb_strlen($this->value, $this->encoding);
     }
 
-    public function getChars () : array {
+    public function countGraphemes () : int {
+        return match ($this->encoding) {
+            "UTF-8" => grapheme_strlen($this->value),
+            default => $this->countCodepoints(),
+        };
+    }
+
+    public function getBytes() : array {
+        return str_split($this->value, 1);
+    }
+
+    public function getCodePoints () : array {
+        return mb_str_split($this->value, 1, $this->encoding);
+    }
+
+    public function getGraphemes () : array {
+        if ($this->encoding !== "UTF-8") {
+            return $this->getCodePoints();
+        }
+
         $chars = [];
 
-        $len = $this->len();
+        $len = grapheme_strlen($this->value);
         for ($i = 0 ; $i < $len ; $i++) {
-            $chars[] = mb_substr($this->value, $i, 1, $this->encoding);
+            $chars[] = grapheme_substr($this->value, $i, 1);
         }
 
         return $chars;
     }
 
+    /**
+     * @deprecated Use more specific method to express your intent:
+     *             getBytes, getCodePoints or getGraphemes
+     */
+    public function getChars () : array {
+        return $this->getGraphemes();
+    }
+
     public function getBigrams () : array {
+        return match ($this->encoding) {
+            "UTF-8" => $this->getBigramsFromGraphemes(),
+            default => $this->getBigramsFromCodePoints(),
+        };
+    }
+
+    private function getBigramsFromGraphemes() : array {
         $bigrams = [];
 
-        $len = $this->len();
+        $len = grapheme_strlen($this->value);
+        for ($i = 0 ; $i < $len - 1 ; $i++) {
+            $bigrams[] = grapheme_substr($this->value, $i, 2);
+        }
+
+        return $bigrams;
+    }
+
+    private function getBigramsFromCodePoints() : array {
+        $bigrams = [];
+
+        $len = mb_strlen($this->value, $this->encoding);
         for ($i = 0 ; $i < $len - 1 ; $i++) {
             $bigrams[] = mb_substr($this->value, $i, 2, $this->encoding);
         }

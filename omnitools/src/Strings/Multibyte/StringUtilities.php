@@ -29,18 +29,15 @@ class StringUtilities {
             ->setPadLength($padLength)
             ->setPadString($padString)
             ->setPadType($padType)
-            ->setEncoding($encoding ?: mb_internal_encoding())
+            ->setEncoding($encoding ?: "UTF-8")
             ->pad();
     }
 
     public static function isSupportedEncoding (string $encoding) : bool {
-        foreach (mb_list_encodings() as $supportedEncoding) {
-            if ($encoding === $supportedEncoding) {
-                return true;
-            }
-        }
-
-        return false;
+        return match ($encoding) {
+            "UTF-8" => true,
+            default => in_array($encoding, mb_list_encodings()),
+        };
     }
 
     /**
