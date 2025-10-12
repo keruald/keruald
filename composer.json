@@ -43,7 +43,7 @@
         "keruald/commands": "0.0.1",
         "keruald/database": "0.4.0",
         "keruald/github": "0.2.1",
-        "keruald/omnitools": "0.13.0",
+        "keruald/omnitools": "0.14.0",
         "keruald/report": "0.1.0"
     },
     "autoload": {
