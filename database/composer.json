@@ -4,9 +4,9 @@
     "type": "library",
     "require-dev": {
         "phan/phan": "^5.3.2",
-        "squizlabs/php_codesniffer": "^3.6.2",
+        "squizlabs/php_codesniffer": "^4.0.0",
         "phpunit/phpunit": "^10.2",
-        "nasqueron/codestyle": "^0.0.1"
+        "nasqueron/codestyle": "^0.1.2"
     },
     "scripts": {
         "lint-src": "find src -type f -name '*.php' | xargs -n1 php -l",
