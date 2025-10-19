@@ -7,6 +7,7 @@ use Keruald\Database\Exceptions\EngineSetupException;
 use Keruald\Database\Exceptions\SqlException;
 
 use Keruald\Database\Result\MySQLiDatabaseResult;
+
 use RuntimeException;
 
 use mysqli;
@@ -53,6 +54,11 @@ class MySQLiEngine extends DatabaseEngine {
         // Connects to MySQL server
         $this->driver = new mysqli_driver();
         $this->db = new mysqli($host, $username, $password);
+
+        if ($this->db->connect_error !== null) {
+            $this->onCantConnectToHost();
+        }
+
         $this->setCharset('utf8mb4');
 
         // Selects database
@@ -78,7 +84,7 @@ class MySQLiEngine extends DatabaseEngine {
                 return false;
             }
 
-            $this->throwException($ex, $query);
+            $this->onQueryError($query);
         }
 
         if (is_bool($result)) {
@@ -144,11 +150,6 @@ class MySQLiEngine extends DatabaseEngine {
     /// Engine mechanics methods
     ///
 
-    private function throwException (mysqli_sql_exception $ex, string $query) {
-        $context = $this->getExceptionContext();
-        throw SqlException::fromException($ex, $query, $context);
-    }
-
     protected function getExceptionContext () : array {
         return [
             'error' => $this->db->error,
@@ -211,6 +212,44 @@ class MySQLiEngine extends DatabaseEngine {
      */
     public function getUnderlyingDriver (): mysqli {
         return $this->db;
+    }
+
+    ///
+    /// Events
+    ///
+
+    /**
+     * Called on connect failure
+     */
+    protected function onCantConnectToHost () : void {
+        $ex = new RuntimeException("Can't connect to SQL server: "
+                                   . $this->db->connect_error);
+
+        if (!class_exists(self::EVENTS_PROPAGATION_CLASS)) {
+            throw $ex;
+        }
+
+        $callable = [self::EVENTS_PROPAGATION_CLASS, "callOrThrow"];
+        $callable($this->cantConnectToHostEvents, $this, $ex);
+    }
+
+    /**
+     * Called on query error
+     *
+     * @param string $query The query executed when the error occurred
+     */
+    protected function onQueryError (string $query) : void {
+        $ex = SqlException::fromQuery(
+            $query,
+            $this->getExceptionContext(),
+        );
+
+        if (!class_exists(self::EVENTS_PROPAGATION_CLASS)) {
+            throw $ex;
+        }
+
+        $callable = [self::EVENTS_PROPAGATION_CLASS, "callOrThrow"];
+        $callable($this->queryErrorEvents, [$this, $query, $ex], $ex);
     }
 
 }

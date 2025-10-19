@@ -8,6 +8,9 @@
         "phpunit/phpunit": "^10.2",
         "nasqueron/codestyle": "^0.1.2"
     },
+    "suggest": {
+        "keruald/omnitools": "Allows to fire database events"
+    },
     "scripts": {
         "lint-src": "find src -type f -name '*.php' | xargs -n1 php -l",
         "lint-tests": "find tests -type f -name '*.php' | xargs -n1 php -l",

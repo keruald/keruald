@@ -151,4 +151,37 @@ abstract class DatabaseEngine {
         );
     }
 
+
+    ///
+    /// Events
+    ///
+
+    public const string EVENTS_PROPAGATION_CLASS = "Keruald\\OmniTools\\Events\\Propagation";
+
+    /**
+     * @event CantConnectToHost Functions to call when it's not possible to connect to the database host
+     * @eventparam Database $db The current database instance
+     */
+    public array $cantConnectToHostEvents = [];
+
+    /**
+     * @event QueryError Functions to call when a query fails.
+     * @eventparam Database $db The current database instance
+     * @eventparam string $query The failed query
+     * @eventparam DatabaseException $ex The exception describing the query error
+     */
+    public array $queryErrorEvents = [];
+
+    /**
+     * Called on connect failure
+     */
+    protected abstract function onCantConnectToHost() : void;
+
+    /**
+     * Called on query error
+     *
+     * @param string $query The query executed when the error occurred
+     */
+    protected abstract function onQueryError (string $query) : void;
+
 }

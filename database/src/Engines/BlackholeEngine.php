@@ -40,4 +40,15 @@ class BlackholeEngine extends DatabaseEngine {
         return true;
     }
 
+    ///
+    /// Events
+    ///
+
+    protected function onCantConnectToHost () : void {
+        // We can always connect to a black hole engine.
+    }
+
+    protected function onQueryError (string $query) : void {
+        // Queries are always valid.
+    }
 }

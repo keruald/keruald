@@ -16,7 +16,7 @@ use Keruald\Database\Exceptions\EngineSetupException;
  *
  *   2) through Database::load() if you want to use a singleton pattern.
  */
-class Database {
+abstract class Database {
 
     ///
     /// Factory pattern
