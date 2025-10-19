@@ -7,6 +7,7 @@ use Keruald\Database\Exceptions\EngineSetupException;
 use Keruald\Database\Exceptions\SqlException;
 
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MySQLiEngineTest extends TestCase {
@@ -171,8 +172,22 @@ class MySQLiEngineTest extends TestCase {
         $this->assertSame(1701, $this->db->nextId());
     }
 
-    public function testEscape () {
-        $this->assertEquals("foo\')", $this->db->escape("foo')"));
+    public static function provideStringsToEscape() : iterable {
+        yield 'empty string' => ['', ''];
+        yield 'simple latin' => ['Lorem ipsum dolor', 'Lorem ipsum dolor'];
+        yield 'apostrophe' => ["L'arbre", "L\\'arbre"];
+        yield 'double apostrophes' => ["''", "\\'\\'"];
+        yield 'unicode' => ['cœur', 'cœur'];
+        yield 'apostrophe and parenthesis' => ["foo')", "foo\\')"];
+    }
+
+    #[DataProvider("provideStringsToEscape")]
+    public function testEscape(string $input, string $expected) : void {
+        $this->assertEquals(
+            $expected,
+            $this->db->escape($input),
+            "The following string isn't properly escaped: '$input'"
+        );
     }
 
     public function testGetUnderlyingDriver () {

@@ -85,4 +85,12 @@ class SqlException extends RuntimeException {
         return new self(null, $query, $context);
     }
 
+    ///
+    /// Getters
+    ///
+
+    public function getQuery () : string {
+        return $this->query;
+    }
+
 }
