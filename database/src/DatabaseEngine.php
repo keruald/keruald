@@ -151,6 +151,11 @@ abstract class DatabaseEngine {
         );
     }
 
+    ///
+    /// Error handling :: compatibility
+    ///
+
+    public abstract function error () : array;
 
     ///
     /// Events

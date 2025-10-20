@@ -41,6 +41,14 @@ class BlackholeEngine extends DatabaseEngine {
     }
 
     ///
+    /// Error handling
+    ///
+
+    public function error () : array {
+        return [];
+    }
+
+    ///
     /// Events
     ///
 
