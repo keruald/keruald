@@ -4,6 +4,10 @@
 
 use Keruald\OmniTools\Debug\Debugger;
 
+const SQL_ERROR = 65;
+const HACK_ERROR = 99;
+const GENERAL_ERROR = 117;
+
 if (!function_exists("dprint_r")) {
     function dprint_r ($variable) {
         Debugger::printVariable($variable);

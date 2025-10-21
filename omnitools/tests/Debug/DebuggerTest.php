@@ -19,6 +19,7 @@ class DebuggerTest extends TestCase {
         Debugger::register();
 
         $this->assertTrue(function_exists("dprint_r"));
+        $this->assertTrue(defined("SQL_ERROR"));
     }
 
     private function assertTestSuiteStateIsValid() : void {
