@@ -36,7 +36,7 @@ class BlackholeEngine extends DatabaseEngine {
     }
 
     public function isExistingTable (string $database, string $table) : bool {
-        // Everything and nothing exists in a blackhole
+        // Everything and nothing exists in a black hole
         return true;
     }
 

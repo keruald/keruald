@@ -54,7 +54,7 @@ replace 'MySQL' by 'MySQLi' as engine.
 ## Specialized drivers for tests
 ### Blackhole
 
-The blackhole engine does nothing and always returns `true` as query result.
+The black hole engine does nothing and always returns `true` as query result.
 
 This engine can be used for mocks:
 
@@ -71,7 +71,7 @@ It can also be used with the loader, without any engine-specific configuration:
 
 ### MockDatabaseEngine
 
-The mock database is a simple implementation of the blackhole engine as mocking
+The mock database is a simple implementation of the black hole engine as mocking
 service to use when you want to return a deterministic response to known
 queries.
 
