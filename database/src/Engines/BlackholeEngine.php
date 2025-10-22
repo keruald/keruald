@@ -31,7 +31,7 @@ class BlackholeEngine extends DatabaseEngine {
         return new self;
     }
 
-    public function getUnderlyingDriver () : mixed {
+    public function getUnderlyingDriver () : null {
         return null;
     }
 
