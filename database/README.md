@@ -45,6 +45,55 @@ use `MYSQLI_BOTH` instead.
 
 Those constants are defined by the MySQLi extension.
 
+### PDO Drivers - PostgreSQL
+
+Two PDO drivers for PostgreSQL are supported:
+
+  - PDO\Pgsql for PHP 8.4+, as PgsqlPDOEngine
+  - The legacy PDO for other PHP versions, as PostgreSQLPDOEngine
+
+| Key        | Value                                |                    |
+|------------|--------------------------------------|:-------------------|
+| engine     | PgsqlPDOEngine class reference       |                    |
+| host       | The hostname, e.g. "localhost"       |                    |
+| username   | The user to use for connection       |                    |
+| password   | The clear text password to use       |                    |
+| database   | The default db to select for queries | (optional)         |
+| fetch_mode | The default mode to fetch rows       | `PDO::FETCH_ASSOC` |
+
+For example:
+
+```php
+[
+    'engine' => Keruald\Database\Engines\PgsqlPDOEngine::class,
+    'host' => 'localhost',
+    'username' => 'app',
+    'password' => 'someSecret',
+    'database' => 'app',          // optional
+]
+```
+
+#### About fetch_mode parameter
+
+The `fetch_mode` parameter is used to determine how to represent results:
+
+* `PDO::FETCH_ASSOC` or `2` will use column names
+* `PDO::FETCH_NUM` or `3` will use an enumerated array (0, 1, 2, …)
+* `PDO::FETCH_BOTH` or `4` will use both of them
+
+The code offers `PDO::FETCH_ASSOC` as default value to allow to directly
+represent a row result as API output and encourage to take care of the column
+names for better code maintenance. If you wish to switch to default PDO
+behavior, use `PDO::FETCH_BOTH` instead.
+
+If you need to use other PDO modes, the following methods aren't available:
+  - isExistingTable
+  - queryScalar
+
+Other methods should work perfectly fine.
+
+Those constants are defined by the PDO extension.
+
 ## Legacy drivers
 
 The mysql extension has been deprecated in PHP 5.7 and removed in PHP 7.
