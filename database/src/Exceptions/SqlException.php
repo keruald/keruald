@@ -53,7 +53,7 @@ class SqlException extends RuntimeException {
             // Build from state
             parent::__construct(
                 $this->state['error'] ?? self::DEFAULT_MESSAGE,
-                $this->state['errno'] ?? 0,
+                (int)$this->state['errno'] ?? 0,
             );
         }
     }
