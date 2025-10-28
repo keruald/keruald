@@ -3,6 +3,7 @@
 namespace Keruald\OmniTools\Tests\OS;
 
 use InvalidArgumentException;
+use Keruald\OmniTools\DataTypes\Option\Some;
 use Keruald\OmniTools\OS\Environment;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -41,6 +42,19 @@ class EnvironmentTest extends TestCase {
     #[DataProvider('provideEnvironment')]
     public function testGet (string $key, string $value) : void {
         self::assertSame($value, Environment::get($key));
+    }
+
+    #[DataProvider('provideEnvironment')]
+    public function testTryGet (string $key, string $value) : void {
+        $actual = Environment::tryGet($key);
+
+        $this->assertEquals(new Some($value), $actual);
+    }
+
+    public function testTryGetWhenKeyDoesNotExist () : void {
+        $actual = Environment::tryGet("quux");
+
+        $this->assertTrue($actual->isNone());
     }
 
     #[DataProvider('provideEnvironment')]
