@@ -1,0 +1,41 @@
+{
+  "name": "keruald/yaml",
+  "description": "YAML parser",
+  "license": "BSD-2-Clause",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/keruald/yaml"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Sébastien Santoro",
+      "email": "dereckson@espace-win.org"
+    }
+  ],
+  "keywords": [
+    "keruald",
+    "YAML"
+  ],
+  "support": {
+    "irc": "irc://irc.libera.chat/nasqueron",
+    "issues": "https://devcentral.nasqueron.org"
+  },
+  "require": {
+    "keruald/omnitools": "^0.16.0",
+    "php": ">=8.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "12.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Keruald\\Yaml\\": "src/",
+      "Keruald\\Yaml\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit tests"
+  }
+}

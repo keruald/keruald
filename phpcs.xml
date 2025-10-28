@@ -55,4 +55,7 @@
     <file>report/src</file>
     <file>report/tests</file>
 
+    <file>yaml/src</file>
+    <file>yaml/tests</file>
+
 </ruleset>

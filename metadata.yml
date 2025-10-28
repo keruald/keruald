@@ -28,6 +28,7 @@ packages:
     - github
     - omnitools
     - report
+    - yaml
 
 packages_namespaces:
     cache: Keruald\Cache
@@ -36,3 +37,4 @@ packages_namespaces:
     github: Keruald\GitHub
     omnitools: Keruald\OmniTools
     report: Keruald\Reporting
+    yaml: Keruald\Yaml

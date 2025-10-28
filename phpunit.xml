@@ -51,6 +51,9 @@
         <testsuite name="Unit tests for keruald/report">
             <directory suffix="Test.php">./report/tests</directory>
         </testsuite>
+        <testsuite name="Unit tests for keruald/yaml">
+            <directory suffix="Test.php">./yaml/tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
@@ -60,6 +63,7 @@
             <directory suffix=".php">github/src/</directory>
             <directory suffix=".php">omnitools/src/</directory>
             <directory suffix=".php">report/src/</directory>
+            <directory suffix=".php">yaml/src/</directory>
         </include>
     </source>
 </phpunit>
