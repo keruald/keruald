@@ -24,6 +24,7 @@
   },
   "require": {
     "keruald/omnitools": "^0.16.0",
+    "symfony/yaml": "^7.3.5",
     "php": ">=8.3.0"
   },
   "require-dev": {
