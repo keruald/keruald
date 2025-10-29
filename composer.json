@@ -46,7 +46,7 @@
         "keruald/github": "0.2.1",
         "keruald/omnitools": "0.16.0",
         "keruald/report": "0.1.0",
-        "keruald/yaml": "0.1.0"
+        "keruald/yaml": "0.1.1"
     },
     "autoload": {
         "psr-4": {
