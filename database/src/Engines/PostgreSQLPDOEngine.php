@@ -57,4 +57,8 @@ class PostgreSQLPDOEngine extends PDOEngine {
         END);
     }
 
+    public function hasInOutSupport() : bool {
+        return false;
+    }
+
 }

@@ -52,6 +52,10 @@ final class PgsqlPDOEngine extends PDOEngine {
         END);
     }
 
+    public function hasInOutSupport() : bool {
+        return false;
+    }
+
     ///
     /// Engine-specific methods
     ///

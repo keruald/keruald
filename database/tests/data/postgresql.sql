@@ -25,3 +25,11 @@ SELECT category,
        COUNT(category) AS "count(category)"
 FROM ships
 GROUP BY category;
+
+CREATE OR REPLACE PROCEDURE define_port (OUT Pout INTEGER)
+    LANGUAGE plpgsql
+AS $$
+BEGIN
+    Pout := 1912;
+END;
+$$;

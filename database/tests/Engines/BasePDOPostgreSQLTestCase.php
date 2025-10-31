@@ -6,6 +6,8 @@ use Keruald\Database\Exceptions\NotImplementedException;
 use Keruald\Database\Exceptions\SqlException;
 use Keruald\Database\Result\PDODatabaseResult;
 
+use PDO;
+
 abstract class BasePDOPostgreSQLTestCase extends BasePDOTestCase {
 
     const string DB_NAME = "test_keruald_db";
@@ -89,6 +91,17 @@ abstract class BasePDOPostgreSQLTestCase extends BasePDOTestCase {
         $this->expectExceptionMessage('This PDO engine does not support escape for literals');
 
         $this->db->escape("test'string");
+    }
+
+
+    public function testInOut () : void {
+        $this->expectException(NotImplementedException::class);
+
+        $port = 8000;
+        $query = $this->db
+            ->prepare("CALL define_port(:port);")
+            ->bindInOutParameter("port", $port, PDO::PARAM_INT)
+            ->query();
     }
 
 }

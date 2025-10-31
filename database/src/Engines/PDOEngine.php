@@ -10,6 +10,7 @@ use Keruald\Database\Exceptions\NotImplementedException;
 use Keruald\Database\Exceptions\SqlException;
 use Keruald\Database\Result\PDODatabaseResult;
 
+use Keruald\Database\Query\PDOQuery;
 use PDO;
 use PDOException;
 use RuntimeException;
@@ -46,6 +47,10 @@ abstract class PDOEngine extends DatabaseEngine {
 
     public function nextId () : int|string {
         return $this->db->lastInsertId();
+    }
+
+    public function setLastException (PDOException $ex) : void {
+        $this->lastException = $ex;
     }
 
     protected function getExceptionContext () : array {
@@ -158,7 +163,7 @@ abstract class PDOEngine extends DatabaseEngine {
         $callable($this->cantConnectToHostEvents, [$this, $ex], $ex);
     }
 
-    protected function onQueryError (string $query) : void {
+    public function onQueryError (string $query) : void {
         $ex = SqlException::fromQuery(
             $query,
             $this->getExceptionContext(),
@@ -170,6 +175,26 @@ abstract class PDOEngine extends DatabaseEngine {
 
         $callable = [self::EVENTS_PROPAGATION_CLASS, "callOrThrow"];
         $callable($this->queryErrorEvents, [$this, $query, $ex], $ex);
+    }
+
+    ///
+    /// PDO features
+    ///
+
+    public abstract function hasInOutSupport() : bool;
+
+    /**
+     * Prepares a query for later execution
+     *
+     * @param string $query
+     * @param int[] $options
+     * @return PDOQuery
+     */
+    public function prepare (string $query, array $options = []) : PDOQuery {
+        $statement = $this->db->prepare($query, $options);
+
+        return PDOQuery::from($this, $statement)
+            ->withFetchMode($this->fetchMode);
     }
 
     ///
