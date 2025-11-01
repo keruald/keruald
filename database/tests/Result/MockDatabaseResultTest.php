@@ -25,6 +25,10 @@ class MockDatabaseResultTest extends TestCase {
         );
     }
 
+    public function testFetchScalar () {
+        $this->assertEquals("strawberry", $this->result->fetchScalar());
+    }
+
     public function testNumRows () {
         $this->assertEquals(2, $this->result->numRows());
     }

@@ -21,6 +21,10 @@ class EmptyDatabaseResultTest extends TestCase {
         $this->assertEmpty($this->result->fetchRow());
     }
 
+    public function testFetchScalar () : void {
+        $this->assertNull($this->result->fetchScalar());
+    }
+
     public function testGetIterator () : void {
         $actual = iterator_to_array($this->result->getIterator());
 

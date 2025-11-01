@@ -49,6 +49,10 @@ class MySQLiDatabaseResultTest extends TestCase {
         $this->assertEquals($expected, $this->result->fetchRow());
     }
 
+    public function testFetchScalar () {
+        $this->assertEquals("1", $this->result->fetchScalar());
+    }
+
     public function testNumRows () {
         $this->assertEquals(4, $this->result->numRows());
     }
