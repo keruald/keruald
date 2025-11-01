@@ -2,6 +2,7 @@
 
 namespace Keruald\Database\Engines;
 
+use Keruald\Database\Database;
 use Keruald\Database\DatabaseEngine;
 
 use Keruald\Database\Exceptions\EngineSetupException;
@@ -72,7 +73,7 @@ abstract class PDOEngine extends DatabaseEngine {
         return $context;
     }
 
-    public static function load (array $config) : DatabaseEngine {
+    public static function load (array $config) : PDOEngine {
         $config = self::getConfig($config);
 
         try {
@@ -94,6 +95,18 @@ abstract class PDOEngine extends DatabaseEngine {
         $instance->fetchMode = (int)$config["fetch_mode"];
 
         return $instance;
+    }
+
+    public static function initialize (array &$config) : PDOEngine {
+        $instance = Database::initialize($config);
+
+        if ($instance instanceof PDOEngine) {
+            return $instance;
+        }
+
+        throw new EngineSetupException(
+            "Invalid database engine for PDO: " . get_class($instance)
+        );
     }
 
     private static function getConfig (array $config) : array {
