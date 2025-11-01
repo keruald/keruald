@@ -8,8 +8,14 @@
 
 RM=rm -f
 RMDIR=rm -rf
+MKDIR=mkdir -p
 
 GENERATED_FROM_TEMPLATES=phpcs.xml phpunit.xml
+
+PHP=php
+PHPUNIT=vendor/bin/phpunit
+PHP_EXTENSIONS != php -r 'echo ini_get("extension_dir");'
+XDEBUG=xdebug.so
 
 #   -------------------------------------------------------------
 #   Main targets
@@ -47,3 +53,13 @@ $(GENERATED_FROM_TEMPLATES):
 
 composer.json:
 	_utils/templates/generate-compose-json.php > composer.json
+
+#   -------------------------------------------------------------
+#   Test targets
+#   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+coverage:
+	$(MKDIR) .phpunit.cache/coverage/html
+
+	$(PHP) -d zend_extension=$(PHP_EXTENSIONS)/$(XDEBUG) -d xdebug.mode=coverage \
+	    $(PHPUNIT) --coverage-html .phpunit.cache/coverage/html
