@@ -28,11 +28,6 @@ class TraversableUtilitiesTest extends TestCase {
         TraversableUtilities::count($notCountable);
     }
 
-    #[DataProvider('providePureCountables')]
-    public function testIsCountable ($countable) {
-        $this->assertTrue(TraversableUtilities::isCountable($countable));
-    }
-
     #[DataProvider('provideIterableAndFirst')]
     public function testIsFirst($expected, $iterable) {
         $this->assertEquals($expected, TraversableUtilities::first($iterable));
@@ -65,17 +60,6 @@ class TraversableUtilitiesTest extends TestCase {
         yield [0, []];
         yield [3, ["a", "b", "c"]];
         yield [42, new class implements Countable {
-            public function count () : int {
-                return 42;
-            }
-        }
-        ];
-    }
-
-    public static function providePureCountables () : iterable {
-        yield [[]];
-        yield [["a", "b", "c"]];
-        yield [new class implements Countable {
             public function count () : int {
                 return 42;
             }

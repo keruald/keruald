@@ -66,7 +66,7 @@ trait WithURL {
         }
 
         if (isset($_SERVER['HTTP_FORWARDED'])) {
-            return StringUtilities::contains($_SERVER['HTTP_FORWARDED'], "proto=https");
+            return str_contains($_SERVER['HTTP_FORWARDED'], "proto=https");
         }
 
         return false;
