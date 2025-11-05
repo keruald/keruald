@@ -6,6 +6,7 @@ use InvalidArgumentException;
 
 use Keruald\OmniTools\DataTypes\Option\None;
 use Keruald\OmniTools\DataTypes\Option\Option;
+use Keruald\OmniTools\DataTypes\Option\Some;
 
 use PHPUnit\Framework\TestCase;
 
@@ -39,8 +40,28 @@ class NoneTest extends TestCase {
         $this->assertEquals($mapped_v, $this->v);
     }
 
+    public function testOr () : void {
+        $actual = $this->v->or(new Some(666));
+
+        $this->assertTrue($actual->isSome());
+        $this->assertEquals(666, $actual->getValue());
+    }
+
     public function testOrElse () : void {
-        $value = $this->v->orElse(666);
+        $actual = $this->v->orElse(fn () => new Some(666));
+
+        $this->assertTrue($actual->isSome());
+        $this->assertEquals(666, $actual->getValue());
+    }
+
+    public function testGetValueOr () : void {
+        $value = $this->v->getValueOr(666);
+
+        $this->assertEquals(666, $value);
+    }
+
+    public function testGetValueOrElse () : void {
+        $value = $this->v->getValueOrElse(fn () => 666);
 
         $this->assertEquals(666, $value);
     }

@@ -2,12 +2,15 @@
 
 namespace Keruald\OmniTools\DataTypes\Result;
 
-use Exception;
+use Keruald\OmniTools\Reflection\CallableElement;
+
 use InvalidArgumentException;
 use Throwable;
 
 class Err extends Result {
     private ?Throwable $error;
+
+    const CB_TOO_MANY_ARGS = "The callback must take 0 or 1 argument.";
 
     public function __construct (Throwable $error = null) {
         $this->error = $error;
@@ -48,7 +51,37 @@ EOD
         return new self($error);
     }
 
-    public function orElse (mixed $default) : mixed {
+    public function or (Result $default) : Result {
         return $default;
+    }
+
+    public function orElse (callable $callable) : Result {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        return match($argc) {
+            0 => $callable(),
+            1 => $callable($this->error),
+
+            default => throw new InvalidArgumentException(
+                self::CB_TOO_MANY_ARGS, 0, $this->error
+            ),
+        };
+    }
+
+    public function getValueOr (mixed $default) : mixed {
+        return $default;
+    }
+
+    public function getValueOrElse (callable $callable) : mixed {
+        $argc = (new CallableElement($callable))->countArguments();
+
+        return match($argc) {
+            0 => $callable(),
+            1 => $callable($this->error),
+
+            default => throw new InvalidArgumentException(
+                self::CB_TOO_MANY_ARGS, 0, $this->error
+            ),
+        };
     }
 }

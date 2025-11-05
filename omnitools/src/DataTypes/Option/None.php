@@ -26,7 +26,20 @@ EOD
         return $this;
     }
 
-    public function orElse (mixed $default) : mixed {
+    public function or (Option $default) : Option {
         return $default;
     }
+
+    public function orElse (callable $callable) : Option {
+        return $callable();
+    }
+
+    public function getValueOr (mixed $default) : mixed {
+        return $default;
+    }
+
+    public function getValueOrElse (callable $callable) : mixed {
+        return $callable();
+    }
+
 }

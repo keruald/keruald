@@ -49,8 +49,28 @@ class SomeTest extends TestCase {
         $this->assertEquals(84, $mapped_v->getValue());
     }
 
+    public function testOr () : void {
+        $actual = $this->v->or(new Some(666));
+
+        $this->assertTrue($actual->isSome());
+        $this->assertEquals(42, $actual->getValue());
+    }
+
     public function testOrElse () : void {
-        $value = $this->v->orElse(666);
+        $actual = $this->v->orElse(fn () => new Some(666));
+
+        $this->assertTrue($actual->isSome());
+        $this->assertEquals(42, $actual->getValue());
+    }
+
+    public function testGetValueOr () : void {
+        $value = $this->v->getValueOr(666);
+
+        $this->assertEquals(42, $value);
+    }
+
+    public function testGetValueOrElse () : void {
+        $value = $this->v->getValueOrElse(fn () => 666);
 
         $this->assertEquals(42, $value);
     }

@@ -27,7 +27,7 @@ class Propagation {
         foreach ($callables as $callable) {
             if (!is_callable($callable)) {
                 $previous = self::grabException($parameters);
-                throw new BadFunctionCallException("Callback for this method.", 0, $previous->orElse(null));
+                throw new BadFunctionCallException("Callback for this method.", 0, $previous->getValueOr(null));
             }
 
             call_user_func_array($callable, $parameters);
@@ -49,7 +49,7 @@ class Propagation {
     public static function callOrThrow (iterable $callables, array $parameters = [], Throwable $exception = null) : void {
         if (!count($callables)) {
             throw $exception ?? self::grabException($parameters)
-                                      ->orElse(new RuntimeException);
+                                      ->getValueOrElse(fn () => new RuntimeException);
         }
 
         static::call($callables, $parameters);

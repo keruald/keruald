@@ -53,7 +53,19 @@ EOD
         return new self($value);
     }
 
-    public function orElse (mixed $default) : mixed {
+    public function or (Option $default) : Option {
+        return $this;
+    }
+
+    public function orElse (callable $callable) : Option {
+        return $this;
+    }
+
+    public function getValueOr (mixed $default) : mixed {
+        return $this->value;
+    }
+
+    public function getValueOrElse (callable $callable) : mixed {
         return $this->value;
     }
 }
