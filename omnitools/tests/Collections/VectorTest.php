@@ -433,14 +433,15 @@ class VectorTest extends TestCase {
     ///
 
     public function testFirst () : void {
-        $this->assertEquals(1, $this->vector->first());
+        $item = $this->vector->first();
+        $this->assertEquals(1, $item->getValue());
     }
 
     public function testFirstWhenEmpty () : void {
         $vector = new Vector;
 
-        $this->expectException(OutOfRangeException::class);
-        $vector->first();
+        $item = $vector->first();
+        $this->assertTrue($item->isNone());
     }
 
     public function testFirstOr () : void {

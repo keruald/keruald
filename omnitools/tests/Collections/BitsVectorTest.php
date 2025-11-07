@@ -236,14 +236,16 @@ class BitsVectorTest extends TestCase {
         $bits = BitsVector::new(4);
         $bits[2] = 1;
 
-        $this->assertEquals(0, $bits->first());
+        $firstBit = $bits->first();
+        $this->assertTrue($firstBit->isSome());
+        $this->assertEquals(0, $firstBit->getValue());
     }
 
     public function testFirstWhenEmpty () : void {
         $bits = BitsVector::new(0);
 
-        $this->expectException(OutOfRangeException::class);
-        $bits->first();
+        $firstBit = $bits->first();
+        $this->assertTrue($firstBit->isNone());
     }
 
     public function testFirstOr () : void {

@@ -2,29 +2,28 @@
 
 namespace Keruald\OmniTools\Collections;
 
+use Keruald\OmniTools\DataTypes\Option\None;
+use Keruald\OmniTools\DataTypes\Option\Option;
+use Keruald\OmniTools\DataTypes\Option\Some;
 use Keruald\OmniTools\Reflection\CallableElement;
 
 use InvalidArgumentException;
-use OutOfRangeException;
 
 trait WithCollection {
 
     abstract function count () : int;
     abstract function toArray() : array;
 
-    public function first () : mixed {
+    public function first () : Option {
         foreach ($this->toArray() as $item) {
-            return $item;
+            return new Some($item);
         }
 
-        throw new OutOfRangeException("The collection is empty.");
+        return new None;
     }
 
     public function firstOr (mixed $default) : mixed {
-        return match ($this->count()) {
-            0 => $default,
-            default => $this->first(),
-        };
+        return $this->first()->getValueOr($default);
     }
 
     ///

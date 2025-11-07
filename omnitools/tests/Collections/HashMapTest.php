@@ -530,14 +530,17 @@ class HashMapTest extends TestCase {
     ///
 
     public function testFirst () : void {
-        $this->assertEquals("Iain Banks", $this->map->first());
+        $author = $this->map->first();
+
+        $this->assertTrue($author->isSome());
+        $this->assertEquals("Iain Banks", $author->getValue());
     }
 
     public function testFirstWhenEmpty () : void {
         $map = new HashMap();
+        $author = $map->first();
 
-        $this->expectException(OutOfRangeException::class);
-        $map->first();
+        $this->assertTrue($author->isNone());
     }
 
     public function testFirstOr () : void {
