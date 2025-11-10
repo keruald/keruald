@@ -40,7 +40,7 @@
         "ext-redis": "*"
     },
     "replace": {
-        "keruald/cache": "0.1.0",
+        "keruald/cache": "0.1.1",
         "keruald/commands": "0.0.1",
         "keruald/database": "0.6.1",
         "keruald/github": "0.2.1",

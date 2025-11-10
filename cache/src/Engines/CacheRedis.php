@@ -86,8 +86,9 @@ class CacheRedis extends Cache {
         null|int|DateInterval $ttl = null
     ) : bool {
         try {
+            $value = serialize($value);
             if ($ttl === null) {
-                $this->redis->set($key, serialize($value));
+                $this->redis->set($key, $value);
             } else {
                 $this->redis->setex($key, self::parse_interval($ttl), $value);
             }
