@@ -101,16 +101,18 @@ class StringUtilitiesTest extends TestCase {
     }
 
     public static function provideBase64 () : iterable {
-        yield ['foo', 'Zm9v', "This is the regular base test without any exception."];
-        yield ['', '', "An empty string should remain an empty string."];
-        yield [
+        yield "This is the regular base test without any exception." => ['foo', 'Zm9v'];
+
+        yield "An empty string should remain an empty string." => ['', ''];
+
+        yield "No padding should be used." => [
             "J'ai fait mes 60 prières par terre dans la poudrière.",
             'SidhaSBmYWl0IG1lcyA2MCBwcmnDqHJlcyBwYXIgdGVycmUgZGFucyBsYSBwb3VkcmnDqHJlLg',
-            "No padding should be used."
         ];
-        yield [
-            "àèòàFOOàèòà", "w6DDqMOyw6BGT0_DoMOow7LDoA",
-            "Slashes / should be replaced by underscores _."
+
+        yield "Slashes / should be replaced by underscores _." => [
+            "àèòàFOOàèòà",
+            "w6DDqMOyw6BGT0_DoMOow7LDoA",
         ];
     }
 }

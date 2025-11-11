@@ -10,21 +10,21 @@ use PHPUnit\Framework\TestCase;
 class URLTest extends TestCase {
 
     #[DataProvider('provideURLsAndComponents')]
-    public function testGetDomain ($url, $expectedDomain) : void {
+    public function testGetDomain ($url, $expectedDomain, $_, $__, $___ = null) : void {
         $url = new URL($url);
 
         $this->assertEquals($expectedDomain, $url->getDomain());
     }
 
     #[DataProvider('provideURLsAndComponents')]
-    public function testGetProtocol ($url, $_, $expectedProtocol) : void {
+    public function testGetProtocol ($url, $_, $expectedProtocol, $__, $___ = null) : void {
         $url = new URL($url);
 
         $this->assertEquals($expectedProtocol, $url->getProtocol());
     }
 
     #[DataProvider('provideURLsAndComponents')]
-    public function testGetQuery ($url, $_, $__, $expectedQuery) : void {
+    public function testGetQuery ($url, $_, $__, $expectedQuery, $___ = null) : void {
         $url = new URL($url);
 
         $this->assertEquals($expectedQuery, $url->getQuery());

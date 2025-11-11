@@ -5,7 +5,7 @@
     "require-dev": {
         "nasqueron/codestyle": "^0.1.2",
         "phan/phan": "^5.3",
-        "phpunit/phpunit": "^10.2",
+        "phpunit/phpunit": "^12.4",
         "squizlabs/php_codesniffer": "^4.0.0"
     },
     "license": "BSD-2-Clause",
