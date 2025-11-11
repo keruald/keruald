@@ -8,5 +8,6 @@ class Request {
     use WithAcceptedLanguages;
     use WithRemoteAddress;
     use WithURL;
+    use WithLocalURL;
 
 }

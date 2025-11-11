@@ -26,6 +26,7 @@
          displayDetailsOnTestsThatTriggerNotices="true"
          bootstrap="vendor/autoload.php"
          cacheDirectory=".phpunit.cache"
+         backupGlobals="true"
          stopOnFailure="false">
     <php>
         <ini name="display_errors" value="On" />
