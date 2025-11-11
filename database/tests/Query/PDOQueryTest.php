@@ -24,8 +24,8 @@ class PDOQueryTest extends TestCase {
     }
 
     protected function mockQuery () : PDOQuery {
-        $engine = $this->createMock(PDOEngine::class);
-        $statement = $this->createMock(PDOStatement::class);
+        $engine = $this->createStub(PDOEngine::class);
+        $statement = $this->createStub(PDOStatement::class);
 
         return new PDOQuery($engine, $statement);
     }

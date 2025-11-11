@@ -9,18 +9,20 @@ use PHPUnit\Framework\TestCase;
 class SqlExceptionTest extends TestCase {
 
     public function testGetQuery () {
-        $sql = 'SELECT 1+';
-        $ex = SqlException::fromQuery($sql, [
+        $state = [
             "error" => 'Syntax error',
             "errno" => 1064,
-        ]);
+        ];
+
+        $sql = 'SELECT 1+';
+        $ex = SqlException::fromQuery($sql, $state);
         $this->assertEquals(
             $sql,
             $ex->getQuery(),
             ""
         );
 
-        $ex = SqlException::fromQuery("", []);
+        $ex = SqlException::fromQuery("", $state);
         $this->assertEquals(
             "",
             $ex->getQuery(),
