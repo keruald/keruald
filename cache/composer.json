@@ -13,6 +13,12 @@
             "email": "dereckson@espace-win.org"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Keruald\\Cache\\": "src/",
+            "Keruald\\Cache\\Tests\\": "tests/"
+        }
+    },
     "provide": {
         "psr/simple-cache-implementation": "1.0|2.0|3.0"
     },
