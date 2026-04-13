@@ -23,7 +23,7 @@
         "psr/simple-cache-implementation": "1.0|2.0|3.0"
     },
     "require": {
-        "keruald/omnitools": "^0.11"
+        "keruald/omnitools": "^0.16"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.4"
