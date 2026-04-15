@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Acme\SolarSystemLib;
 
-class Sun {
+use Keruald\OmniTools\Tests\data\SolarSystemLib\Base\AstronomicalBody;
+
+class Sun implements AstronomicalBody {
 
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Acme\SolarSystemLib\Planets;
 
-class Pluton {
+use Keruald\OmniTools\Tests\data\SolarSystemLib\Base\Planet;
+
+class Pluton extends Planet {
 
 }

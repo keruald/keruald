@@ -19,6 +19,8 @@ class PSR4NamespaceTest extends TestCase {
 
     const ALL_CLASSES = [
         "Acme\\SolarSystemLib\\Sun",
+        "Acme\\SolarSystemLib\\Base\\AstronomicalBody",
+        "Acme\\SolarSystemLib\\Base\\Planet",
         "Acme\\SolarSystemLib\\Planets\\Pluton",
         "Acme\\SolarSystemLib\\Planets\\Inner\\Mercure",
         "Acme\\SolarSystemLib\\Planets\\Inner\\Venus",

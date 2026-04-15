@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Acme\SolarSystemLib\Planets\Inner;
 
-class Venus {
+use Keruald\OmniTools\Tests\data\SolarSystemLib\Base\Planet;
+
+class Venus extends Planet {
 
 }
