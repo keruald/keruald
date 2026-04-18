@@ -42,6 +42,19 @@ class XHubSignatureTest extends TestCase {
     }
 
     ///
+    /// Tests for X-Hub-Signature-256 / SHA-256 (T2310)
+    ///
+
+    public function testCompute256 () : void {
+        $instance = new XHubSignature(DEFAULT_256_SECRET, "sha256");
+        $instance->payload = DEFAULT_256_PAYLOAD;
+        $this->assertSame(
+            DEFAULT_256_SIGNATURE,
+            $instance->compute()
+        );
+    }
+
+    ///
     /// Test static helper methods
     ///
 
