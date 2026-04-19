@@ -1,5 +1,6 @@
 {
     "repository.callsign": "KERUALD",
     "phabricator.uri": "https://devcentral.nasqueron.org",
+    "phpunit_config": "phpunit.xml",
     "unit.engine": "PhpunitTestEngine"
 }
